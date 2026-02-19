@@ -1,19 +1,18 @@
 "use client";
 
-import { HeartIcon } from "@phosphor-icons/react";
+import { ShoppingCartIcon } from "@phosphor-icons/react";
 
 import { UiButton, UiSheet } from "@/components/ui";
 
-export function Wishlist() {
+export function Cart() {
   return (
     <UiSheet.Sheet>
       <UiSheet.SheetTrigger asChild>
         <UiButton.Button
           variant="outline"
-          size="icon"
-          className="rounded-full border border-primary/10"
+          className="rounded-full border bg-primary text-white"
         >
-          <HeartIcon />
+          Cart <ShoppingCartIcon />
         </UiButton.Button>
       </UiSheet.SheetTrigger>
       <UiSheet.SheetContent
@@ -21,14 +20,14 @@ export function Wishlist() {
         className="w-full max-w-[440px] sm:max-w-[600px] lg:max-w-[550px] overflow-auto "
       >
         <UiSheet.SheetHeader>
-          <UiSheet.SheetTitle>Wishlist</UiSheet.SheetTitle>
+          <UiSheet.SheetTitle>Cart</UiSheet.SheetTitle>
           <UiSheet.SheetDescription>
-            Items you&apos;ve saved for later.
+            Items you&apos;ve added to your cart.
           </UiSheet.SheetDescription>
         </UiSheet.SheetHeader>
         <div className="flex flex-1 items-center justify-center">
           <div className="text-center">
-            <HeartIcon className="mx-auto size-12 text-muted-foreground/40" />
+            <ShoppingCartIcon className="mx-auto size-12 text-muted-foreground/40" />
             <p className="mt-3 text-sm font-medium text-muted-foreground">
               Coming Soon
             </p>

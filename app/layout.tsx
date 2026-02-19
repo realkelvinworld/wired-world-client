@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
 import "./globals.css";
 
+import QuickNav from "@/components/ux/quick-nav";
 import Footer from "@/components/ux/footer";
 import Navbar from "@/components/ux/nav";
 
@@ -93,6 +94,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <QuickNav />
         <Footer />
       </body>
     </html>

@@ -16,128 +16,8 @@ import { routes } from "@/routes";
 
 import { SearchProducts } from "./nav/search-products";
 import { Wishlist } from "./nav/wishlist";
-
-const brandLogos = [
-  {
-    name: "LG",
-    logo: "/logos/LG-LOGO.svg",
-    description: "Premium home electronics & appliances",
-  },
-  {
-    name: "Sony",
-    logo: "/logos/SONY-LOGO.png",
-    description: "Entertainment, gaming & audio systems",
-  },
-  {
-    name: "Samsung",
-    logo: "/logos/SAMSUNG-LOGO.avif",
-    description: "Smart devices & home innovation",
-  },
-  {
-    name: "Midea",
-    logo: "/logos/MIDEA-LOGO.png",
-    description: "Affordable home & kitchen appliances",
-  },
-  {
-    name: "Nasco",
-    logo: "/logos/NASCO-LOGO.png",
-    description: "Reliable everyday electronics",
-  },
-  {
-    name: "TCL",
-    logo: "/logos/TCL-LOGO.png",
-    description: "Smart TVs & display technology",
-  },
-];
-
-const categories = [
-  {
-    name: "Televisions",
-    description: "Smart TVs & displays",
-    icon: Icon.MonitorIcon,
-    items: [
-      { name: "UHD 4K TVs", href: "#" },
-      { name: "QHD TVs", href: "#" },
-      { name: "OLED TVs", href: "#" },
-      { name: "Smart TVs", href: "#" },
-      { name: "LED TVs", href: "#" },
-    ],
-  },
-  {
-    name: "Home Appliances",
-    description: "Fridges, washers & more",
-    icon: Icon.HouseIcon,
-    items: [
-      { name: "Refrigerators", href: "#" },
-      { name: "Washing Machines", href: "#" },
-      { name: "Dryers", href: "#" },
-      { name: "Vacuum Cleaners", href: "#" },
-      { name: "Irons", href: "#" },
-    ],
-  },
-  {
-    name: "Audio & Sound",
-    description: "Speakers & headphones",
-    icon: Icon.SpeakerHighIcon,
-    items: [
-      { name: "Soundbars", href: "#" },
-      { name: "Headphones", href: "#" },
-      { name: "Bluetooth Speakers", href: "#" },
-      { name: "Home Theater Systems", href: "#" },
-      { name: "Earbuds", href: "#" },
-    ],
-  },
-  {
-    name: "Kitchen",
-    description: "Cooking & kitchen electronics",
-    icon: Icon.CookingPotIcon,
-    items: [
-      { name: "Microwaves", href: "#" },
-      { name: "Blenders", href: "#" },
-      { name: "Air Fryers", href: "#" },
-      { name: "Electric Kettles", href: "#" },
-      { name: "Rice Cookers", href: "#" },
-    ],
-  },
-  {
-    name: "Air Conditioning",
-    description: "ACs, fans & cooling",
-    icon: Icon.WindIcon,
-    items: [
-      { name: "Split ACs", href: "#" },
-      { name: "Portable ACs", href: "#" },
-      { name: "Standing Fans", href: "#" },
-      { name: "Ceiling Fans", href: "#" },
-      { name: "Air Purifiers", href: "#" },
-    ],
-  },
-  {
-    name: "Computing",
-    description: "Laptops, monitors & accessories",
-    icon: Icon.LaptopIcon,
-    items: [
-      { name: "Laptops", href: "#" },
-      { name: "Monitors", href: "#" },
-      { name: "Printers", href: "#" },
-      { name: "Keyboards & Mice", href: "#" },
-      { name: "Storage Devices", href: "#" },
-    ],
-  },
-];
-
-const mobileLinks = [
-  { label: "Home", href: routes.home },
-  { label: "Shop", href: routes.shop },
-  { label: "Showrooms", href: routes.shop },
-  { label: "Pricing", href: routes.pricing },
-];
-
-const socialLinks = [
-  { label: "Twitter", href: "#", icon: Icon.XLogoIcon },
-  { label: "Instagram", href: "#", icon: Icon.InstagramLogoIcon },
-  { label: "LinkedIn", href: "#", icon: Icon.LinkedinLogoIcon },
-  { label: "YouTube", href: "#", icon: Icon.YoutubeLogoIcon },
-];
+import { Cart } from "./nav/cart";
+import { brandLogos, categories, mobileLinks, socialLinks } from "@/db-locale";
 
 const navLinkClass =
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none bg-transparent";
@@ -323,7 +203,7 @@ export default function Navbar() {
                 className="hidden lg:inline-flex"
                 asChild
               >
-                <Link href={routes.login}>
+                <Link href={routes.showrooms}>
                   Showrooms <Icon.CaretRightIcon className="ml-1 size-4" />
                 </Link>
               </UiButton.Button>
@@ -338,7 +218,7 @@ export default function Navbar() {
               className="hidden lg:inline-flex"
               asChild
             >
-              <Link href={routes.login}>
+              <Link href={routes.signup}>
                 Sign up <Icon.CaretRightIcon className="ml-1 size-4" />
               </Link>
             </UiButton.Button>
@@ -352,12 +232,13 @@ export default function Navbar() {
           <UiButton.Button
             className="rounded-full border border-primary/10 "
             variant="outline"
+            asChild
           >
-            Login <Icon.UserIcon />
+            <Link href={routes.login}>
+              Login <Icon.UserIcon />
+            </Link>
           </UiButton.Button>
-          <UiButton.Button className="rounded-full">
-            Cart <Icon.ShoppingCartIcon />
-          </UiButton.Button>
+          <Cart />
         </div>
         {/* Mobile Menu */}
         <UiSheet.Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
