@@ -11,7 +11,7 @@ export function Wishlist() {
         <UiButton.Button
           variant="outline"
           size="icon"
-          className="rounded-full"
+          className="rounded-full border border-primary/10"
         >
           <HeartIcon />
         </UiButton.Button>

@@ -154,7 +154,9 @@ export default function Navbar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
             <span className="text-sm font-bold text-background">W</span>
           </div>
-          <span className="hidden font-bold sm:inline-block">WiredWorld</span>
+          <span className="hidden text-lg leading-none font-bold tracking-tighter text-primary lg:block">
+            wiredworld.
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -216,7 +218,7 @@ export default function Navbar() {
                               <UiButton.Button
                                 size="sm"
                                 variant="secondary"
-                                className="rounded-full"
+                                className="rounded-full text-sm group-hover:underline"
                               >
                                 See All Brands
                                 <Icon.CaretRightIcon className="ml-1 size-4" />
@@ -347,7 +349,10 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <SearchProducts />
           <Wishlist />
-          <UiButton.Button className="rounded-full border" variant="secondary">
+          <UiButton.Button
+            className="rounded-full border border-primary/10 "
+            variant="outline"
+          >
             Login <Icon.UserIcon />
           </UiButton.Button>
           <UiButton.Button className="rounded-full">
@@ -368,7 +373,7 @@ export default function Navbar() {
           </UiSheet.SheetTrigger>
           <UiSheet.SheetContent
             side="right"
-            className="flex w-full flex-col overflow-y-auto sm:max-w-md"
+            className="flex w-full flex-col overflow-y-auto sm:max-w-md px-4"
           >
             <UiSheet.SheetHeader>
               <UiSheet.SheetTitle className="text-left">
