@@ -197,6 +197,7 @@ export default function Navbar() {
                               src="/images/HOME-BANNER.avif"
                               alt="Home Banner"
                               fill
+                              unoptimized
                               quality={100}
                               className="object-cover object-center opacity-30"
                             />
@@ -239,6 +240,7 @@ export default function Navbar() {
                               alt={brand.name}
                               width={56}
                               height={40}
+                              unoptimized
                               className="h-9 w-auto object-contain"
                             />
                           </div>
@@ -420,6 +422,7 @@ export default function Navbar() {
                           alt={brand.name}
                           width={48}
                           height={32}
+                          unoptimized
                           className="h-7 w-auto object-contain"
                         />
                       </div>
