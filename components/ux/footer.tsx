@@ -17,7 +17,7 @@ const footerSections = [
       { label: "Store", href: routes.shop },
       { label: "Products", href: routes.products },
       { label: "Brands", href: routes.brands },
-      { label: "Pricing", href: routes.pricing },
+      { label: "Showrooms", href: routes.showrooms },
     ],
   },
   {
@@ -36,7 +36,7 @@ const footerSections = [
     links: [
       { label: "About", href: routes.about },
       { label: "Blog", href: routes.blog },
-      { label: "Careers", href: routes.careers },
+
       { label: "Contact Sales", href: routes.contact },
     ],
   },
