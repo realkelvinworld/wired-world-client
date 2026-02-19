@@ -13,7 +13,7 @@ export function SearchProducts() {
       <UiButton.Button
         variant="outline"
         size="icon"
-        className="rounded-full"
+        className="rounded-full border border-primary/10"
         onClick={() => setOpen(true)}
       >
         <MagnifyingGlassIcon />
