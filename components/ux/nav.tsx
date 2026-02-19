@@ -140,7 +140,7 @@ const socialLinks = [
 ];
 
 const navLinkClass =
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none";
+  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none bg-transparent";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -183,7 +183,7 @@ export default function Navbar() {
 
               {/* Brands Dropdown */}
               <UiNavigationMenu.NavigationMenuItem>
-                <UiNavigationMenu.NavigationMenuTrigger>
+                <UiNavigationMenu.NavigationMenuTrigger className="bg-transparent">
                   Brands
                 </UiNavigationMenu.NavigationMenuTrigger>
                 <UiNavigationMenu.NavigationMenuContent>
@@ -263,7 +263,7 @@ export default function Navbar() {
 
               {/* Categories Dropdown */}
               <UiNavigationMenu.NavigationMenuItem>
-                <UiNavigationMenu.NavigationMenuTrigger>
+                <UiNavigationMenu.NavigationMenuTrigger className="bg-transparent">
                   Categories
                 </UiNavigationMenu.NavigationMenuTrigger>
                 <UiNavigationMenu.NavigationMenuContent>
