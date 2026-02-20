@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import QuickNav from "@/components/ux/quick-nav";
+import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
 import Navbar from "@/components/ux/nav";
+import AppProvider from "@/providers/app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://wiredworld.com";
+const siteUrl = "https://wireworldgh.com";
 
 export const metadata: Metadata = {
   title: {
@@ -92,10 +94,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <QuickNav />
-        <Footer />
+        <AppProvider>
+          <Navbar />
+          {children}
+          <QuickNav />
+          <TrustBar />
+          <Footer />
+        </AppProvider>
       </body>
     </html>
   );

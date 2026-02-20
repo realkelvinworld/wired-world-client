@@ -152,6 +152,7 @@ export const mobileLinks = [
   { label: "Home", href: routes.home },
   { label: "Shop", href: routes.shop },
   { label: "Showrooms", href: routes.showrooms },
+  { label: "Contact", href: routes.contact },
 ];
 
 export const socialLinks = [

@@ -3,8 +3,11 @@ import { Airconditioner, SamsungOledTv } from "@/public/images";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+import LoadingLayout from "@/components/animations/loading-layout";
+
 export default function Home() {
   return (
+    <LoadingLayout>
     <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Hero */}
       <motion.div
@@ -36,5 +39,6 @@ export default function Home() {
         </div>
       </motion.div>
     </div>
+    </LoadingLayout>
   );
 }
