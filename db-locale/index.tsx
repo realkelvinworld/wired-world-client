@@ -1,6 +1,14 @@
 import * as Icon from "@phosphor-icons/react";
 import { routes } from "@/routes";
 
+/**
+ * brandLogos
+ * Array of featured brand objects for display (e.g. homepage, brand carousel).
+ * Each object contains:
+ * - name: Brand name
+ * - logo: Path to logo image
+ * - description: Short tagline/description
+ */
 export const brandLogos = [
   {
     name: "LG",
@@ -34,6 +42,15 @@ export const brandLogos = [
   },
 ];
 
+/**
+ * categories
+ * Main product categories for navigation menus and filtering.
+ * Each category contains:
+ * - name: Category name
+ * - description: Short description
+ * - icon: Phosphor icon component
+ * - items: Array of subcategory objects (name, href)
+ */
 export const categories = [
   {
     name: "Televisions",
@@ -109,6 +126,15 @@ export const categories = [
   },
 ];
 
+/**
+ * quicknavlinks
+ * Used for quick navigation sections (e.g. homepage shortcuts).
+ * Each link contains:
+ * - name: Category name
+ * - description: Short description
+ * - icon: Phosphor icon component
+ * - url: Route to filtered shop page for the category
+ */
 export const quicknavlinks = [
   {
     name: "Televisions",
@@ -148,6 +174,13 @@ export const quicknavlinks = [
   },
 ];
 
+/**
+ * mobileLinks
+ * Navigation links for mobile menu/drawer.
+ * Each link contains:
+ * - label: Display text
+ * - href: Route from routes object
+ */
 export const mobileLinks = [
   { label: "Home", href: routes.home },
   { label: "Shop", href: routes.shop },
@@ -155,6 +188,14 @@ export const mobileLinks = [
   { label: "Contact", href: routes.contact },
 ];
 
+/**
+ * socialLinks
+ * Social media links for footer/header.
+ * Each link contains:
+ * - label: Platform name
+ * - href: External URL (currently "#")
+ * - icon: Phosphor icon component for the platform
+ */
 export const socialLinks = [
   { label: "Twitter", href: "#", icon: Icon.XLogoIcon },
   { label: "Instagram", href: "#", icon: Icon.InstagramLogoIcon },
