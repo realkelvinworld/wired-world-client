@@ -204,7 +204,7 @@ export default function Navbar() {
                 asChild
               >
                 <Link href={routes.showrooms}>
-                  Showrooms <Icon.CaretRightIcon className="ml-1 size-4" />
+                  Showrooms <Icon.SlideshowIcon className="ml-1 size-4" />
                 </Link>
               </UiButton.Button>
             </UiNavigationMenu.NavigationMenuList>
@@ -219,7 +219,17 @@ export default function Navbar() {
               asChild
             >
               <Link href={routes.signup}>
-                Sign up <Icon.CaretRightIcon className="ml-1 size-4" />
+                Sign up <Icon.LockKeyIcon className="ml-1 size-4" />
+              </Link>
+            </UiButton.Button>
+            <UiButton.Button
+              variant="ghost"
+              size="sm"
+              className="hidden lg:inline-flex"
+              asChild
+            >
+              <Link href={routes.contact}>
+                Contact <Icon.LifebuoyIcon className="ml-1 size-4" />
               </Link>
             </UiButton.Button>
           </div>
@@ -240,6 +250,7 @@ export default function Navbar() {
           </UiButton.Button>
           <Cart />
         </div>
+
         {/* Mobile Menu */}
         <UiSheet.Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <UiSheet.SheetTrigger asChild>
@@ -355,7 +366,7 @@ export default function Navbar() {
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
                     <Icon.EnvelopeSimpleIcon className="size-4 shrink-0" />
-                    <span>support@wiredworld.com</span>
+                    <span>support@wireworldgh.com</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
                     <Icon.ClockIcon className="size-4 shrink-0" />
