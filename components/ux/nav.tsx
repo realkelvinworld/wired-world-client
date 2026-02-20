@@ -218,7 +218,7 @@ export default function Navbar() {
               className="hidden lg:inline-flex"
               asChild
             >
-              <Link href={routes.signup}>
+              <Link href={routes.auth.signUp}>
                 Sign up <Icon.LockKeyIcon className="ml-1 size-4" />
               </Link>
             </UiButton.Button>
@@ -244,7 +244,7 @@ export default function Navbar() {
             variant="outline"
             asChild
           >
-            <Link href={routes.login}>
+            <Link href={routes.auth.login}>
               Login <Icon.UserIcon />
             </Link>
           </UiButton.Button>
@@ -408,7 +408,7 @@ export default function Navbar() {
                 <div className="flex flex-col gap-2">
                   <UiButton.Button className="w-full" asChild>
                     <Link
-                      href={routes.signup}
+                      href={routes.auth.signUp}
                       onClick={() => setMobileOpen(false)}
                     >
                       Sign up
@@ -417,7 +417,7 @@ export default function Navbar() {
                   </UiButton.Button>
                   <UiButton.Button variant="outline" className="w-full" asChild>
                     <Link
-                      href={routes.login}
+                      href={routes.auth.login}
                       onClick={() => setMobileOpen(false)}
                     >
                       Log in

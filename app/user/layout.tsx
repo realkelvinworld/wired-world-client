@@ -12,3 +12,4 @@ export default function RootLayout({
 }>) {
   return <div>{children}</div>;
 }
+// Use Auth wrapper to protect pages

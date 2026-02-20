@@ -10,6 +10,10 @@ export const routes = {
   help: "/help",
   privacy: "/privacy",
   terms: "/terms",
-  login: "/auth/login",
-  signup: "/auth/sign-up",
+  user: "/user",
+  auth: {
+    login: "/auth/login",
+    signUp: "/auth/sign-up",
+    otpInput: "/auth/otp-input",
+  },
 };
