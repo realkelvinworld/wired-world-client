@@ -180,3 +180,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .font-sans {
+    font-family: var(--font-geist-sans);
+  }
+  .font-mono {
+    font-family: var(--font-geist-mono);
+  }
+}
