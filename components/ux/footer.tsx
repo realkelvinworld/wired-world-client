@@ -5,6 +5,7 @@ import {
   InstagramLogoIcon,
   LinkedinLogoIcon,
   YoutubeLogoIcon,
+  FacebookLogoIcon,
 } from "@phosphor-icons/react";
 
 import { UiButton, UiInput } from "@/components/ui";
@@ -57,11 +58,10 @@ const footerSections = [
   },
 ];
 
-const socialLinks = [
+export const socialLinks = [
   { label: "X (fka Twitter)", href: "#", icon: XLogoIcon },
   { label: "Instagram", href: "#", icon: InstagramLogoIcon },
-  { label: "LinkedIn", href: "#", icon: LinkedinLogoIcon },
-  { label: "YouTube", href: "#", icon: YoutubeLogoIcon },
+  { label: "Facebook", href: "#", icon: FacebookLogoIcon },
 ];
 
 export default function Footer() {

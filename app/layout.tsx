@@ -5,8 +5,8 @@ import "./globals.css";
 import QuickNav from "@/components/ux/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
-import Navbar from "@/components/ux/nav";
 import AppProvider from "@/providers/app";
+import Navbar from "@/components/ux/nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

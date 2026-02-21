@@ -29,6 +29,7 @@ export * as UiField from "./field";
 // I
 export * as UiInput from "./input";
 export * as UiInputGroup from "./input-group";
+export * as UiInputOtp from "./input-otp";
 export * as UiItem from "./item";
 
 // L

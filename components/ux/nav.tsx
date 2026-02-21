@@ -5,6 +5,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { brandLogos, categories, mobileLinks, socialLinks } from "@/db-locale";
+import { routes } from "@/routes";
 import {
   UiAspectRatio,
   UiButton,
@@ -12,12 +14,10 @@ import {
   UiSeparator,
   UiSheet,
 } from "@/components/ui";
-import { routes } from "@/routes";
 
 import { SearchProducts } from "./nav/search-products";
 import { Wishlist } from "./nav/wishlist";
 import { Cart } from "./nav/cart";
-import { brandLogos, categories, mobileLinks, socialLinks } from "@/db-locale";
 
 const navLinkClass =
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none bg-transparent";
@@ -28,9 +28,9 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-16 max-w-7xl mx-auto items-center justify-between px-6">
+      <div className="flex h-16 max-w-7xl mx-auto items-center lg:justify-between md:justify-evenly justify-evenly px-2">
         {/* Logo */}
-        <Link href={routes.home} className="mr-8 flex items-center space-x-2">
+        <Link href={routes.home} className=" flex items-center space-x-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
             <span className="text-sm font-bold text-background">W</span>
           </div>
@@ -218,7 +218,7 @@ export default function Navbar() {
               className="hidden lg:inline-flex"
               asChild
             >
-              <Link href={routes.auth.signUp}>
+              <Link href={routes.auth.signUp.signUpVerify}>
                 Sign up <Icon.LockKeyIcon className="ml-1 size-4" />
               </Link>
             </UiButton.Button>
@@ -244,7 +244,7 @@ export default function Navbar() {
             variant="outline"
             asChild
           >
-            <Link href={routes.auth.login}>
+            <Link href={routes.auth.login.login}>
               Login <Icon.UserIcon />
             </Link>
           </UiButton.Button>
@@ -408,7 +408,7 @@ export default function Navbar() {
                 <div className="flex flex-col gap-2">
                   <UiButton.Button className="w-full" asChild>
                     <Link
-                      href={routes.auth.signUp}
+                      href={routes.auth.signUp.signUpVerify}
                       onClick={() => setMobileOpen(false)}
                     >
                       Sign up
@@ -417,7 +417,7 @@ export default function Navbar() {
                   </UiButton.Button>
                   <UiButton.Button variant="outline" className="w-full" asChild>
                     <Link
-                      href={routes.auth.login}
+                      href={routes.auth.login.login}
                       onClick={() => setMobileOpen(false)}
                     >
                       Log in

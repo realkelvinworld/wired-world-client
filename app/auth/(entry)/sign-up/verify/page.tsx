@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 
-import LogIn from "@/components/forms/auth/log-in/log-in";
+import Verify from "@/components/forms/auth/sign-up/verify";
 
-export default function LoginPage() {
+export default function VerifyPage() {
   return (
     <motion.div
       initial={{ opacity: 0, x: 60 }}
@@ -18,16 +18,19 @@ export default function LoginPage() {
         </div>
 
         <div className="flex flex-col items-center justify-center space-y-2">
+          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Step 1 of 3
+          </p>
           <h1 className="font-semibold text-2xl text-center max-w-sm">
-            Welcome back to WiredWorld
+            Let&apos;s get you started
           </h1>
           <p className="max-w-xs text-sm text-center text-muted-foreground">
-            Sign in to track your orders, manage your wishlist, and pick up
-            right where you left off.
+            Enter your email address and we&apos;ll send you a verification code
+            to confirm it&apos;s really you.
           </p>
         </div>
 
-        <LogIn />
+        <Verify />
 
         <p className="text-sm">
           &copy; Wired World {new Date().getFullYear()} | All Rights Reserved

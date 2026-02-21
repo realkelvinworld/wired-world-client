@@ -4,15 +4,8 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 import { PhoneInput } from "@/components/ui/phone-input";
+import { UiField, UiInput } from "@/components/ui";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"; //pretier-ignore
 import {
   InputGroup,
   InputGroupAddon,
@@ -65,14 +58,16 @@ export default function ContactForm() {
   return (
     <div className="h-full my-8 max-w-xl">
       <form id="contact-form" onSubmit={form.handleSubmit(onSubmit)}>
-        <FieldGroup>
+        <UiField.FieldGroup>
           <Controller
             name="full_name"
             control={form.control}
             render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="full_name">Full Name</FieldLabel>
-                <Input
+              <UiField.Field data-invalid={fieldState.invalid}>
+                <UiField.FieldLabel htmlFor="full_name">
+                  Full Name
+                </UiField.FieldLabel>
+                <UiInput.Input
                   {...field}
                   id="full_name"
                   aria-invalid={fieldState.invalid}
@@ -81,18 +76,18 @@ export default function ContactForm() {
                   className="shadow-none py-5"
                 />
                 {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
+                  <UiField.FieldError errors={[fieldState.error]} />
                 )}
-              </Field>
+              </UiField.Field>
             )}
           />
           <Controller
             name="email"
             control={form.control}
             render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
+              <UiField.Field data-invalid={fieldState.invalid}>
+                <UiField.FieldLabel htmlFor="email">Email</UiField.FieldLabel>
+                <UiInput.Input
                   {...field}
                   id="email"
                   aria-invalid={fieldState.invalid}
@@ -101,17 +96,19 @@ export default function ContactForm() {
                   className="shadow-none py-5"
                 />
                 {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
+                  <UiField.FieldError errors={[fieldState.error]} />
                 )}
-              </Field>
+              </UiField.Field>
             )}
           />
           <Controller
             name="phone_number"
             control={form.control}
             render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="phone_number">Phone Number</FieldLabel>
+              <UiField.Field data-invalid={fieldState.invalid}>
+                <UiField.FieldLabel htmlFor="phone_number">
+                  Phone Number
+                </UiField.FieldLabel>
                 <PhoneInput
                   id="phone_number"
                   placeholder="Enter phone number"
@@ -122,17 +119,19 @@ export default function ContactForm() {
                   className="rounded"
                 />
                 {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
+                  <UiField.FieldError errors={[fieldState.error]} />
                 )}
-              </Field>
+              </UiField.Field>
             )}
           />
           <Controller
             name="message"
             control={form.control}
             render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="message">Message</FieldLabel>
+              <UiField.Field data-invalid={fieldState.invalid}>
+                <UiField.FieldLabel htmlFor="message">
+                  Message
+                </UiField.FieldLabel>
                 <InputGroup>
                   <InputGroupTextarea
                     {...field}
@@ -148,28 +147,28 @@ export default function ContactForm() {
                     </InputGroupText>
                   </InputGroupAddon>
                 </InputGroup>
-                <FieldDescription>
+                <UiField.FieldDescription>
                   Once you are satisfied with your composition, click the submit
                   button to send us your message otherwise hit reset to start
                   over.
-                </FieldDescription>
+                </UiField.FieldDescription>
                 {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
+                  <UiField.FieldError errors={[fieldState.error]} />
                 )}
-              </Field>
+              </UiField.Field>
             )}
           />
-        </FieldGroup>
+        </UiField.FieldGroup>
       </form>
 
-      <Field orientation="horizontal" className="my-4">
+      <UiField.Field orientation="horizontal" className="my-4">
         <Button type="button" variant="outline" onClick={() => form.reset()}>
           Reset
         </Button>
         <Button type="submit" form="contact-form">
           Submit
         </Button>
-      </Field>
+      </UiField.Field>
     </div>
   );
 }
