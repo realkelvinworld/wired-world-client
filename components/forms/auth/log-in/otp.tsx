@@ -2,9 +2,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 import * as z from "zod";
 
-import { UiButton, UiField, UiInputOtp } from "@/components/ui";
+import { UiButton, UiField, UiInputOtp, UiSpinner } from "@/components/ui";
+import { setAuthCookies } from "@/app/auth/actions";
+import { loginVerifyService } from "@/services/auth";
+import { useWebTokenStore } from "@/store/auth";
+import { useUserStore } from "@/store/user";
+import { getDeviceInfo } from "@/lib/utils";
+import { routes } from "@/routes";
 
 const formSchema = z.object({
   otp: z.string().length(6, "Please enter all 6 digits."),
@@ -13,6 +22,12 @@ const formSchema = z.object({
 type OtpFormValues = z.infer<typeof formSchema>;
 
 export default function LoginOtp() {
+  const [loading, setLoading] = useState(false);
+
+  const { webToken, clearWebToken } = useWebTokenStore();
+  const { setUser } = useUserStore();
+  const router = useRouter();
+
   const form = useForm<OtpFormValues>({
     resolver: zodResolver(formSchema),
     mode: "all",
@@ -22,7 +37,31 @@ export default function LoginOtp() {
   });
 
   function onSubmit(data: OtpFormValues) {
-    console.log("Login OTP output:", data);
+    const device = getDeviceInfo();
+
+    const payload = {
+      token: webToken ?? "",
+      code: data.otp,
+      device: `${device.browser.name} / ${device.os}`,
+    };
+
+    setLoading(true);
+    loginVerifyService(payload)
+      .then(async (res) => {
+        setUser(res.info.user);
+        await setAuthCookies(
+          res.info.token,
+          res.info.user.is_staff && res.info.user.staff_role
+            ? res.info.user.staff_role
+            : undefined,
+        );
+        clearWebToken();
+        toast.success("Welcome back!");
+        router.replace(routes.user.dashboard);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -93,10 +132,14 @@ export default function LoginOtp() {
 
       <UiButton.Button
         type="submit"
-        disabled={form.formState.isSubmitting || !form.formState.isValid}
+        disabled={loading || !form.formState.isValid}
         className="w-full max-w-xs"
       >
-        Verify code
+        {loading ? (
+          <UiSpinner.Spinner className="text-secondary" />
+        ) : (
+          "Verify code"
+        )}
       </UiButton.Button>
     </form>
   );

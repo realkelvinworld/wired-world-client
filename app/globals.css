@@ -11,7 +11,7 @@
   --card-foreground: oklch(0.3211 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.3211 0 0);
-  --primary: oklch(0.6231 0.188 259.8145);
+  --primary: oklch(62.55% 0.18669 259.706);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.967 0.0029 264.5419);
   --secondary-foreground: oklch(0.4461 0.0263 256.8018);
@@ -188,4 +188,29 @@
   .font-mono {
     font-family: var(--font-geist-mono);
   }
+}
+
+/* Sonner toast type colors */
+[data-sonner-toast][data-type="success"] {
+  --normal-bg: var(--color-green-100);
+  --normal-text: var(--color-green-800);
+  --normal-border: var(--color-green-300);
+}
+
+[data-sonner-toast][data-type="error"] {
+  --normal-bg: var(--color-red-100);
+  --normal-text: var(--color-red-800);
+  --normal-border: var(--color-red-300);
+}
+
+[data-sonner-toast][data-type="warning"] {
+  --normal-bg: var(--color-amber-100);
+  --normal-text: var(--color-amber-800);
+  --normal-border: var(--color-amber-300);
+}
+
+[data-sonner-toast][data-type="info"] {
+  --normal-bg: var(--color-blue-100);
+  --normal-text: var(--color-blue-800);
+  --normal-border: var(--color-blue-300);
 }

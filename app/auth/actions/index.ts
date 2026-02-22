@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export async function setAuthCookies(token: string, role: any) {
+export async function setAuthCookies(token: string, role?: string) {
   const cookieStore = await cookies();
 
   const cookieOptions = {
@@ -15,10 +15,12 @@ export async function setAuthCookies(token: string, role: any) {
   };
   cookieStore.set("access_token", token, cookieOptions);
 
-  cookieStore.set("user_role", role, {
-    ...cookieOptions,
-    httpOnly: true,
-  });
+  if (role) {
+    cookieStore.set("user_role", role, {
+      ...cookieOptions,
+      httpOnly: true,
+    });
+  }
 }
 
 export async function clearCookies() {

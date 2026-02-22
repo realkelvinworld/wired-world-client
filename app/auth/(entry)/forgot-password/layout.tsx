@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Log-in",
-  description: "Sign in to your WiredWorld account.",
+  title: "Forgot Password",
+  description: "Reset your WiredWorld account password.",
 };
 
 export default function Layout({

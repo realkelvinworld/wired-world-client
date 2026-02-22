@@ -1,11 +1,12 @@
 "use client";
 
 import * as Icon from "@phosphor-icons/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { brandLogos, categories, mobileLinks, socialLinks } from "@/db-locale";
+import { useUserStore } from "@/store/user";
 import { routes } from "@/routes";
 import {
   UiAspectRatio,
@@ -13,6 +14,7 @@ import {
   UiNavigationMenu,
   UiSeparator,
   UiSheet,
+  UiSpinner,
 } from "@/components/ui";
 
 import { SearchProducts } from "./nav/search-products";
@@ -25,6 +27,21 @@ const navLinkClass =
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(0);
+  const [hydrated, setHydrated] = useState(
+    useUserStore?.persist?.hasHydrated(),
+  );
+  const { user } = useUserStore();
+
+  useEffect(() => {
+    const unsub = useUserStore.persist.onFinishHydration(() =>
+      setHydrated(true),
+    );
+    return unsub;
+  }, []);
+
+  const userInitials = user
+    ? `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase()
+    : null;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -200,11 +217,15 @@ export default function Navbar() {
               <UiButton.Button
                 variant="ghost"
                 size="sm"
-                className="hidden lg:inline-flex"
+                className="hidden lg:inline-flex "
                 asChild
               >
                 <Link href={routes.showrooms}>
-                  Showrooms <Icon.SlideshowIcon className="ml-1 size-4" />
+                  Showrooms{" "}
+                  <Icon.SlideshowIcon
+                    weight="fill"
+                    className="text-primary ml-1 size-4"
+                  />
                 </Link>
               </UiButton.Button>
             </UiNavigationMenu.NavigationMenuList>
@@ -218,20 +239,30 @@ export default function Navbar() {
               className="hidden lg:inline-flex"
               asChild
             >
-              <Link href={routes.auth.signUp.signUpVerify}>
-                Sign up <Icon.LockKeyIcon className="ml-1 size-4" />
-              </Link>
-            </UiButton.Button>
-            <UiButton.Button
-              variant="ghost"
-              size="sm"
-              className="hidden lg:inline-flex"
-              asChild
-            >
               <Link href={routes.contact}>
-                Contact <Icon.LifebuoyIcon className="ml-1 size-4" />
+                Contact{" "}
+                <Icon.LifebuoyIcon
+                  weight="fill"
+                  className="text-primary ml-1 size-4"
+                />
               </Link>
             </UiButton.Button>
+            {!user && (
+              <UiButton.Button
+                variant="ghost"
+                size="sm"
+                className="hidden lg:inline-flex"
+                asChild
+              >
+                <Link href={routes.auth.signUp.signUpVerify}>
+                  Sign up{" "}
+                  <Icon.LockKeyIcon
+                    weight="fill"
+                    className="text-primary ml-1 size-4"
+                  />
+                </Link>
+              </UiButton.Button>
+            )}
           </div>
         </div>
 
@@ -239,15 +270,26 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <SearchProducts />
           <Wishlist />
-          <UiButton.Button
-            className="rounded-full border border-primary/10 "
-            variant="outline"
-            asChild
-          >
-            <Link href={routes.auth.login.login}>
-              Login <Icon.UserIcon />
+          {!hydrated ? (
+            <UiSpinner.Spinner className="size-5" />
+          ) : user ? (
+            <Link
+              href={routes.user.dashboard}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-background"
+            >
+              {userInitials}
             </Link>
-          </UiButton.Button>
+          ) : (
+            <UiButton.Button
+              className="rounded-full border border-primary/10"
+              variant="outline"
+              asChild
+            >
+              <Link href={routes.auth.login.login}>
+                Login <Icon.UserIcon />
+              </Link>
+            </UiButton.Button>
+          )}
           <Cart />
         </div>
 
@@ -405,25 +447,53 @@ export default function Navbar() {
                 </div>
 
                 {/* Auth Buttons */}
-                <div className="flex flex-col gap-2">
-                  <UiButton.Button className="w-full" asChild>
-                    <Link
-                      href={routes.auth.signUp.signUpVerify}
-                      onClick={() => setMobileOpen(false)}
+                {!hydrated ? (
+                  <div className="flex justify-center py-4">
+                    <UiSpinner.Spinner className="size-5" />
+                  </div>
+                ) : user ? (
+                  <Link
+                    href={routes.user.dashboard}
+                    className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-background">
+                      {userInitials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">
+                        {user.first_name} {user.last_name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        View dashboard
+                      </p>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <UiButton.Button className="w-full" asChild>
+                      <Link
+                        href={routes.auth.signUp.signUpVerify}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        Sign up
+                        <Icon.CaretRightIcon className="ml-1 size-4" />
+                      </Link>
+                    </UiButton.Button>
+                    <UiButton.Button
+                      variant="outline"
+                      className="w-full"
+                      asChild
                     >
-                      Sign up
-                      <Icon.CaretRightIcon className="ml-1 size-4" />
-                    </Link>
-                  </UiButton.Button>
-                  <UiButton.Button variant="outline" className="w-full" asChild>
-                    <Link
-                      href={routes.auth.login.login}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Log in
-                    </Link>
-                  </UiButton.Button>
-                </div>
+                      <Link
+                        href={routes.auth.login.login}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        Log in
+                      </Link>
+                    </UiButton.Button>
+                  </div>
+                )}
               </div>
             </div>
           </UiSheet.SheetContent>

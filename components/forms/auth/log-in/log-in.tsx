@@ -3,11 +3,19 @@
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 import * as z from "zod";
+import Link from "next/link";
 
-import { UiButton, UiField, UiInput } from "@/components/ui";
+import { UiButton, UiField, UiInput, UiSpinner } from "@/components/ui";
+import { setAuthCookies } from "@/app/auth/actions";
+import { useWebTokenStore } from "@/store/auth";
+import { loginService } from "@/services/auth";
+import { useUserStore } from "@/store/user";
 import { getDeviceInfo } from "@/lib/utils";
+import { routes } from "@/routes";
 
 const formSchema = z.object({
   email: z
@@ -21,6 +29,11 @@ type LoginFormValues = z.infer<typeof formSchema>;
 
 export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const { setWebToken } = useWebTokenStore();
+  const { setUser } = useUserStore();
+  const router = useRouter();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),
@@ -35,11 +48,33 @@ export default function LogIn() {
     const device = getDeviceInfo();
 
     const payload = {
-      ...data,
+      email: data.email,
+      password: data.password,
       device: `${device.browser.name} / ${device.os}`,
     };
 
-    console.log("Login form output:", payload);
+    setLoading(true);
+    loginService(payload)
+      .then(async (res) => {
+        if (res.info.two_factor) {
+          setWebToken(res.info.token);
+          toast.success("Verification code sent to your email.");
+          router.push(routes.auth.login.otpInput);
+        } else {
+          setUser(res.info.user!);
+          await setAuthCookies(
+            res.info.token,
+            res.info.user?.is_staff && res.info.user?.staff_role
+              ? res.info.user.staff_role
+              : undefined,
+          );
+          toast.success("Welcome back!");
+          router.push(routes.user.dashboard);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -110,12 +145,21 @@ export default function LogIn() {
         />
       </UiField.FieldGroup>
 
+      <div className="flex justify-end -mt-2">
+        <Link
+          href={routes.auth.forgotPassword.request}
+          className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4"
+        >
+          Forgot password?
+        </Link>
+      </div>
+
       <UiButton.Button
         type="submit"
-        disabled={form.formState.isSubmitting || !form.formState.isValid}
+        disabled={loading || !form.formState.isValid}
         className="w-full"
       >
-        Sign in
+        {loading ? <UiSpinner.Spinner className="text-secondary" /> : "Sign in"}
       </UiButton.Button>
     </form>
   );

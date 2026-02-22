@@ -41,8 +41,6 @@ export const http = axios.create({
   timeout: 45000,
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
-    "X-AppId": "web",
-    "X-AppVersion": "1",
     "Content-Type": "application/json",
     Accept: "application/json",
   },
@@ -110,7 +108,7 @@ http.interceptors.response.use(
         const shouldShowToast = !config?.headers?.["no-toast"];
 
         if (shouldShowToast) {
-          toast.error(errorMessage);
+          toast.warning(errorMessage);
         }
 
         return Promise.reject(new Error(errorMessage));
