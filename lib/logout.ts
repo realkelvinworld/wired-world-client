@@ -5,7 +5,7 @@ export const performLogout = async () => {
   try {
     // Clear client-side persisted data
     if (typeof window !== "undefined") {
-      localStorage.removeItem("customer-data");
+      localStorage.removeItem("user");
       localStorage.removeItem("web-token");
       localStorage.removeItem("customer-role");
       sessionStorage.clear();

@@ -3,12 +3,27 @@
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 import * as z from "zod";
 
-import { UiButton, UiField, UiInput } from "@/components/ui";
+import {
+  UiButton,
+  UiField,
+  UiInput,
+  UiSelect,
+  UiSpinner,
+} from "@/components/ui";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { setAuthCookies } from "@/app/auth/actions";
+import { useResendOtpStore } from "@/store/auth";
+import { useCountry } from "@/hooks/useCountries";
+import { signUpService } from "@/services/auth";
+import { useUserStore } from "@/store/user";
 import { getDeviceInfo } from "@/lib/utils";
+import { routes } from "@/routes";
+import { toast } from "sonner";
 
 const formSchema = z
   .object({
@@ -20,6 +35,7 @@ const formSchema = z
       .string()
       .min(2, "Last name must be at least 2 characters.")
       .max(32, "Last name must be at most 32 characters."),
+    country_id: z.string(),
     email: z
       .string()
       .min(1, "Email is required.")
@@ -41,8 +57,16 @@ const formSchema = z
 type SignUpFormValues = z.infer<typeof formSchema>;
 
 export default function SignUp() {
+  // State
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Hooks
+  const { otpStore } = useResendOtpStore();
+  const { data: country } = useCountry();
+  const { setUser } = useUserStore();
+  const router = useRouter();
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(formSchema),
@@ -50,9 +74,10 @@ export default function SignUp() {
     defaultValues: {
       first_name: "",
       last_name: "",
-      email: "",
+      email: otpStore?.email ?? "",
       phone: "",
       password: "",
+      country_id: "",
       confirm_password: "",
     },
   });
@@ -64,11 +89,26 @@ export default function SignUp() {
 
     const payload = {
       ...rest,
-      country_id: 1,
+      country_id: Number(rest.country_id),
       device: `${device.browser.name} / ${device.os}`,
     };
-
-    console.log("Sign-up form output:", payload);
+    setLoading(true);
+    signUpService(payload)
+      .then(async (data) => {
+        toast.success("Account created successfully");
+        setUser(data.info.user);
+        await setAuthCookies(
+          data.info.token,
+          data.info.user.is_staff && data.info.user.staff_role
+            ? data.info.user.staff_role
+            : undefined,
+        );
+        form.reset();
+        router.push(routes.user.dashboard);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -141,6 +181,44 @@ export default function SignUp() {
                 autoComplete="email"
                 className="shadow-none py-5"
               />
+              {fieldState.invalid && (
+                <UiField.FieldError errors={[fieldState.error]} />
+              )}
+            </UiField.Field>
+          )}
+        />
+
+        <Controller
+          name="country_id"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <UiField.Field data-invalid={fieldState.invalid} className="w-full">
+              <UiField.FieldLabel>Country</UiField.FieldLabel>
+              <UiSelect.Select
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <UiSelect.SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  className="py-5"
+                >
+                  <UiSelect.SelectValue placeholder="Select a country" />
+                </UiSelect.SelectTrigger>
+                <UiSelect.SelectContent>
+                  {country?.info?.map((c) => (
+                    <UiSelect.SelectItem key={c.id} value={c.id.toString()}>
+                      <Image
+                        src={c.image}
+                        alt={c.name}
+                        width={20}
+                        height={16}
+                        className="inline-block rounded-sm object-cover"
+                      />
+                      {c.name}
+                    </UiSelect.SelectItem>
+                  ))}
+                </UiSelect.SelectContent>
+              </UiSelect.Select>
               {fieldState.invalid && (
                 <UiField.FieldError errors={[fieldState.error]} />
               )}
@@ -249,10 +327,14 @@ export default function SignUp() {
 
       <UiButton.Button
         type="submit"
-        disabled={form.formState.isSubmitting || !form.formState.isValid}
+        disabled={loading || !form.formState.isValid}
         className="w-full"
       >
-        Create account
+        {loading ? (
+          <UiSpinner.Spinner className="text-secondary" />
+        ) : (
+          " Create Account"
+        )}
       </UiButton.Button>
     </form>
   );

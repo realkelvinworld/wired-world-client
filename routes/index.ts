@@ -25,5 +25,9 @@ export const routes = {
       otpInput: "/auth/sign-up/otp-input",
       signUpUser: "/auth/sign-up",
     },
+    forgotPassword: {
+      request: "/auth/forgot-password",
+      reset: "/auth/forgot-password/reset",
+    },
   },
 };

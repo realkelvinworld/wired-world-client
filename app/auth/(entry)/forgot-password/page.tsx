@@ -1,25 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-import SignUpForm from "@/components/forms/auth/sign-up/sign-up";
-import { useResendOtpStore } from "@/store/auth";
-import { routes } from "@/routes";
+import ForgotPasswordRequest from "@/components/forms/auth/forgot-password/request";
 
-export default function SignUpPage() {
-  const { otpStore } = useResendOtpStore();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!otpStore?.isVerified) {
-      router.replace(routes.auth.signUp.signUpVerify);
-    }
-  }, [otpStore?.isVerified, router]);
-
-  if (!otpStore?.isVerified) return null;
-
+export default function ForgotPasswordPage() {
   return (
     <motion.div
       initial={{ opacity: 0, x: 60 }}
@@ -34,18 +19,18 @@ export default function SignUpPage() {
 
         <div className="flex flex-col items-center justify-center space-y-2">
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Step 3 of 3
+            Step 1 of 2
           </p>
           <h1 className="font-semibold text-2xl text-center max-w-sm">
-            Create your WiredWorld account
+            Forgot your password?
           </h1>
           <p className="max-w-xs text-sm text-center text-muted-foreground">
-            Almost there! Fill in your details below to complete your
-            registration.
+            Enter your email address and we&apos;ll send you a code to reset
+            your password.
           </p>
         </div>
 
-        <SignUpForm />
+        <ForgotPasswordRequest />
 
         <p className="text-sm">
           &copy; Wired World {new Date().getFullYear()} | All Rights Reserved

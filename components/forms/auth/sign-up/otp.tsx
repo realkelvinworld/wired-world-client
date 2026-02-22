@@ -2,9 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 import * as z from "zod";
 
-import { UiButton, UiField, UiInputOtp } from "@/components/ui";
+import { UiButton, UiField, UiInputOtp, UiSpinner } from "@/components/ui";
+import { requestEmailService, verifyEmailService } from "@/services/auth";
+import { useResendOtpStore } from "@/store/auth";
+import { routes } from "@/routes";
 
 const formSchema = z.object({
   otp: z.string().length(6, "Please enter all 6 digits."),
@@ -13,6 +19,13 @@ const formSchema = z.object({
 type OtpFormValues = z.infer<typeof formSchema>;
 
 export default function SignUpOtp() {
+  // Hooks
+  const router = useRouter();
+  const { otpStore, setOtpStore } = useResendOtpStore();
+
+  //   state
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<OtpFormValues>({
     resolver: zodResolver(formSchema),
     mode: "all",
@@ -22,7 +35,43 @@ export default function SignUpOtp() {
   });
 
   function onSubmit(data: OtpFormValues) {
-    console.log("Sign-up OTP output:", data);
+    setLoading(true);
+    verifyEmailService({
+      email: otpStore?.email ?? "",
+      type: "verify",
+      code: data.otp,
+    })
+      .then((data) => {
+        setOtpStore({
+          ...otpStore,
+          isVerified: true,
+        });
+        toast.success(
+          data.info || "Verification email sent! Please check your inbox.",
+        );
+        router.push(routes.auth.signUp.signUpUser);
+        form.reset();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  function handleResend() {
+    setLoading(true);
+    requestEmailService({
+      email: otpStore?.email ?? "",
+      type: "request",
+    })
+      .then((data) => {
+        toast.success(
+          data.info || "Verification email sent! Please check your inbox.",
+        );
+        form.reset();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -82,6 +131,7 @@ export default function SignUpOtp() {
                 <button
                   type="button"
                   className="font-medium text-primary underline underline-offset-4"
+                  onClick={handleResend}
                 >
                   Resend
                 </button>
@@ -93,10 +143,14 @@ export default function SignUpOtp() {
 
       <UiButton.Button
         type="submit"
-        disabled={form.formState.isSubmitting || !form.formState.isValid}
+        disabled={loading || !form.formState.isValid}
         className="w-full max-w-xs"
       >
-        Verify code
+        {loading ? (
+          <UiSpinner.Spinner className="text-secondary" />
+        ) : (
+          " Verify Code"
+        )}
       </UiButton.Button>
     </form>
   );

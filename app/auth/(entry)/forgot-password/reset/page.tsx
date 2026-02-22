@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
-import SignUpForm from "@/components/forms/auth/sign-up/sign-up";
-import { useResendOtpStore } from "@/store/auth";
+import ForgotPasswordReset from "@/components/forms/auth/forgot-password/reset";
+import { useForgotPasswordStore } from "@/store/auth";
 import { routes } from "@/routes";
 
-export default function SignUpPage() {
-  const { otpStore } = useResendOtpStore();
+export default function ResetPasswordPage() {
+  const { email } = useForgotPasswordStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (!otpStore?.isVerified) {
-      router.replace(routes.auth.signUp.signUpVerify);
+    if (!email) {
+      router.replace(routes.auth.forgotPassword.request);
     }
-  }, [otpStore?.isVerified, router]);
+  }, [email, router]);
 
-  if (!otpStore?.isVerified) return null;
+  if (!email) return null;
 
   return (
     <motion.div
@@ -34,18 +34,17 @@ export default function SignUpPage() {
 
         <div className="flex flex-col items-center justify-center space-y-2">
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Step 3 of 3
+            Step 2 of 2
           </p>
           <h1 className="font-semibold text-2xl text-center max-w-sm">
-            Create your WiredWorld account
+            Reset your password
           </h1>
           <p className="max-w-xs text-sm text-center text-muted-foreground">
-            Almost there! Fill in your details below to complete your
-            registration.
+            Enter the code sent to your email and set a new password.
           </p>
         </div>
 
-        <SignUpForm />
+        <ForgotPasswordReset />
 
         <p className="text-sm">
           &copy; Wired World {new Date().getFullYear()} | All Rights Reserved

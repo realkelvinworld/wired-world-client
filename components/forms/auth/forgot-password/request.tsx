@@ -8,11 +8,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 import * as z from "zod";
 
-import { routes } from "@/routes";
-
 import { UiButton, UiField, UiInput, UiSpinner } from "@/components/ui";
-import { requestEmailService } from "@/services/auth";
-import { useResendOtpStore } from "@/store/auth";
+import { forgotPasswordRequestService } from "@/services/auth";
+import { useForgotPasswordStore } from "@/store/auth";
+import { routes } from "@/routes";
 
 const formSchema = z.object({
   email: z
@@ -21,17 +20,15 @@ const formSchema = z.object({
     .email("Please enter a valid email address."),
 });
 
-type VerifyFormValues = z.infer<typeof formSchema>;
+type RequestFormValues = z.infer<typeof formSchema>;
 
-export default function Verify() {
-  // Hooks
-  const router = useRouter();
-  const { setOtpStore } = useResendOtpStore();
-
-  //   state
+export default function ForgotPasswordRequest() {
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<VerifyFormValues>({
+  const { setEmail } = useForgotPasswordStore();
+  const router = useRouter();
+
+  const form = useForm<RequestFormValues>({
     resolver: zodResolver(formSchema),
     mode: "all",
     defaultValues: {
@@ -39,20 +36,18 @@ export default function Verify() {
     },
   });
 
-  function onSubmit(data: VerifyFormValues) {
+  function onSubmit(data: RequestFormValues) {
     setLoading(true);
-    // set temporary data
-    setOtpStore({ email: data.email, type: "request" });
-    requestEmailService({ email: data.email, type: "request" })
-      .then((data) => {
+    setEmail(data.email);
+    forgotPasswordRequestService({ email: data.email, type: "request" })
+      .then((res) => {
         toast.success(
-          data.info || "Verification email sent! Please check your inbox.",
+          res.info || "A reset code has been sent to your email.",
           {
             icon: <MailboxIcon className="h-4 w-4 text-green-500" />,
           },
         );
-        form.reset();
-        router.push(routes.auth.signUp.otpInput);
+        router.push(routes.auth.forgotPassword.reset);
       })
       .finally(() => {
         setLoading(false);
@@ -70,12 +65,12 @@ export default function Verify() {
           control={form.control}
           render={({ field, fieldState }) => (
             <UiField.Field data-invalid={fieldState.invalid}>
-              <UiField.FieldLabel htmlFor="email">
+              <UiField.FieldLabel htmlFor="forgot-email">
                 Email address
               </UiField.FieldLabel>
               <UiInput.Input
                 {...field}
-                id="email"
+                id="forgot-email"
                 type="email"
                 aria-invalid={fieldState.invalid}
                 placeholder="you@example.com"
@@ -98,7 +93,7 @@ export default function Verify() {
         {loading ? (
           <UiSpinner.Spinner className="text-secondary" />
         ) : (
-          " Continue"
+          "Send reset code"
         )}
       </UiButton.Button>
     </form>
