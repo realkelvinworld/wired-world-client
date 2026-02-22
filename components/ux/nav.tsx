@@ -316,6 +316,31 @@ export default function Navbar() {
             </UiSheet.SheetHeader>
 
             <div className="flex flex-1 flex-col gap-6 py-4">
+              {/* User Info */}
+              {!hydrated ? (
+                <div className="flex justify-center py-4">
+                  <UiSpinner.Spinner className="size-5" />
+                </div>
+              ) : user ? (
+                <Link
+                  href={routes.user.dashboard}
+                  className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-background">
+                    {userInitials}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">
+                      {user.first_name} {user.last_name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </Link>
+              ) : null}
+
               {/* Navigation Links */}
               <nav className="flex flex-col gap-1">
                 {mobileLinks.map((link) => (
@@ -447,29 +472,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Auth Buttons */}
-                {!hydrated ? (
-                  <div className="flex justify-center py-4">
-                    <UiSpinner.Spinner className="size-5" />
-                  </div>
-                ) : user ? (
-                  <Link
-                    href={routes.user.dashboard}
-                    className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-background">
-                      {userInitials}
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">
-                        {user.first_name} {user.last_name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        View dashboard
-                      </p>
-                    </div>
-                  </Link>
-                ) : (
+                {!user && (
                   <div className="flex flex-col gap-2">
                     <UiButton.Button className="w-full" asChild>
                       <Link
