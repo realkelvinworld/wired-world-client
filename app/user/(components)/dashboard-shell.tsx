@@ -45,7 +45,7 @@ export default function DashboardShell({
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap gap-2 items-center justify-between">
         <nav className="flex gap-1">
           {navItems.map((item) => (
             <UiButton.Button
