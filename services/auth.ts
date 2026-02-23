@@ -62,16 +62,18 @@ export const forgotPasswordResetService = (payload: {
 export const logoutService = async () => {
   const deviceInfo = getDeviceInfo();
   const deviceDetails = `${deviceInfo.device} - ${deviceInfo.browser.name} - ${deviceInfo.browser.version} - ${deviceInfo.os}`;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const response: any = await axios.post("/api/logout", {
-    device: deviceDetails,
-  });
-  if (response.data.success) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await axios.post("/api/logout", {
+      device: deviceDetails,
+    });
+    if (!response.data.success) {
+      console.error("Logout failed");
+    }
+  } catch (error) {
+    console.error("Logout failed:", error);
+  } finally {
     clearCookies();
     performLogout();
-  } else {
-    clearCookies();
-    performLogout();
-    throw new Error("Logout failed");
   }
 };
