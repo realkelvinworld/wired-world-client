@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import Announcements from "@/components/ux/nav/announcements";
-import QuickNav from "@/components/ux/quick-nav";
+import QuickNav from "@/components/ux/nav/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
 import AppProvider from "@/providers/app";
