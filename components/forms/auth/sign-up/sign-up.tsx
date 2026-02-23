@@ -8,6 +8,15 @@ import { useState } from "react";
 import Image from "next/image";
 import * as z from "zod";
 
+import { PhoneInput } from "@/components/ui/phone-input";
+import { setAuthCookies } from "@/app/auth/actions";
+import { useCountry } from "@/hooks/use-countries";
+import { useResendOtpStore } from "@/store/auth";
+import { signUpService } from "@/services/auth";
+import { getDeviceInfo } from "@/lib/utils";
+import { useUserStore } from "@/store/user";
+import { routes } from "@/routes";
+import { toast } from "sonner";
 import {
   UiButton,
   UiField,
@@ -15,15 +24,7 @@ import {
   UiSelect,
   UiSpinner,
 } from "@/components/ui";
-import { PhoneInput } from "@/components/ui/phone-input";
-import { setAuthCookies } from "@/app/auth/actions";
-import { useResendOtpStore } from "@/store/auth";
-import { useCountry } from "@/hooks/useCountries";
-import { signUpService } from "@/services/auth";
-import { useUserStore } from "@/store/user";
-import { getDeviceInfo } from "@/lib/utils";
-import { routes } from "@/routes";
-import { toast } from "sonner";
+import ErrorState from "@/components/ux/error-state";
 
 const formSchema = z
   .object({
@@ -64,7 +65,7 @@ export default function SignUp() {
 
   // Hooks
   const { otpStore } = useResendOtpStore();
-  const { data: country } = useCountry();
+  const { data: country, error } = useCountry();
   const { setUser } = useUserStore();
   const router = useRouter();
 
@@ -109,6 +110,10 @@ export default function SignUp() {
       .finally(() => {
         setLoading(false);
       });
+  }
+
+  if (error) {
+    return <ErrorState message={error.message} />;
   }
 
   return (

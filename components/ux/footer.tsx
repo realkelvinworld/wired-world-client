@@ -3,8 +3,6 @@ import Link from "next/link";
 import {
   XLogoIcon,
   InstagramLogoIcon,
-  LinkedinLogoIcon,
-  YoutubeLogoIcon,
   FacebookLogoIcon,
 } from "@phosphor-icons/react";
 
@@ -51,9 +49,8 @@ const footerSections = [
   {
     title: "Support",
     links: [
-      { label: "Help Center", href: routes.help },
       { label: "Contact Us", href: routes.contact },
-      { label: "FAQ", href: routes.help },
+      { label: "FAQ", href: routes.contact },
     ],
   },
 ];

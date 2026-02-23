@@ -27,7 +27,7 @@ const TABSANDCONTENT = [
   },
   {
     key: "warehouse",
-    title: "Warehouse",
+    title: " Our Warehouse",
     url: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.8480509819856!2d-0.2065021881498515!3d5.589462494367855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9084b2b7a773%3A0x96dc3765b235c1df!2sHQQW%2BQCP%2C%20Accra!5e0!3m2!1sen!2sgh!4v1771595521924!5m2!1sen!2sgh",
   },
 ];
@@ -74,9 +74,13 @@ export default function ContactPage() {
           <h2 className="lg:text-4xl sm:text-3xl font-bold tracking-tight">
             Come Say <span className="text-primary">Hello</span>
           </h2>
-          <p className="mt-2 text-muted-foreground max-w-lg">
-            Prefer to see things in person? Stop by our showroom in Accra — our
-            doors are always open.
+          <p className="mt-2 text-muted-foreground max-w-xl">
+            Prefer to see things in person? Stop by our showroom in / at{" "}
+            <span className="text-primary">
+              {" "}
+              {TABSANDCONTENT[activeIndex].title}{" "}
+            </span>{" "}
+            — our doors are always open.
           </p>
           <div>
             <div className="mb-4 flex space-x-2 overflow-auto">

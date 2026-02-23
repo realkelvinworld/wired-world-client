@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { brandLogos, categories, mobileLinks, socialLinks } from "@/db-locale";
+import { mobileLinks, socialLinks } from "@/db-locale";
+import { useNavBar } from "@/hooks/use-navbar";
 import { useUserStore } from "@/store/user";
 import { routes } from "@/routes";
 import {
@@ -25,13 +26,18 @@ const navLinkClass =
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none bg-transparent";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  // hooks
+  const { data } = useNavBar();
+
+  // state
   const [activeCategory, setActiveCategory] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [hydrated, setHydrated] = useState(
     useUserStore?.persist?.hasHydrated(),
   );
   const { user } = useUserStore();
 
+  // effects
   useEffect(() => {
     const unsub = useUserStore.persist.onFinishHydration(() =>
       setHydrated(true),
@@ -39,9 +45,13 @@ export default function Navbar() {
     return unsub;
   }, []);
 
+  // Variables
   const userInitials = user
     ? `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase()
     : null;
+
+  const navcategories = data?.info.main_categories;
+  const brands = data?.info.brands;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -127,10 +137,10 @@ export default function Navbar() {
                     </div>
 
                     <div className="grid grid-cols-3 gap-3">
-                      {brandLogos.map((brand) => (
+                      {brands?.slice(0, 6).map((brand) => (
                         <Link
                           key={brand.name}
-                          href={routes.brands}
+                          href={`${routes.brands}?brand=${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
                           className="flex items-center gap-3 rounded-lg border border-transparent p-3 transition-all hover:border-border hover:bg-accent"
                         >
                           <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-md bg-muted/50 p-1.5">
@@ -164,21 +174,29 @@ export default function Navbar() {
                   Categories
                 </UiNavigationMenu.NavigationMenuTrigger>
                 <UiNavigationMenu.NavigationMenuContent>
-                  <div className="grid w-[700px] grid-cols-[1fr_1fr] p-4">
+                  <div className="grid w-[700px] grid-cols-[1fr_1fr] p-4 ">
                     {/* Left - Categories */}
-                    <div className="pr-4">
+                    <div className="pr-4 max-h-120 overflow-auto">
                       <p className="mb-3 text-xs font-medium text-muted-foreground">
                         Categories
                       </p>
                       <div className="space-y-1">
-                        {categories.map((cat, index) => (
+                        {navcategories?.map((cat, index) => (
                           <Link
                             key={cat.name}
-                            href="#"
+                            href={routes.category(
+                              cat.name.toLowerCase().replace(/\s+/g, "-"),
+                            )}
                             className={`flex items-start gap-3 rounded-md p-3 transition-colors ${activeCategory === index ? "bg-accent" : "hover:bg-accent"}`}
                             onMouseEnter={() => setActiveCategory(index)}
                           >
-                            <cat.icon className="mt-0.5 size-5 shrink-0 text-muted-foreground" />
+                            {cat.icon && (
+                              <Image
+                                src={cat.icon}
+                                alt="Category Logo"
+                                className="mt-0.5 size-5 shrink-0 text-muted-foreground"
+                              />
+                            )}
                             <div>
                               <div className="text-sm font-medium">
                                 {cat.name}
@@ -195,19 +213,24 @@ export default function Navbar() {
                     {/* Right - Sub-items on hover */}
                     <div className="rounded-lg bg-muted/50 p-4">
                       <p className="mb-3 text-xs font-medium text-muted-foreground">
-                        {categories[activeCategory].name}
+                        {navcategories && navcategories[activeCategory]?.name}
                       </p>
                       <div className="space-y-1">
-                        {categories[activeCategory].items.map((item) => (
-                          <Link
-                            key={item.name}
-                            href={item.href}
-                            className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-background"
-                          >
-                            {item.name}
-                            <Icon.CaretRightIcon className="size-3.5 text-muted-foreground" />
-                          </Link>
-                        ))}
+                        {navcategories &&
+                          navcategories[activeCategory].sub_categories.map(
+                            (item) => (
+                              <Link
+                                key={item.name}
+                                href={routes.category(
+                                  item.name.toLowerCase().replace(/\s+/g, "-"),
+                                )}
+                                className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-background"
+                              >
+                                {item.name}
+                                <Icon.CaretRightIcon className="size-3.5 text-muted-foreground" />
+                              </Link>
+                            ),
+                          )}
                       </div>
                     </div>
                   </div>
@@ -373,10 +396,10 @@ export default function Navbar() {
                   </Link>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  {brandLogos.map((brand) => (
+                  {brands?.slice(0, 6).map((brand) => (
                     <Link
                       key={brand.name}
-                      href={routes.brands}
+                      href={`${routes.brands}?brand=${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
                       className="flex flex-col items-center gap-1.5 rounded-lg p-3 text-center hover:bg-accent"
                       onClick={() => setMobileOpen(false)}
                     >
@@ -399,22 +422,33 @@ export default function Navbar() {
               <UiSeparator.Separator />
 
               {/* Categories */}
-              <div className="space-y-3">
+              <div className="space-y-3 ">
                 <p className="px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Categories
                 </p>
-                <div className="flex flex-col gap-1">
-                  {categories.map((cat) => (
-                    <a
+                <div className="flex flex-col gap-1 max-h-60 overflow-auto">
+                  {navcategories?.map((cat) => (
+                    <Link
                       key={cat.name}
-                      href="#"
+                      href={routes.category(
+                        cat.name.toLowerCase().replace(/\s+/g, "-"),
+                      )}
                       className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
                       onClick={() => setMobileOpen(false)}
                     >
-                      <cat.icon className="size-4 shrink-0 text-muted-foreground" />
+                      {cat.icon && (
+                        <Image
+                          src={cat.icon}
+                          alt={cat.name}
+                          width={16}
+                          height={16}
+                          unoptimized
+                          className="size-4 shrink-0"
+                        />
+                      )}
                       <span className="text-sm font-medium">{cat.name}</span>
                       <Icon.CaretRightIcon className="ml-auto size-4 text-muted-foreground" />
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>

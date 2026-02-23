@@ -1,12 +1,14 @@
 "use client";
-import { getCountriesService } from "@/services/utils";
+
+import { getRegionsService } from "@/services/utils";
 import { useQuery } from "@tanstack/react-query";
 
-export function useCountry() {
+export function useRegions() {
   const { data, isPending, error } = useQuery({
-    queryKey: ["metrics"],
-    queryFn: () => getCountriesService(),
+    queryKey: ["regions"],
+    queryFn: () => getRegionsService(),
   });
+
   return {
     data,
     isPending,
