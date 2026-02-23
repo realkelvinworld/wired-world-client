@@ -3,11 +3,11 @@ export const routes = {
   shop: "/shop",
   products: "/products",
   brands: "/brands",
+  category: (slug: string) => `/category/${slug}`,
   showrooms: "/showrooms",
   about: "/about",
   contact: "/contact",
   blog: "/blog",
-  help: "/help",
   privacy: "/privacy",
   terms: "/terms",
   user: {

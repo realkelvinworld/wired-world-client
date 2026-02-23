@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 
+import Announcements from "@/components/ux/nav/announcements";
 import QuickNav from "@/components/ux/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
@@ -95,6 +96,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <AppProvider>
+          <Announcements />
           <Navbar />
           {children}
           <QuickNav />
