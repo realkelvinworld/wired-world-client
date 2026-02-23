@@ -41,7 +41,7 @@ export default function ShowroomsPage() {
         <PageHeader img={KitchenTwo} title="showrooms" />
 
         {/* Region Filters */}
-        <div className="mb-8">
+        <div className="mb-8 sticky top-20 bg-white px-2 py-4 rounded-lg border border-gray-200 shadow-none">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Filter by Region
           </h2>
