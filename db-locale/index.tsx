@@ -183,7 +183,7 @@ export const quicknavlinks = [
  */
 export const mobileLinks = [
   { label: "Home", href: routes.home },
-  { label: "Shop", href: routes.shop },
+  { label: "Shop", href: routes.shop.shop },
   { label: "Showrooms", href: routes.showrooms },
   { label: "Contact", href: routes.contact },
 ];

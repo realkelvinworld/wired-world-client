@@ -85,3 +85,7 @@ export const formatCompactNumber = (value: number) => {
     maximumFractionDigits: 2,
   }).format(value);
 };
+
+export const formatToLocalString = (value: number) => {
+  return value.toLocaleString();
+};

@@ -13,8 +13,7 @@ const footerSections = [
   {
     title: "Shop",
     links: [
-      { label: "Store", href: routes.shop },
-      { label: "Products", href: routes.products },
+      { label: "Store", href: routes.shop.shop },
       { label: "Brands", href: routes.brands },
       { label: "Showrooms", href: routes.showrooms },
     ],
@@ -22,12 +21,12 @@ const footerSections = [
   {
     title: "Categories",
     links: [
-      { label: "Televisions", href: routes.shop },
-      { label: "Home Appliances", href: routes.shop },
-      { label: "Audio & Sound", href: routes.shop },
-      { label: "Kitchen", href: routes.shop },
-      { label: "Air Conditioning", href: routes.shop },
-      { label: "Computing", href: routes.shop },
+      { label: "Televisions", href: routes.shop.shop },
+      { label: "Home Appliances", href: routes.shop.shop },
+      { label: "Audio & Sound", href: routes.shop.shop },
+      { label: "Kitchen", href: routes.shop.shop },
+      { label: "Air Conditioning", href: routes.shop.shop },
+      { label: "Computing", href: routes.shop.shop },
     ],
   },
   {

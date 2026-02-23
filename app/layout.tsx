@@ -7,6 +7,7 @@ import QuickNav from "@/components/ux/nav/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
 import AppProvider from "@/providers/app";
+import GlobalCursor from "@/components/ux/global-cursor";
 import Navbar from "@/components/ux/nav";
 
 const geistSans = Geist({
@@ -96,6 +97,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <AppProvider>
+          <GlobalCursor />
           <Announcements />
           <Navbar />
           {children}

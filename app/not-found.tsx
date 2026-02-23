@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   Home,
   ShoppingBag,
-  Package,
   Users,
   Mail,
   Tag,
@@ -21,16 +20,10 @@ const quickLinks = [
     description: "Return to the WiredWorld homepage",
   },
   {
-    href: routes.shop,
+    href: routes.shop.shop,
     icon: ShoppingBag,
     title: "Store",
     description: "Browse our full catalogue of products",
-  },
-  {
-    href: routes.products,
-    icon: Package,
-    title: "Products",
-    description: "Explore our product lines and features",
   },
   {
     href: routes.brands,
@@ -77,7 +70,7 @@ export default function NotFound() {
             </Link>
           </UiButton.Button>
           <UiButton.Button asChild>
-            <Link href={routes.shop}>Visit the store</Link>
+            <Link href={routes.shop.shop}>Visit the store</Link>
           </UiButton.Button>
         </div>
 

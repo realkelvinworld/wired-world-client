@@ -75,7 +75,7 @@ export default function Navbar() {
 
               <UiNavigationMenu.NavigationMenuItem>
                 <UiNavigationMenu.NavigationMenuLink
-                  href={routes.shop}
+                  href={routes.shop.shop}
                   className={navLinkClass}
                 >
                   Shop
