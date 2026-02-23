@@ -18,6 +18,11 @@ export interface Paginator {
   prev: boolean;
 }
 
+// API response with optional pagination
+export interface PaginatedApiResponse<T = any> extends BaseApiResponse<T> {
+  paginator?: Paginator;
+}
+
 // Country
 export interface Country {
   id: number;
@@ -31,9 +36,26 @@ export interface Country {
   image: string;
 }
 
-// Login reponse
+// Login response
 export interface LoginResponse {
   two_factor: string;
   user?: UserModel;
   token: string;
+}
+
+// Product filters
+export interface FiltersInterface {
+  type?: string;
+  filters?: {
+    search?: string;
+    sub_category_id?: number;
+    main_category_id?: number;
+    min_price?: number;
+    max_price?: number;
+    min_rating?: number;
+    max_rating?: number;
+    on_promotion?: boolean;
+  } | null;
+  drop?: number;
+  page?: number;
 }

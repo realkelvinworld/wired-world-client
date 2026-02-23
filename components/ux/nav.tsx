@@ -1,7 +1,7 @@
 "use client";
 
 import * as Icon from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,18 +32,12 @@ export default function Navbar() {
   // state
   const [activeCategory, setActiveCategory] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(
-    useUserStore?.persist?.hasHydrated(),
+  const hydrated = useSyncExternalStore(
+    (cb) => useUserStore.persist.onFinishHydration(cb),
+    () => useUserStore.persist.hasHydrated(),
+    () => false,
   );
   const { user } = useUserStore();
-
-  // effects
-  useEffect(() => {
-    const unsub = useUserStore.persist.onFinishHydration(() =>
-      setHydrated(true),
-    );
-    return unsub;
-  }, []);
 
   // Variables
   const userInitials = user
@@ -195,6 +189,8 @@ export default function Navbar() {
                                 src={cat.icon}
                                 alt="Category Logo"
                                 className="mt-0.5 size-5 shrink-0 text-muted-foreground"
+                                width={100}
+                                height={100}
                               />
                             )}
                             <div>
