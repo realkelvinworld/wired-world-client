@@ -66,9 +66,9 @@ export default function DashboardShell({
             size="sm"
             className="rounded-full"
             onClick={async () => {
+              await clearCookies();
               clearOtpStore();
               clearUser();
-              await clearCookies();
               router.push(routes.auth.forgotPassword.request);
             }}
           >
@@ -80,10 +80,10 @@ export default function DashboardShell({
             variant="destructive"
             size="sm"
             className="text-secondary hover:text-destructive-foreground rounded-full"
-            onClick={() => {
+            onClick={async () => {
+              await logoutService();
               clearOtpStore();
               clearUser();
-              logoutService();
             }}
           >
             Logout
