@@ -40,7 +40,7 @@ export default function ErrorState({
           </Link>
         </UiButton.Button>
         <UiButton.Button size="sm" asChild>
-          <Link href={routes.shop}>
+          <Link href={routes.shop.shop}>
             <Icon.StorefrontIcon className="mr-1 size-4" />
             Shop
           </Link>

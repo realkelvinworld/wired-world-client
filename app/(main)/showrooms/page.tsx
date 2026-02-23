@@ -37,7 +37,7 @@ export default function ShowroomsPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
-        {/* Header Space — left for user */}
+        {/* Header Space */}
         <PageHeader img={KitchenTwo} title="showrooms" />
 
         {/* Region Filters */}
