@@ -11,6 +11,7 @@ import { FiltersInterface } from "@/interfaces";
 import { KichenFour } from "@/public/images";
 
 import ListProducts from "./(components)/list-products";
+import Paginator from "@/components/ui/paginator";
 
 export default function ShopPage() {
   // state
@@ -30,26 +31,31 @@ export default function ShopPage() {
       }),
   });
   return (
-    <LoadingLayout>
-      <div className="min-h-screen">
-        <div className="mx-auto max-w-7xl px-4 py-12">
-          <PageHeader img={KichenFour} title="shop/products" />
-          <div>
-            {/* Filters */}
-            <section></section>
-
-            {/* List products */}
-            <section>
-              <ListProducts
-                setFilters={setFilters}
-                isPending={isPending}
-                error={error}
-                data={data}
-              />
-            </section>
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 py-12">
+        <PageHeader img={KichenFour} title="shop/products" />
+        <div className="flex lg:flex-row flex-col gap-2">
+          {/* Filters */}
+          <div className="lg:sticky top-20 h-full">
+            <span className="border rounded-full py-1 px-6 text-muted-foreground">
+              Filters will sit here :)
+            </span>
           </div>
+
+          {/* List products */}
+          <section className="flex-1 min-w-0">
+            <ListProducts
+              setFilters={setFilters}
+              isPending={isPending}
+              error={error}
+              data={data}
+            />
+          </section>
         </div>
+        <section className="my-6">
+          <Paginator />
+        </section>
       </div>
-    </LoadingLayout>
+    </div>
   );
 }

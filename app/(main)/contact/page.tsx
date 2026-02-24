@@ -45,7 +45,7 @@ export default function ContactPage() {
               alt="Wired world Kitchen setup"
               unoptimized
               quality={100}
-              className="object-cover object-center lg:h-200 h-100 rounded-xl "
+              className="object-cover object-center lg:h-200 h-100 rounded-xl bg-gray-100"
             />
             <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">
               wiredworld.

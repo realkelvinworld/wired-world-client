@@ -110,7 +110,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
 export function ProductCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl border bg-background">
+    <div className="overflow-hidden rounded-2xl border bg-background w-full">
       <UiSkeleton.Skeleton className="aspect-square w-full rounded-none" />
       <div className="space-y-3 bg-muted/20 p-4">
         <div className="space-y-1">

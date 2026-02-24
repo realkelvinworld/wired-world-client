@@ -20,7 +20,7 @@ export default function PageHeader({
             alt="Wired world"
             unoptimized
             quality={100}
-            className="object-cover object-center lg:h-100 h-100 rounded-xl mb-20"
+            className="object-cover object-center lg:h-100 h-100 rounded-xl mb-20 bg-gray-100"
           />
         )}
         <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">

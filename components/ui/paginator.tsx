@@ -1,22 +1,42 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import {
+  CaretLeftIcon,
+  CaretRightIcon,
+  ListDashesIcon,
+} from "@phosphor-icons/react";
 import React from "react";
 
 import { formatToLocalString } from "@/lib/utils";
 import { FiltersInterface } from "@/interfaces";
 
-import { UiSelect } from ".";
+import { UiButton, UiSelect } from ".";
 
 // PROPS
 type PaginatorProps = React.HTMLAttributes<HTMLDivElement> & {
-  filters: FiltersInterface;
-  setFilters: React.Dispatch<React.SetStateAction<FiltersInterface>>;
+  filters?: FiltersInterface;
+  setFilters?: React.Dispatch<React.SetStateAction<FiltersInterface>>;
   next?: boolean;
   prev?: boolean;
-  items: number;
+  items?: number;
   total?: number;
   next_page?: number;
   previous_page?: number;
 };
+
+function getVisiblePages(current: number, total: number): (number | "dots")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+  const pages: (number | "dots")[] = [];
+
+  if (current <= 3) {
+    pages.push(1, 2, 3, 4, "dots", total);
+  } else if (current >= total - 2) {
+    pages.push(1, "dots", total - 3, total - 2, total - 1, total);
+  } else {
+    pages.push(1, "dots", current - 1, current, current + 1, "dots", total);
+  }
+
+  return pages;
+}
 
 export default function Paginator({
   items,
@@ -27,119 +47,110 @@ export default function Paginator({
   total,
   next_page,
 }: PaginatorProps) {
-  /**
-   * functions
-   */
-
   const handlePageChange = (page: number) => {
-    setFilters((prev) => ({
-      ...prev,
-      page: page,
-    }));
+    setFilters?.((prev) => ({ ...prev, page }));
   };
 
   const changeDropCount = (value: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      drop: Number(value),
-    }));
+    setFilters?.((prev) => ({ ...prev, drop: Number(value), page: 1 }));
   };
 
-  // Current Page
   const currentPage = next_page && next_page > 1 ? next_page - 1 : 1;
+  const drop = filters?.drop || items || 20;
+  const totalPages = total ? Math.ceil(total / drop) : 1;
+  const progress = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;
+  const visiblePages = getVisiblePages(currentPage, totalPages);
 
   return (
-    <>
-      <div className="lg:hidden md:hidden  flex justify-end">
-        {items > 0 && (
-          <p className="text-muted-foreground ">
-            Showing {items || filters.drop}{" "}
-            {filters?.drop || items === 1 ? "item" : "items"} out of{" "}
-            {total && formatToLocalString(total)} total{" "}
-            {filters?.drop || items === 1 ? "item" : "items"} on page{" "}
-            {currentPage ?? 1}
-          </p>
-        )}
+    <div className="space-y-3">
+      {/* Progress track */}
+      <div className="h-0.5 w-full overflow-hidden rounded-full bg-border">
+        <div
+          className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
+          style={{ width: `${Math.max(progress, 2)}%` }}
+        />
       </div>
-      <div className="flex flex-row justify-between items-center gap-1">
-        <button
-          onClick={() => {
-            if (prev) {
-              handlePageChange((filters.page ?? 1) - 1);
-            }
-          }}
-          disabled={prev === false}
-          className={`inline-flex items-center gap-1 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-            prev === false ? "" : "hover:bg-accent hover:text-accent-foreground"
-          }`}
-        >
-          <ChevronLeftIcon className="size-4" />
-          <span className="hidden sm:block">Previous</span>
-        </button>
 
-        <section className="flex items-center gap-x-1">
-          <div className="lg:block md:block hidden">
-            {items > 0 && (
-              <p className="text-muted-foreground px-2">
-                Showing {formatToLocalString(items) || filters.drop}{" "}
-                {filters?.drop || items === 1 ? "item" : "items"} out of{" "}
-                {total && formatToLocalString(total)} total{" "}
-                {filters?.drop || items === 1 ? "item" : "items"} on page{" "}
-                {currentPage ?? 1}
-              </p>
-            )}
-          </div>
-          <div>
-            <UiSelect.Select
-              value={filters?.drop ? filters?.drop.toString() : "8"}
-              onValueChange={(value) => changeDropCount(value)}
-            >
-              <UiSelect.SelectTrigger className="w-full inline-flex items-center gap-1 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                <UiSelect.SelectValue>
-                  {filters?.drop
-                    ? ` ${filters?.drop} item${
-                        filters?.drop === 1 ? "" : "s"
-                      }  on page`
-                    : `${items} item${items === 1 ? "" : "s"}  on page`}
-                </UiSelect.SelectValue>
-              </UiSelect.SelectTrigger>
-              <UiSelect.SelectContent>
-                <UiSelect.SelectItem value="20">
-                  20 items per page
-                </UiSelect.SelectItem>
-                <UiSelect.SelectItem value="50">
-                  50 items per page
-                </UiSelect.SelectItem>
-                <UiSelect.SelectItem value="100">
-                  100 items per page
-                </UiSelect.SelectItem>
-                <UiSelect.SelectItem value="250">
-                  250 items per page
-                </UiSelect.SelectItem>
-                <UiSelect.SelectItem value="500">
-                  500 items per page
-                </UiSelect.SelectItem>
-              </UiSelect.SelectContent>
-            </UiSelect.Select>
-          </div>
-          <button
-            onClick={() => {
-              if (next) {
-                handlePageChange((filters.page ?? 1) + 1);
-              }
-            }}
-            disabled={next === false}
-            className={`inline-flex items-center gap-1 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-              next === false
-                ? ""
-                : "hover:bg-accent hover:text-accent-foreground"
-            }`}
+      {/* Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        {/* Left: info + per-page */}
+        <div className="flex items-center gap-2 text-sm">
+          {total != null && total > 0 && (
+            <span className="text-muted-foreground">
+              <span className="font-medium text-foreground">
+                {formatToLocalString(total)}
+              </span>{" "}
+              items
+            </span>
+          )}
+
+          <UiSelect.Select
+            value={drop.toString()}
+            onValueChange={changeDropCount}
           >
-            <span className="hidden sm:block">Next</span>
-            <ChevronRightIcon className="size-4" />
-          </button>
-        </section>
+            <UiSelect.SelectTrigger className="h-7 w-auto gap-1.5 rounded-full border-dashed px-2.5 text-xs text-muted-foreground">
+              <ListDashesIcon weight="bold" className="size-3.5" />
+              <UiSelect.SelectValue>{drop}/pg</UiSelect.SelectValue>
+            </UiSelect.SelectTrigger>
+            <UiSelect.SelectContent align="start">
+              {[20, 50, 100, 250, 500].map((n) => (
+                <UiSelect.SelectItem key={n} value={n.toString()}>
+                  {n} per page
+                </UiSelect.SelectItem>
+              ))}
+            </UiSelect.SelectContent>
+          </UiSelect.Select>
+        </div>
+
+        {/* Right: page numbers + nav arrows */}
+        <div className="flex items-center gap-1">
+          {/* Page numbers */}
+          {visiblePages.map((page, i) =>
+            page === "dots" ? (
+              <span
+                key={`dots-${i}`}
+                className="px-1 text-sm text-muted-foreground select-none"
+              >
+                ...
+              </span>
+            ) : (
+              <UiButton.Button
+                key={page}
+                variant={page === currentPage ? "default" : "ghost"}
+                size="icon-xs"
+                onClick={() => handlePageChange(page)}
+                className="rounded-full text-xs"
+              >
+                {page}
+              </UiButton.Button>
+            ),
+          )}
+
+          {/* Nav arrows */}
+          <div className="ml-1 flex items-center">
+            <UiButton.Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={() =>
+                prev && handlePageChange((filters?.page ?? 1) - 1)
+              }
+              disabled={!prev}
+            >
+              <CaretLeftIcon weight="bold" />
+            </UiButton.Button>
+            <UiButton.Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={() =>
+                next && handlePageChange((filters?.page ?? 1) + 1)
+              }
+              disabled={!next}
+            >
+              <CaretRightIcon weight="bold" />
+            </UiButton.Button>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
