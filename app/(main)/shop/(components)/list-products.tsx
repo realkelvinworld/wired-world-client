@@ -20,7 +20,7 @@ export default function ListProducts({
 }: IProductListProps) {
   if (isPending) {
     return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 w-full">
         {Array.from({ length: 8 }).map((_, i) => (
           <ProductCardSkeleton key={i} />
         ))}
@@ -63,7 +63,7 @@ export default function ListProducts({
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 w-full">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
