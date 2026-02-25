@@ -25,6 +25,8 @@
     "framer-motion": "^12.34.0",
     "immer": "^11.1.4",
     "input-otp": "^1.4.2",
+    "lodash": "^4.17.23",
+    "lodash-es": "^4.17.23",
     "lucide-react": "^0.564.0",
     "motion": "^12.34.2",
     "next": "16.1.6",
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

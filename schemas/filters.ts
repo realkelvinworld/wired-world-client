@@ -12,6 +12,7 @@ export const FiltersSchema = z.object({
       min_rating: z.number().optional(),
       max_rating: z.number().optional(),
       on_promotion: z.boolean().optional(),
+      brand_id: z.number().optional(),
     })
     .nullable()
     .optional(),

@@ -55,6 +55,7 @@ export interface FiltersInterface {
     min_rating?: number;
     max_rating?: number;
     on_promotion?: boolean;
+    brand_id?: number;
   } | null;
   drop?: number;
   page?: number;
