@@ -12,11 +12,11 @@ import { UiButton, UiSelect } from ".";
 
 // PROPS
 type PaginatorProps = React.HTMLAttributes<HTMLDivElement> & {
-  filters?: FiltersInterface;
-  setFilters?: React.Dispatch<React.SetStateAction<FiltersInterface>>;
+  filters: FiltersInterface;
+  setFilters: React.Dispatch<React.SetStateAction<FiltersInterface>>;
   next?: boolean;
   prev?: boolean;
-  items?: number;
+  items: number;
   total?: number;
   next_page?: number;
   previous_page?: number;
@@ -48,15 +48,15 @@ export default function Paginator({
   next_page,
 }: PaginatorProps) {
   const handlePageChange = (page: number) => {
-    setFilters?.((prev) => ({ ...prev, page }));
+    setFilters((prev) => ({ ...prev, page }));
   };
 
   const changeDropCount = (value: string) => {
-    setFilters?.((prev) => ({ ...prev, drop: Number(value), page: 1 }));
+    setFilters((prev) => ({ ...prev, drop: Number(value), page: 1 }));
   };
 
   const currentPage = next_page && next_page > 1 ? next_page - 1 : 1;
-  const drop = filters?.drop || items || 20;
+  const drop = filters.drop || items || 20;
   const totalPages = total ? Math.ceil(total / drop) : 1;
   const progress = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;
   const visiblePages = getVisiblePages(currentPage, totalPages);
@@ -132,7 +132,7 @@ export default function Paginator({
               variant="ghost"
               size="icon-xs"
               onClick={() =>
-                prev && handlePageChange((filters?.page ?? 1) - 1)
+                prev && handlePageChange((filters.page ?? 1) - 1)
               }
               disabled={!prev}
             >
@@ -142,7 +142,7 @@ export default function Paginator({
               variant="ghost"
               size="icon-xs"
               onClick={() =>
-                next && handlePageChange((filters?.page ?? 1) + 1)
+                next && handlePageChange((filters.page ?? 1) + 1)
               }
               disabled={!next}
             >

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { UiBadge, UiButton, UiSkeleton } from "@/components/ui";
+import { formatPrice } from "@/lib/format-price";
 import { Product } from "@/models/product";
 import { routes } from "@/routes";
 
@@ -10,15 +11,9 @@ interface ProductCardProps {
   product: Product;
 }
 
-function formatPrice(currency: string, amount: string) {
-  const symbol = currency === "GHS" ? "₵" : currency;
-  const num = parseFloat(amount);
-  return `${symbol}${num.toLocaleString("en-GH", { minimumFractionDigits: num % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 })}`;
-}
-
 export function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = parseFloat(product.discount) > 0;
-  const productHref = routes.shop.productDetails(product.sku);
+  const productHref = routes.shop.productDetails(product.id);
 
   return (
     <div className="group overflow-hidden rounded-2xl border bg-background transition-shadow hover:shadow-lg">

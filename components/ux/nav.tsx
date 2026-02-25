@@ -134,7 +134,7 @@ export default function Navbar() {
                       {brands?.slice(0, 6).map((brand) => (
                         <Link
                           key={brand.name}
-                          href={`${routes.brands}?brand=${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
+                          href={`${routes.brands}?brand_id=${brand.id}`}
                           className="flex items-center gap-3 rounded-lg border border-transparent p-3 transition-all hover:border-border hover:bg-accent"
                         >
                           <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-md bg-muted/50 p-1.5">
@@ -395,7 +395,7 @@ export default function Navbar() {
                   {brands?.slice(0, 6).map((brand) => (
                     <Link
                       key={brand.name}
-                      href={`${routes.brands}?brand=${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`${routes.brands}?brand_id=${brand.id}`}
                       className="flex flex-col items-center gap-1.5 rounded-lg p-3 text-center hover:bg-accent"
                       onClick={() => setMobileOpen(false)}
                     >
