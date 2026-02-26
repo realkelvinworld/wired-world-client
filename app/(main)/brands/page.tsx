@@ -16,6 +16,8 @@ import FilterModal from "@/components/shared/filter-modal";
 import SortToggle from "@/components/shared/sort-toggle";
 
 import BrandSelector from "./(components)/brand-selector";
+import PageHeader from "@/components/ux/page-header";
+import { SamsungPhones } from "@/public/images";
 
 export default function BrandsPage() {
   // state
@@ -74,12 +76,24 @@ export default function BrandsPage() {
     setFilters((prev) => ({ ...prev, page: 1 }));
   };
 
+  const selectedBrand = brands?.find((f) => f.id === Number(brandId));
+
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
         {/* Banner placeholder */}
-        <div className="mb-8 flex min-h-48 items-center justify-center rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
-          <p className="text-sm text-muted-foreground">Banner</p>
+        <div className="my-10 ">
+          {selectedBrand?.banners.length === 0 ? (
+            <PageHeader img={SamsungPhones} title={"brands"} />
+          ) : (
+            selectedBrand?.banners.map((m) => (
+              <PageHeader
+                img={m}
+                title={selectedBrand.name.toLowerCase()}
+                key={m}
+              />
+            ))
+          )}
         </div>
 
         {/* Brand selector */}
@@ -108,7 +122,7 @@ export default function BrandsPage() {
           />
         </div>
 
-        <div className="flex lg:flex-row flex-col gap-2">
+        <div className="flex lg:flex-row flex-col gap-6">
           {/* Desktop: sidebar filters */}
           <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
             <div className="flex justify-between gap-2">

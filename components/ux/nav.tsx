@@ -178,9 +178,7 @@ export default function Navbar() {
                         {navcategories?.map((cat, index) => (
                           <Link
                             key={cat.name}
-                            href={routes.category(
-                              cat.name.toLowerCase().replace(/\s+/g, "-"),
-                            )}
+                            href={`${routes.shop.shop}?filters=${encodeURIComponent(JSON.stringify({ filters: { main_category_id: cat.id } }))}`}
                             className={`flex items-start gap-3 rounded-md p-3 transition-colors ${activeCategory === index ? "bg-accent" : "hover:bg-accent"}`}
                             onMouseEnter={() => setActiveCategory(index)}
                           >
@@ -217,9 +215,7 @@ export default function Navbar() {
                             (item) => (
                               <Link
                                 key={item.name}
-                                href={routes.category(
-                                  item.name.toLowerCase().replace(/\s+/g, "-"),
-                                )}
+                                href={`${routes.shop.shop}?filters=${encodeURIComponent(JSON.stringify({ filters: { main_category_id: item.main_category_id, sub_category_id: item.id } }))}`}
                                 className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-background"
                               >
                                 {item.name}
@@ -288,7 +284,8 @@ export default function Navbar() {
         {/* Actions */}
         <div className="flex items-center gap-2">
           <SearchProducts />
-          <Wishlist />
+
+          {user && <Wishlist />}
           {!hydrated ? (
             <UiSpinner.Spinner className="size-5" />
           ) : user ? (
@@ -426,9 +423,7 @@ export default function Navbar() {
                   {navcategories?.map((cat) => (
                     <Link
                       key={cat.name}
-                      href={routes.category(
-                        cat.name.toLowerCase().replace(/\s+/g, "-"),
-                      )}
+                      href={`${routes.shop.shop}?filters=${encodeURIComponent(JSON.stringify({ filters: { main_category_id: cat.id } }))}`}
                       className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
                       onClick={() => setMobileOpen(false)}
                     >

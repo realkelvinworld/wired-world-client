@@ -45,9 +45,13 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
     <div className="space-y-6">
       {/* Section header */}
       <div className="flex items-center gap-3">
-        <ChatTeardropTextIcon weight="bold" className="size-6" />
+        <ChatTeardropTextIcon
+          weight="light"
+          size={25}
+          className="text-muted-foreground"
+        />
         <h2 className="text-xl font-semibold">Customer Reviews</h2>
-        <UiBadge.Badge variant="secondary" className="rounded-full">
+        <UiBadge.Badge variant="outline" className="rounded-full">
           {totalItems}
         </UiBadge.Badge>
       </div>
@@ -55,7 +59,7 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
       {isPending ? (
         <ReviewsSkeleton />
       ) : reviews.length === 0 ? (
-        <UiCard.Card className="py-12">
+        <UiCard.Card className="py-12 shadow-none">
           <UiCard.CardContent className="flex flex-col items-center gap-3 text-center">
             <ChatTeardropTextIcon className="size-10 text-muted-foreground/40" />
             <p className="text-sm text-muted-foreground">
