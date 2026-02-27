@@ -48,13 +48,13 @@ export default function LoginOtp() {
     setLoading(true);
     loginVerifyService(payload)
       .then(async (res) => {
-        setUser(res.info.user);
         await setAuthCookies(
           res.info.token,
           res.info.user.is_staff && res.info.user.staff_role
             ? res.info.user.staff_role
             : undefined,
         );
+        setUser(res.info.user);
         clearWebToken();
         toast.success("Welcome back!");
         router.replace(routes.user.dashboard);

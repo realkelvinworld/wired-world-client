@@ -61,13 +61,13 @@ export default function LogIn() {
           toast.success("Verification code sent to your email.");
           router.push(routes.auth.login.otpInput);
         } else {
-          setUser(res.info.user!);
           await setAuthCookies(
             res.info.token,
             res.info.user?.is_staff && res.info.user?.staff_role
               ? res.info.user.staff_role
               : undefined,
           );
+          setUser(res.info.user!);
           toast.success("Welcome back!");
           router.push(routes.user.dashboard);
         }

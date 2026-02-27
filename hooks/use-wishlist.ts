@@ -15,9 +15,14 @@ const WISHLIST_KEY = ["wishlist"];
 export function useWishlist() {
   const queryClient = useQueryClient();
 
+  const hasToken =
+    typeof document !== "undefined" &&
+    document.cookie.includes("access_token");
+
   const { data, isPending } = useQuery({
     queryKey: WISHLIST_KEY,
     queryFn: () => getWishlistService(),
+    enabled: hasToken,
   });
 
   const items = data?.info ?? [];
