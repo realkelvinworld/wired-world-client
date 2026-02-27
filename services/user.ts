@@ -34,8 +34,17 @@ export const getOrderHistoryService = (params: {
 }) => http.post<PaginatedApiResponse<Order[]>>(`/user/order/`, params);
 
 // Cart
+export const getCartService = () =>
+  http.post<BaseApiResponse<Cart>>(`/user/cart/`, { type: "get" });
+
 export const addToCartService = (payload: { type: "add"; id: number; quantity: number }) =>
   http.post<BaseApiResponse<Cart>>(`/user/cart/`, payload);
+
+export const removeFromCartService = (id: number) =>
+  http.post<BaseApiResponse<string>>(`/user/cart/`, { type: "remove", id });
+
+export const clearCartService = () =>
+  http.post<BaseApiResponse<string>>(`/user/cart/`, { type: "clear" });
 
 // Wishlist
 export const getWishlistService = () =>

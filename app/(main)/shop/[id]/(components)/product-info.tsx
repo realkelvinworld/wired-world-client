@@ -1,12 +1,17 @@
 import {
   CheckCircleIcon,
+  MinusIcon,
+  PlusIcon,
+  ShoppingCartIcon,
   StarIcon,
   TagIcon,
   XCircleIcon,
 } from "@phosphor-icons/react";
+import { useState } from "react";
 import Image from "next/image";
 
-import { UiBadge, UiButton, UiSeparator } from "@/components/ui";
+import { UiBadge, UiButton, UiSeparator, UiSpinner } from "@/components/ui";
+import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
 import { Product } from "@/models/product";
 
@@ -15,6 +20,8 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  const { add, isAdding } = useCart();
+  const [quantity, setQuantity] = useState(1);
   const hasDiscount = parseFloat(product.discount) > 0;
   const inStock = product.stock > 0;
 
@@ -131,10 +138,48 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         </p>
       </div>
 
-      {/* Action */}
-      <UiButton.Button size="lg" className="w-full rounded-full">
-        Add to cart
-      </UiButton.Button>
+      {/* Quantity + Action */}
+      <div className="flex items-center gap-3">
+        <div className="flex items-center rounded-full border">
+          <UiButton.Button
+            variant="ghost"
+            size="icon"
+            className="size-10 rounded-full"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            disabled={quantity <= 1}
+          >
+            <MinusIcon weight="bold" className="size-4" />
+          </UiButton.Button>
+          <span className="w-10 text-center text-sm font-semibold tabular-nums">
+            {quantity}
+          </span>
+          <UiButton.Button
+            variant="ghost"
+            size="icon"
+            className="size-10 rounded-full"
+            onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
+            disabled={quantity >= product.stock}
+          >
+            <PlusIcon weight="bold" className="size-4" />
+          </UiButton.Button>
+        </div>
+
+        <UiButton.Button
+          size="lg"
+          className="flex-1 rounded-full"
+          disabled={!inStock || isAdding}
+          onClick={() => add({ id: product.id, quantity })}
+        >
+          {isAdding ? (
+            <UiSpinner.Spinner className="text-secondary" />
+          ) : (
+            <>
+              <ShoppingCartIcon weight="bold" className="size-5" />
+              Add to cart
+            </>
+          )}
+        </UiButton.Button>
+      </div>
     </div>
   );
 }
