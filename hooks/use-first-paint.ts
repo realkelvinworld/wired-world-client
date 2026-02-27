@@ -8,9 +8,14 @@ import { useEffect } from "react";
 export function useFirstPaint() {
   const { setUser } = useUserStore();
 
+  const hasToken =
+    typeof document !== "undefined" &&
+    document.cookie.includes("access_token");
+
   const { data, isPending, error } = useQuery({
     queryKey: ["first-paint"],
     queryFn: () => firstPaintService(),
+    enabled: hasToken,
   });
 
   useEffect(() => {

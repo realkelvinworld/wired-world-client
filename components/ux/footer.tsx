@@ -1,12 +1,17 @@
 "use client";
-import Link from "next/link";
+
 import {
   XLogoIcon,
   InstagramLogoIcon,
   FacebookLogoIcon,
 } from "@phosphor-icons/react";
+import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 
 import { UiButton, UiInput } from "@/components/ui";
+import { subscribeNewsletterService } from "@/services/base";
 import { routes } from "@/routes";
 
 const footerSections = [
@@ -61,6 +66,16 @@ export const socialLinks = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+
+  const { mutate: subscribe, isPending } = useMutation({
+    mutationFn: () => subscribeNewsletterService(email),
+    onSuccess: () => {
+      toast.success("You've been subscribed to our newsletter");
+      setEmail("");
+    },
+  });
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
@@ -73,17 +88,28 @@ export default function Footer() {
               <span className="text-white">wiredworld.</span>
             </span>
           </h2>
-          <form className="mt-6 flex gap-3">
+          <form
+            className="mt-6 flex gap-3"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (email.trim()) subscribe();
+            }}
+          >
             <UiInput.Input
               type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               className="h-10 max-w-[280px] rounded-full border-primary-foreground/20 bg-primary-foreground/10 px-4 text-primary-foreground placeholder:text-primary-foreground/50 focus-visible:border-primary-foreground/40 focus-visible:ring-primary-foreground/20"
             />
             <UiButton.Button
+              type="submit"
               size="sm"
+              disabled={isPending}
               className="h-10 rounded-full bg-primary-foreground px-5 text-primary hover:bg-primary-foreground/90"
             >
-              Subscribe
+              {isPending ? "Subscribing..." : "Subscribe"}
             </UiButton.Button>
           </form>
         </div>
