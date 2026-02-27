@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { UiBadge, UiButton, UiSkeleton } from "@/components/ui";
 import { useWishlist } from "@/hooks/use-wishlist";
+import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
 import { Product } from "@/models/product";
 import { routes } from "@/routes";
@@ -14,6 +15,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { isInWishlist, toggle, isToggling } = useWishlist();
+  const { add, isAdding } = useCart();
   const hasDiscount = parseFloat(product.discount) > 0;
   const productHref = routes.shop.productDetails(product.id);
   const wishlisted = isInWishlist(product.id);
@@ -76,19 +78,30 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </h3>
           </div>
-          <UiButton.Button
-            variant="ghost"
-            size="icon"
-            className={`size-8 shrink-0 rounded-full ${wishlisted ? "text-red-500" : ""}`}
-            onClick={() => toggle(product.id)}
-            disabled={isToggling}
-          >
-            {wishlisted ? (
-              <Icon.HeartIcon className="size-4" weight="fill" />
-            ) : (
-              <Icon.HeartIcon className="size-4" />
-            )}
-          </UiButton.Button>
+          <div className="flex shrink-0 gap-1">
+            <UiButton.Button
+              variant="ghost"
+              size="icon"
+              className="size-8 rounded-full"
+              onClick={() => add({ id: product.id, quantity: 1 })}
+              disabled={isAdding || product.stock === 0}
+            >
+              <Icon.ShoppingCartIcon className="size-4" />
+            </UiButton.Button>
+            <UiButton.Button
+              variant="ghost"
+              size="icon"
+              className={`size-8 rounded-full ${wishlisted ? "text-red-500" : ""}`}
+              onClick={() => toggle(product.id)}
+              disabled={isToggling}
+            >
+              {wishlisted ? (
+                <Icon.HeartIcon className="size-4" weight="fill" />
+              ) : (
+                <Icon.HeartIcon className="size-4" />
+              )}
+            </UiButton.Button>
+          </div>
         </div>
 
         <div className="flex items-baseline gap-2">
