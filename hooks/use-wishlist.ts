@@ -7,6 +7,7 @@ import {
   getWishlistService,
   addToWishlistService,
   removeFromWishlistService,
+  clearWishlistService,
 } from "@/services/user";
 
 const WISHLIST_KEY = ["wishlist"];
@@ -35,6 +36,13 @@ export function useWishlist() {
       queryClient.invalidateQueries({ queryKey: WISHLIST_KEY }),
   });
 
+  const clearMutation = useMutation({
+    mutationFn: () => clearWishlistService(),
+    onSuccess: () => toast.success("Wishlist cleared"),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: WISHLIST_KEY }),
+  });
+
   const isInWishlist = (id: number) => items.some((item) => item.id === id);
 
   const toggle = (id: number) => {
@@ -52,6 +60,8 @@ export function useWishlist() {
     toggle,
     add: addMutation.mutate,
     remove: removeMutation.mutate,
+    clear: clearMutation.mutate,
     isToggling: addMutation.isPending || removeMutation.isPending,
+    isClearing: clearMutation.isPending,
   };
 }

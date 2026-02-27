@@ -21,11 +21,16 @@ export const updateProfileService = (payload: {
 }) => http.post<BaseApiResponse<UserModel>>(`/user/update_profile/`, payload);
 
 // Order History
+export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+
 export const getOrderHistoryService = (params: {
   type: "history";
   page?: number;
   drop?: number;
-  filters?: Record<string, unknown>;
+  filters?: {
+    search?: string;
+    status?: OrderStatus;
+  };
 }) => http.post<PaginatedApiResponse<Order[]>>(`/user/order/`, params);
 
 // Cart
@@ -41,3 +46,6 @@ export const addToWishlistService = (id: number) =>
 
 export const removeFromWishlistService = (id: number) =>
   http.post<BaseApiResponse<string>>(`/user/wish_list/`, { type: "remove", id });
+
+export const clearWishlistService = () =>
+  http.post<BaseApiResponse<string>>(`/user/compare_list/`, { type: "clear" });

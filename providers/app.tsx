@@ -9,9 +9,29 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProgressProvider } from "@bprogress/next";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+
+import { useFirstPaint } from "@/hooks/use-first-paint";
+import { injectLogout } from "@/lib/http";
+import { useUserStore } from "@/store/user";
 
 import { Toaster } from "../components/ui/sonner";
+
+function AuthInit() {
+  useFirstPaint();
+
+  useEffect(() => {
+    // Wire up logout so http interceptor can clear the store on 401/session expiry
+    injectLogout(() => useUserStore.getState().clearUser());
+
+    // Clean up stale localStorage from old storage key
+    try {
+      localStorage.removeItem("user");
+    } catch {}
+  }, []);
+
+  return null;
+}
 
 function AppProvider({ children }: { children: React.ReactNode }) {
   // Tanstack configs
@@ -35,7 +55,10 @@ function AppProvider({ children }: { children: React.ReactNode }) {
           options={{ showSpinner: false }}
         >
           <Suspense>
-            <NuqsAdapter>{children}</NuqsAdapter>
+            <NuqsAdapter>
+              <AuthInit />
+              {children}
+            </NuqsAdapter>
           </Suspense>
         </AppProgressProvider>
         <Toaster />
