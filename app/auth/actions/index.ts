@@ -16,7 +16,7 @@ export async function setAuthCookies(token: string, role?: string) {
   cookieStore.set("access_token", token, cookieOptions);
 
   if (role) {
-    cookieStore.set("user_role", role, {
+    cookieStore.set("customer-role", role, {
       ...cookieOptions,
       httpOnly: true,
     });

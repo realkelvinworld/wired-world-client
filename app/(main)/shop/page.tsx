@@ -68,7 +68,7 @@ export default function ShopPage() {
           />
         </div>
 
-        <div className="flex lg:flex-row flex-col gap-2">
+        <div className="flex lg:flex-row flex-col gap-6">
           {/* Desktop: sidebar filters */}
           <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
             <div className="flex justify-between gap-2">
@@ -91,10 +91,7 @@ export default function ShopPage() {
               filters={filters}
               setFilters={setFilters}
             />
-            <UiFilters.BrandFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
+            <UiFilters.BrandFilter filters={filters} setFilters={setFilters} />
             <UiFilters.PriceFilter filters={filters} setFilters={setFilters} />
             <UiFilters.RatingFilter filters={filters} setFilters={setFilters} />
             <UiFilters.PromotionFilter

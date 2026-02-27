@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { UiBadge, UiButton, UiSkeleton } from "@/components/ui";
+import { useWishlist } from "@/hooks/use-wishlist";
 import { formatPrice } from "@/lib/format-price";
 import { Product } from "@/models/product";
 import { routes } from "@/routes";
@@ -12,8 +13,10 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { isInWishlist, toggle, isToggling } = useWishlist();
   const hasDiscount = parseFloat(product.discount) > 0;
   const productHref = routes.shop.productDetails(product.id);
+  const wishlisted = isInWishlist(product.id);
 
   return (
     <div className="group overflow-hidden rounded-2xl border bg-background transition-shadow hover:shadow-lg">
@@ -76,10 +79,15 @@ export function ProductCard({ product }: ProductCardProps) {
           <UiButton.Button
             variant="ghost"
             size="icon"
-            className="size-8 shrink-0 rounded-full"
-            onClick={() => {}}
+            className={`size-8 shrink-0 rounded-full ${wishlisted ? "text-red-500" : ""}`}
+            onClick={() => toggle(product.id)}
+            disabled={isToggling}
           >
-            <Icon.HeartIcon className="size-4" />
+            {wishlisted ? (
+              <Icon.HeartIcon className="size-4" weight="fill" />
+            ) : (
+              <Icon.HeartIcon className="size-4" />
+            )}
           </UiButton.Button>
         </div>
 

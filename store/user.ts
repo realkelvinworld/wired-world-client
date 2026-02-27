@@ -21,10 +21,11 @@ export const useUserStore = create<UserState>()(
             if (state.user) updater(state.user);
           }),
         ),
+
       clearUser: () => set({ user: null }),
     }),
     {
-      name: "user",
+      name: "wired-world-user",
     },
   ),
 );

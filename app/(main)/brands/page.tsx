@@ -5,12 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 import { getProductsService } from "@/services/inventory";
-import { useBrands } from "@/hooks/use-brands";
 import { FiltersSchema } from "@/schemas/filters";
 import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
+import { useBrands } from "@/hooks/use-brands";
 import UiFilters from "@/components/filters";
 
+import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
 import SortToggle from "@/components/shared/sort-toggle";
@@ -74,12 +75,18 @@ export default function BrandsPage() {
     setFilters((prev) => ({ ...prev, page: 1 }));
   };
 
+  const selectedBrand = brands?.find((f) => f.id === Number(brandId));
+
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
         {/* Banner placeholder */}
-        <div className="mb-8 flex min-h-48 items-center justify-center rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
-          <p className="text-sm text-muted-foreground">Banner</p>
+        <div className="my-10 ">
+          {selectedBrand?.banners.length === 0 ? (
+            <PageHeaderCarousel title={"brands"} />
+          ) : (
+            <PageHeaderCarousel img={selectedBrand?.banners} />
+          )}
         </div>
 
         {/* Brand selector */}
@@ -108,7 +115,7 @@ export default function BrandsPage() {
           />
         </div>
 
-        <div className="flex lg:flex-row flex-col gap-2">
+        <div className="flex lg:flex-row flex-col gap-6">
           {/* Desktop: sidebar filters */}
           <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
             <div className="flex justify-between gap-2">

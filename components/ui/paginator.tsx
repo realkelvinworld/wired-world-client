@@ -49,6 +49,9 @@ export default function Paginator({
 }: PaginatorProps) {
   const handlePageChange = (page: number) => {
     setFilters((prev) => ({ ...prev, page }));
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   };
 
   const changeDropCount = (value: string) => {
@@ -131,9 +134,7 @@ export default function Paginator({
             <UiButton.Button
               variant="ghost"
               size="icon-xs"
-              onClick={() =>
-                prev && handlePageChange((filters.page ?? 1) - 1)
-              }
+              onClick={() => prev && handlePageChange((filters.page ?? 1) - 1)}
               disabled={!prev}
             >
               <CaretLeftIcon weight="bold" />
@@ -141,9 +142,7 @@ export default function Paginator({
             <UiButton.Button
               variant="ghost"
               size="icon-xs"
-              onClick={() =>
-                next && handlePageChange((filters.page ?? 1) + 1)
-              }
+              onClick={() => next && handlePageChange((filters.page ?? 1) + 1)}
               disabled={!next}
             >
               <CaretRightIcon weight="bold" />
