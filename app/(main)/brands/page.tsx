@@ -5,19 +5,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 import { getProductsService } from "@/services/inventory";
-import { useBrands } from "@/hooks/use-brands";
 import { FiltersSchema } from "@/schemas/filters";
 import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
+import { useBrands } from "@/hooks/use-brands";
 import UiFilters from "@/components/filters";
 
+import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
 import SortToggle from "@/components/shared/sort-toggle";
 
 import BrandSelector from "./(components)/brand-selector";
-import PageHeader from "@/components/ux/page-header";
-import { SamsungPhones } from "@/public/images";
 
 export default function BrandsPage() {
   // state
@@ -84,15 +83,9 @@ export default function BrandsPage() {
         {/* Banner placeholder */}
         <div className="my-10 ">
           {selectedBrand?.banners.length === 0 ? (
-            <PageHeader img={SamsungPhones} title={"brands"} />
+            <PageHeaderCarousel title={"brands"} />
           ) : (
-            selectedBrand?.banners.map((m) => (
-              <PageHeader
-                img={m}
-                title={selectedBrand.name.toLowerCase()}
-                key={m}
-              />
-            ))
+            <PageHeaderCarousel img={selectedBrand?.banners} />
           )}
         </div>
 
