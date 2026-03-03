@@ -1,5 +1,3 @@
-import Image, { StaticImageData } from "next/image";
-
 import { UiBadge } from "../ui";
 
 export default function PageHeader({
@@ -7,7 +5,7 @@ export default function PageHeader({
   title,
   badge,
 }: {
-  img?: string | StaticImageData;
+  img?: string;
   title?: string;
   badge?: string;
 }) {
@@ -15,12 +13,11 @@ export default function PageHeader({
     <div>
       <div className="relative">
         {img && (
-          <Image
-            src={img ? img : ""}
+          <img
+            src={img}
             alt="Wired world"
-            unoptimized
-            quality={100}
-            className="object-cover object-center lg:h-100 h-100 rounded-xl mb-20 bg-gray-100"
+            loading="lazy"
+            className="w-full object-cover object-center lg:h-100 h-100 rounded-xl mb-20 bg-gray-100"
           />
         )}
         <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">

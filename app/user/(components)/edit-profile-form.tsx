@@ -5,7 +5,6 @@ import { PencilSimpleIcon } from "@phosphor-icons/react";
 import { Controller, useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import Image from "next/image";
 import * as z from "zod";
 
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -210,11 +209,12 @@ export default function EditProfileForm({ user }: EditProfileFormProps) {
                     <UiSelect.SelectContent>
                       {countries.map((c) => (
                         <UiSelect.SelectItem key={c.id} value={c.id.toString()}>
-                          <Image
+                          <img
                             src={c.image}
                             alt={c.name}
                             width={20}
                             height={16}
+                            loading="lazy"
                             className="inline-block rounded-sm object-cover"
                           />
                           {c.name}

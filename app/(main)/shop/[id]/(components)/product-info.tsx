@@ -8,7 +8,6 @@ import {
   XCircleIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
-import Image from "next/image";
 
 import { UiBadge, UiButton, UiSeparator, UiSpinner } from "@/components/ui";
 import { useCart } from "@/hooks/use-cart";
@@ -30,12 +29,12 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       {/* Brand */}
       <div className="flex items-center gap-2">
         {product.brand__logo && (
-          <Image
+          <img
             src={product.brand__logo}
             alt={product.brand__name}
             width={24}
             height={24}
-            unoptimized
+            loading="lazy"
             className="size-6 object-contain"
           />
         )}

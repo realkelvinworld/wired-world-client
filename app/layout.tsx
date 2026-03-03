@@ -65,12 +65,25 @@ export const metadata: Metadata = {
     title: "WiredWorld — Electronics, Home Appliances & More",
     description:
       "Shop top electronics, home appliances, TVs, audio systems, kitchen gadgets, laptops and air conditioning from trusted brands. Fast delivery & great prices.",
+    images: [
+      {
+        url: "/logos/WIRED-WORLD-2.png",
+        width: 512,
+        height: 512,
+        alt: "WiredWorld Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "WiredWorld — Electronics, Home Appliances & More",
     description:
       "Shop top electronics, home appliances, TVs, audio systems, kitchen gadgets, laptops and air conditioning from trusted brands. Fast delivery & great prices.",
+    images: ["/logos/WIRED-WORLD-2.png"],
+  },
+  icons: {
+    icon: "/logos/WIRED-WORLD-2.png",
+    apple: "/logos/WIRED-WORLD-2.png",
   },
   robots: {
     index: true,

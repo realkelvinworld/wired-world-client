@@ -2,7 +2,6 @@
 
 import { parseAsIndex, useQueryState } from "nuqs";
 import * as Icon from "@phosphor-icons/react";
-import Image from "next/image";
 
 import { UiButton, UiCard, UiSeparator, UiSkeleton } from "@/components/ui";
 import ErrorState from "@/components/ux/error-state";
@@ -38,7 +37,7 @@ export default function ShowroomsPage() {
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
         {/* Header Space */}
-        <PageHeader img={KitchenTwo} title="showrooms" />
+        <PageHeader img={KitchenTwo.src} title="showrooms" />
 
         {/* Region Filters */}
         <div className="mb-8 sticky top-20 bg-white px-2 py-4 rounded-lg border border-gray-200 shadow-none">
@@ -99,12 +98,11 @@ export default function ShowroomsPage() {
               >
                 {showroom.image ? (
                   <div className="relative h-40 w-full">
-                    <Image
+                    <img
                       src={showroom.image}
                       alt={showroom.location}
-                      fill
-                      unoptimized
-                      className="object-cover"
+                      loading="lazy"
+                      className="absolute inset-0 size-full object-cover"
                     />
                   </div>
                 ) : (

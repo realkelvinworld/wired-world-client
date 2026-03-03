@@ -31,14 +31,17 @@ export default function FilterModal({
           Filters
         </UiButton.Button>
       </UiSheet.SheetTrigger>
-      <UiSheet.SheetContent side="left" className="w-full">
+      <UiSheet.SheetContent
+        side="left"
+        className="w-full max-w-[440px] sm:max-w-[600px] lg:max-w-[550px] py-4 overflow-auto"
+      >
         <UiSheet.SheetHeader>
           <UiSheet.SheetTitle>Filters</UiSheet.SheetTitle>
           <UiSheet.SheetDescription>
             Refine your product search
           </UiSheet.SheetDescription>
         </UiSheet.SheetHeader>
-        <UiScrollArea.ScrollArea className="flex-1 p-4">
+        <UiScrollArea.ScrollArea className="flex-1 p-4 ">
           <div className="flex flex-col gap-4 pb-4">
             <div className="flex justify-between gap-2">
               <SortToggle value={sortingOrder} onChange={setSortingOrder} />

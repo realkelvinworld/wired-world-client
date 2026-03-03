@@ -13,7 +13,6 @@ import { KichenFour } from "@/public/images";
 
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
-import SortToggle from "@/components/shared/sort-toggle";
 
 export default function ShopPage() {
   // state
@@ -52,9 +51,9 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto ma-wx-7xl px-4 py-12">
-        <PageHeader img={KichenFour} title="shop/products" />
+        <PageHeader img={KichenFour.src} title="shop/products" />
         {/* Mobile: sticky search + filter trigger */}
-        <div className="sticky top-16 z-10 flex items-center gap-2 bg-background py-2 lg:hidden">
+        <div className="sticky top-20 z-30 flex items-center gap-2 bg-background pb-4 w-full">
           <UiFilters.SearchFilter
             filters={filters}
             setFilters={setFilters}
@@ -66,11 +65,12 @@ export default function ShopPage() {
             sortingOrder={sorting_order}
             setSortingOrder={setSorting_order}
           />
+          <UiFilters.ClearFilters filters={filters} setFilters={setFilters} />
         </div>
 
         <div className="flex lg:flex-row flex-col gap-6">
           {/* Desktop: sidebar filters */}
-          <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
+          {/* <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
             <div className="flex justify-between gap-2">
               <SortToggle value={sorting_order} onChange={setSorting_order} />
               <UiFilters.ClearFilters
@@ -98,7 +98,7 @@ export default function ShopPage() {
               filters={filters}
               setFilters={setFilters}
             />
-          </div>
+          </div> */}
 
           {/* List products */}
           <section className="flex-1 min-w-0">

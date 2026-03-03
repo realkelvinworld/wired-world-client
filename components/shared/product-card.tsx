@@ -1,5 +1,5 @@
 import * as Icon from "@phosphor-icons/react";
-import Image from "next/image";
+
 import Link from "next/link";
 
 import { UiBadge, UiButton, UiSkeleton } from "@/components/ui";
@@ -8,17 +8,35 @@ import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
 import { Product } from "@/models/product";
 import { routes } from "@/routes";
+import { useUserStore } from "@/store/user";
+import { useCartStore } from "@/store/cart";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  /**
+   * Hooks
+   */
+  const { user } = useUserStore();
+  const { addItem } = useCartStore();
+
   const { isInWishlist, toggle, isToggling } = useWishlist();
   const { add, isAdding } = useCart();
   const hasDiscount = parseFloat(product.discount) > 0;
   const productHref = routes.shop.productDetails(product.id);
   const wishlisted = isInWishlist(product.id);
+
+  const handleAddedToCart = (productItem: Product, quantityOfItem: number) => {
+    const added = addItem(productItem, quantityOfItem || 1);
+    if (added) {
+      toast.success("Added to cart");
+    } else {
+      toast.error("Cannot add more than available stock");
+    }
+  };
 
   return (
     <div className="group overflow-hidden rounded-2xl border bg-background transition-shadow hover:shadow-lg">
@@ -58,12 +76,11 @@ export function ProductCard({ product }: ProductCardProps) {
           </UiButton.Button>
         </div>
 
-        <Image
+        <img
           src={product.images[0]}
           alt={product.name}
-          fill
-          unoptimized
-          className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+          className="absolute inset-0 size-full object-contain p-6 transition-transform duration-300 group-hover:scale-105"
         />
       </Link>
 
@@ -79,15 +96,27 @@ export function ProductCard({ product }: ProductCardProps) {
             </h3>
           </div>
           <div className="flex shrink-0 gap-1">
-            <UiButton.Button
-              variant="ghost"
-              size="icon"
-              className="size-8 rounded-full"
-              onClick={() => add({ id: product.id, quantity: 1 })}
-              disabled={isAdding || product.stock === 0}
-            >
-              <Icon.ShoppingCartIcon className="size-4" />
-            </UiButton.Button>
+            {user ? (
+              <UiButton.Button
+                variant="ghost"
+                size="icon"
+                className="size-8 rounded-full"
+                onClick={() => add({ id: product.id, quantity: 1 })}
+                disabled={isAdding || product.stock === 0}
+              >
+                <Icon.ShoppingCartIcon className="size-4" />
+              </UiButton.Button>
+            ) : (
+              <UiButton.Button
+                variant="ghost"
+                size="icon"
+                className="size-8 rounded-full"
+                onClick={() => handleAddedToCart(product, 1)}
+                disabled={isAdding || product.stock === 0}
+              >
+                <Icon.ShoppingCartIcon className="size-4" />
+              </UiButton.Button>
+            )}
             <UiButton.Button
               variant="ghost"
               size="icon"

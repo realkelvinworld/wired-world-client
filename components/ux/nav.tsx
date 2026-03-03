@@ -2,9 +2,9 @@
 
 import * as Icon from "@phosphor-icons/react";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
+import { WiredWorldLogo } from "@/public/logos";
 import { mobileLinks, socialLinks } from "@/db-locale";
 import { useNavBar } from "@/hooks/use-navbar";
 import { useUserStore } from "@/store/user";
@@ -59,12 +59,13 @@ export default function Navbar() {
       <div className="flex h-16 max-w-7xl mx-auto items-center lg:justify-between md:justify-evenly justify-evenly px-2">
         {/* Logo */}
         <Link href={routes.home} className=" flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-            <span className="text-sm font-bold text-background">W</span>
-          </div>
-          <span className="hidden text-lg leading-none font-bold tracking-tighter text-primary lg:block">
-            wiredworld.
-          </span>
+          <img
+            src={WiredWorldLogo.src}
+            alt="WiredWorld"
+            width={200}
+            className="rounded-full "
+            loading="lazy"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -103,13 +104,11 @@ export default function Navbar() {
                       >
                         <UiAspectRatio.AspectRatio ratio={16 / 9}>
                           <div className="absolute inset-0 bg-linear-to-br from-blue-50 via-neutral-500 to-neutral-700">
-                            <Image
+                            <img
                               src="/images/HOME-BANNER.avif"
                               alt="Home Banner"
-                              fill
-                              unoptimized
-                              quality={100}
-                              className="object-cover object-center opacity-30"
+                              loading="lazy"
+                              className="absolute inset-0 size-full object-cover object-center opacity-30"
                             />
                           </div>
                           <div className="relative flex h-full flex-col justify-between p-6">
@@ -145,12 +144,12 @@ export default function Navbar() {
                           className="flex items-center gap-3 rounded-lg border border-transparent p-3 transition-all hover:border-border hover:bg-accent"
                         >
                           <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-md bg-muted/50 p-1.5">
-                            <Image
+                            <img
                               src={brand.logo}
                               alt={brand.name}
                               width={56}
                               height={40}
-                              unoptimized
+                              loading="lazy"
                               className="h-9 w-auto object-contain"
                             />
                           </div>
@@ -190,9 +189,10 @@ export default function Navbar() {
                             onMouseEnter={() => setActiveCategory(index)}
                           >
                             {cat.icon && (
-                              <Image
+                              <img
                                 src={cat.icon}
                                 alt="Category Logo"
+                                loading="lazy"
                                 className="mt-0.5 size-5 shrink-0 text-muted-foreground"
                                 width={100}
                                 height={100}
@@ -269,22 +269,6 @@ export default function Navbar() {
                 />
               </Link>
             </UiButton.Button>
-            {!user && (
-              <UiButton.Button
-                variant="ghost"
-                size="sm"
-                className="hidden lg:inline-flex"
-                asChild
-              >
-                <Link href={routes.auth.signUp.signUpVerify}>
-                  Sign up{" "}
-                  <Icon.LockKeyIcon
-                    weight="fill"
-                    className="text-primary ml-1 size-4"
-                  />
-                </Link>
-              </UiButton.Button>
-            )}
           </div>
         </div>
 
@@ -303,15 +287,26 @@ export default function Navbar() {
               {userInitials}
             </Link>
           ) : (
-            <UiButton.Button
-              className="rounded-full border border-primary/10"
-              variant="outline"
-              asChild
-            >
-              <Link href={routes.auth.login.login}>
-                Login <Icon.UserIcon />
-              </Link>
-            </UiButton.Button>
+            <>
+              <UiButton.Button
+                className="hidden rounded-full border border-primary/10 lg:inline-flex"
+                variant="outline"
+                asChild
+              >
+                <Link href={routes.auth.signUp.signUpVerify}>
+                  Sign up <Icon.LockKeyIcon weight="fill" className="size-4" />
+                </Link>
+              </UiButton.Button>
+              <UiButton.Button
+                className="rounded-full border border-primary/10"
+                variant="outline"
+                asChild
+              >
+                <Link href={routes.auth.login.login}>
+                  Login <Icon.UserIcon />
+                </Link>
+              </UiButton.Button>
+            </>
           )}
           <Cart />
         </div>
@@ -404,12 +399,12 @@ export default function Navbar() {
                       onClick={() => setMobileOpen(false)}
                     >
                       <div className="flex h-10 w-14 items-center justify-center rounded-md bg-muted/50 p-1">
-                        <Image
+                        <img
                           src={brand.logo}
                           alt={brand.name}
                           width={48}
                           height={32}
-                          unoptimized
+                          loading="lazy"
                           className="h-7 w-auto object-contain"
                         />
                       </div>
@@ -435,12 +430,12 @@ export default function Navbar() {
                       onClick={() => setMobileOpen(false)}
                     >
                       {cat.icon && (
-                        <Image
+                        <img
                           src={cat.icon}
                           alt={cat.name}
                           width={16}
                           height={16}
-                          unoptimized
+                          loading="lazy"
                           className="size-4 shrink-0"
                         />
                       )}

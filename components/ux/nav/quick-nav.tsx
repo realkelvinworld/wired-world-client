@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
@@ -38,18 +37,16 @@ export default function QuickNav() {
               <UiTooltip.Tooltip>
                 <UiTooltip.TooltipTrigger asChild>
                   <Link
-                    href={routes.category(
-                      cat.name.toLowerCase().replace(/\s+/g, "-"),
-                    )}
+                    href={`${routes.shop.shop}?filters=${encodeURIComponent(JSON.stringify({ filters: { main_category_id: cat.id } }))}`}
                     className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                   >
                     {cat.icon ? (
-                      <Image
+                      <img
                         src={cat.icon}
                         alt={cat.name}
                         width={18}
                         height={18}
-                        unoptimized
+                        loading="lazy"
                         className="size-4.5 object-contain"
                       />
                     ) : (
