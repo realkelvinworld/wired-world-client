@@ -1,6 +1,7 @@
 import { persist } from "zustand/middleware";
 import { create } from "zustand";
 import { produce } from "immer";
+
 import { Product } from "@/models/product";
 
 interface CartState {
@@ -42,6 +43,7 @@ export const useCartStore = create<CartState>()(
             return { cart: [...currentCart, { item, quantity }] };
           }
         });
+
         return true;
       },
       removeItem: (id: number) => {

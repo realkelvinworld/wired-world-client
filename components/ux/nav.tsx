@@ -261,6 +261,20 @@ export default function Navbar() {
               className="hidden lg:inline-flex"
               asChild
             >
+              <Link href={routes.about}>
+                About{" "}
+                <Icon.InfoIcon
+                  weight="fill"
+                  className="text-primary ml-1 size-4"
+                />
+              </Link>
+            </UiButton.Button>
+            <UiButton.Button
+              variant="ghost"
+              size="sm"
+              className="hidden lg:inline-flex"
+              asChild
+            >
               <Link href={routes.contact}>
                 Contact{" "}
                 <Icon.LifebuoyIcon
@@ -456,15 +470,15 @@ export default function Navbar() {
                 <div className="flex flex-col gap-2.5 px-3">
                   <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
                     <Icon.PhoneIcon className="size-4 shrink-0" />
-                    <span>+233 (0) 302 123 456</span>
+                    <span>+233 (0) 55 110 5055</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
                     <Icon.EnvelopeSimpleIcon className="size-4 shrink-0" />
-                    <span>support@wireworldgh.com</span>
+                    <span>info@wiredworldgh.com</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
                     <Icon.ClockIcon className="size-4 shrink-0" />
-                    <span>Mon – Sat: 9am – 6pm</span>
+                    <span>Mon – Sat: 8am – 6pm</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
                     <Icon.MapPinIcon className="size-4 shrink-0" />

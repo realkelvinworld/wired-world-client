@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://wireworldgh.com";
+const siteUrl = "https://wiredworldgh.com";
 
 export const metadata: Metadata = {
   title: {
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     template: "%s | WiredWorld",
   },
   description:
-    "Shop top electronics, home appliances, TVs, audio systems, kitchen gadgets, laptops and air conditioning from trusted brands like LG, Samsung, Sony, TCL, Midea and Nasco. Fast delivery & great prices.",
+    "Ghana's premier online electronics store. Shop TVs, home appliances, audio systems, kitchen gadgets, laptops & air conditioning from Samsung, LG, Sony, TCL, Midea, Nasco & more. Nationwide delivery, competitive pricing & B2B support since 2020.",
   keywords: [
-    "electronics store",
-    "home appliances",
+    "electronics store Ghana",
+    "home appliances Accra",
     "smart TVs",
     "4K UHD TVs",
     "OLED TVs",
@@ -47,8 +47,15 @@ export const metadata: Metadata = {
     "TCL",
     "Midea",
     "Nasco",
+    "Electrolux",
+    "Bruhm",
+    "Ariston",
+    "JBL",
     "WiredWorld",
-    "buy electronics online",
+    "Wired World Limited",
+    "buy electronics online Ghana",
+    "B2B electronics Ghana",
+    "bulk electronics orders Accra",
   ],
   authors: [{ name: "WiredWorld" }],
   creator: "WiredWorld",
@@ -62,9 +69,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "WiredWorld",
-    title: "WiredWorld — Electronics, Home Appliances & More",
+    title: "WiredWorld — Electronics, Home Appliances & More | Accra, Ghana",
     description:
-      "Shop top electronics, home appliances, TVs, audio systems, kitchen gadgets, laptops and air conditioning from trusted brands. Fast delivery & great prices.",
+      "Ghana's premier online electronics destination since 2020. Authentic products from Samsung, LG, Sony & more — nationwide delivery, competitive pricing & world-class service.",
     images: [
       {
         url: "/logos/WIRED-WORLD-2.png",
@@ -76,9 +83,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "WiredWorld — Electronics, Home Appliances & More",
+    title: "WiredWorld — Electronics, Home Appliances & More | Ghana",
     description:
-      "Shop top electronics, home appliances, TVs, audio systems, kitchen gadgets, laptops and air conditioning from trusted brands. Fast delivery & great prices.",
+      "Ghana's premier online electronics destination since 2020. Authentic products from Samsung, LG, Sony & more — nationwide delivery, competitive pricing & world-class service.",
     images: ["/logos/WIRED-WORLD-2.png"],
   },
   icons: {

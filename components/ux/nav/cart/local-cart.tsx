@@ -111,7 +111,7 @@ export function LocalCart() {
                 Clear cart
               </UiButton.Button>
               <UiButton.Button className="flex-1 rounded-full" asChild>
-                <Link href={routes.shop.shop}>Checkout</Link>
+                <Link href={routes.checkout}>Checkout</Link>
               </UiButton.Button>
             </div>
           </div>

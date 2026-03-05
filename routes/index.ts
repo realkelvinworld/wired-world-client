@@ -11,6 +11,7 @@ export const routes = {
   blog: "/blog",
   privacy: "/privacy",
   terms: "/terms",
+  checkout: "/checkout",
   user: {
     dashboard: "/user",
     orderHistory: "/user/order-history",

@@ -9,6 +9,7 @@ import * as z from "zod";
 
 import { PhoneInput } from "@/components/ui/phone-input";
 import { setAuthCookies } from "@/app/auth/actions";
+import { useCartSync } from "@/hooks/use-cart-sync";
 import { useCountry } from "@/hooks/use-countries";
 import { useResendOtpStore } from "@/store/auth";
 import { signUpService } from "@/services/auth";
@@ -66,6 +67,7 @@ export default function SignUp() {
   const { otpStore } = useResendOtpStore();
   const { data: country, error } = useCountry();
   const { setUser } = useUserStore();
+  const { syncCart } = useCartSync();
   const router = useRouter();
 
   const form = useForm<SignUpFormValues>({
@@ -103,6 +105,7 @@ export default function SignUp() {
             ? data.info.user.staff_role
             : undefined,
         );
+        await syncCart();
         form.reset();
         router.push(routes.user.dashboard);
       })
