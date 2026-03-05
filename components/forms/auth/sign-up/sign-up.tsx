@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Image from "next/image";
 import * as z from "zod";
 
 import { PhoneInput } from "@/components/ui/phone-input";
 import { setAuthCookies } from "@/app/auth/actions";
+import { useCartSync } from "@/hooks/use-cart-sync";
 import { useCountry } from "@/hooks/use-countries";
 import { useResendOtpStore } from "@/store/auth";
 import { signUpService } from "@/services/auth";
@@ -67,6 +67,7 @@ export default function SignUp() {
   const { otpStore } = useResendOtpStore();
   const { data: country, error } = useCountry();
   const { setUser } = useUserStore();
+  const { syncCart } = useCartSync();
   const router = useRouter();
 
   const form = useForm<SignUpFormValues>({
@@ -104,6 +105,7 @@ export default function SignUp() {
             ? data.info.user.staff_role
             : undefined,
         );
+        await syncCart();
         form.reset();
         router.push(routes.user.dashboard);
       })
@@ -212,11 +214,12 @@ export default function SignUp() {
                 <UiSelect.SelectContent>
                   {country?.info?.map((c) => (
                     <UiSelect.SelectItem key={c.id} value={c.id.toString()}>
-                      <Image
+                      <img
                         src={c.image}
                         alt={c.name}
                         width={20}
                         height={16}
+                        loading="lazy"
                         className="inline-block rounded-sm object-cover"
                       />
                       {c.name}

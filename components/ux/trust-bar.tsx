@@ -11,12 +11,12 @@ const features = [
   {
     icon: HeadsetIcon,
     title: "Customer Service",
-    description: "Dedicated world-class customer service available 24/7",
+    description: "Dedicated customer service Mon–Sat, 8am–6pm",
   },
   {
     icon: PackageIcon,
-    title: "Fast Free Shipping",
-    description: "Get free shipping on orders of \u20B510,000 or more",
+    title: "Nationwide Delivery",
+    description: "Fast, reliable delivery to every region of Ghana",
   },
   {
     icon: ArrowsCounterClockwiseIcon,

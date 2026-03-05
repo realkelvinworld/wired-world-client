@@ -1,6 +1,5 @@
 "use client";
 import { Airconditioner, SamsungOledTv } from "@/public/images";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 import LoadingLayout from "@/components/animations/loading-layout";
@@ -24,17 +23,19 @@ export default function Home() {
             <span> One Step at a Time</span>
           </h1>
 
-          <Image
-            src={SamsungOledTv}
+          <img
+            src={SamsungOledTv.src}
             alt="Samsung OLED TV"
+            loading="lazy"
+            width={350}
             className="absolute hidden lg:block lg:-top-16 lg:-right-20 rotate-12 lg:w-87.5 -z-50 animate-[bounce_15s_linear_infinite]"
-            width={350}
           />
-          <Image
-            src={Airconditioner}
+          <img
+            src={Airconditioner.src}
             alt="Air Conditioner"
-            className="absolute hidden lg:block lg:-top-4 lg:-left-18 -rotate-12 lg:w-87.5 -z-50 animate-[bounce_14s_linear_infinite]"
+            loading="lazy"
             width={350}
+            className="absolute hidden lg:block lg:-top-4 lg:-left-18 -rotate-12 lg:w-87.5 -z-50 animate-[bounce_14s_linear_infinite]"
           />
         </div>
       </motion.div>

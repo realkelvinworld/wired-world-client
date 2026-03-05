@@ -38,7 +38,12 @@ export function SearchFilter({
   setFilters,
   placeholder = "Search products...",
 }: FilterProps) {
-  const [localValue, setLocalValue] = useState(filters.filters?.search ?? "");
+  const externalSearch = filters.filters?.search ?? "";
+  const [localValue, setLocalValue] = useState(externalSearch);
+
+  if (localValue !== externalSearch && externalSearch === "") {
+    setLocalValue("");
+  }
 
   const debouncedUpdate = useMemo(
     () =>
@@ -57,7 +62,7 @@ export function SearchFilter({
   );
 
   return (
-    <div className="relative w-full">
+    <div className="relative">
       <MagnifyingGlassIcon
         weight="bold"
         className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"

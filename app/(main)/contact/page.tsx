@@ -2,7 +2,6 @@
 
 import { KitchenOne } from "@/public/images";
 import { UiBadge } from "@/components/ui";
-import Image from "next/image";
 
 import { TransitionPanel } from "@/components/motion-primitives/transition-panel";
 import LoadingLayout from "@/components/animations/loading-layout";
@@ -40,12 +39,11 @@ export default function ContactPage() {
       <div className="min-h-screen max-w-7xl mx-auto px-4 py-12">
         <section className="grid lg:grid-cols-2 grid-cols-1 gap-x-10 ">
           <div className="relative">
-            <Image
-              src={KitchenOne}
+            <img
+              src={KitchenOne.src}
               alt="Wired world Kitchen setup"
-              unoptimized
-              quality={100}
-              className="object-cover object-center lg:h-200 h-100 rounded-xl bg-gray-100"
+              loading="lazy"
+              className="w-full object-cover object-center lg:h-200 h-100 rounded-xl bg-gray-100"
             />
             <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">
               wiredworld.

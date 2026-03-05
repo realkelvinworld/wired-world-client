@@ -10,8 +10,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { UiButton, UiInput } from "@/components/ui";
 import { subscribeNewsletterService } from "@/services/base";
+import { UiButton, UiInput } from "@/components/ui";
 import { routes } from "@/routes";
 
 const footerSections = [

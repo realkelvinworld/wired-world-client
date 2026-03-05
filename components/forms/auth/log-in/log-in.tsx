@@ -12,6 +12,7 @@ import Link from "next/link";
 import { UiButton, UiField, UiInput, UiSpinner } from "@/components/ui";
 import { setAuthCookies } from "@/app/auth/actions";
 import { useWebTokenStore } from "@/store/auth";
+import { useCartSync } from "@/hooks/use-cart-sync";
 import { loginService } from "@/services/auth";
 import { useUserStore } from "@/store/user";
 import { getDeviceInfo } from "@/lib/utils";
@@ -33,6 +34,7 @@ export default function LogIn() {
 
   const { setWebToken } = useWebTokenStore();
   const { setUser } = useUserStore();
+  const { syncCart } = useCartSync();
   const router = useRouter();
 
   const form = useForm<LoginFormValues>({
@@ -68,6 +70,7 @@ export default function LogIn() {
               : undefined,
           );
           setUser(res.info.user!);
+          await syncCart();
           toast.success("Welcome back!");
           router.push(routes.user.dashboard);
         }

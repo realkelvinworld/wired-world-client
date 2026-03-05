@@ -19,3 +19,6 @@ export { default as SamsungLogo } from "./SAMSUNG-LOGO.avif";
 export { default as SonyLogo } from "./SONY-LOGO.png";
 export { default as SyinixLogo } from "./SYINIX-LOGO.webp";
 export { default as TclLogo } from "./TCL-LOGO.png";
+export { default as WiredWorldLogo } from "./WIRED-WORLD-2.png";
+export { default as WiredWorldIcon } from "./WIRED-WORLD-ICON.png";
+export { default as WiredWorldLogoWhite } from "./WIRED-WORLD-LOGO-WHITE.png";

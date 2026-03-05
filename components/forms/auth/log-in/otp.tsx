@@ -9,6 +9,7 @@ import * as z from "zod";
 
 import { UiButton, UiField, UiInputOtp, UiSpinner } from "@/components/ui";
 import { setAuthCookies } from "@/app/auth/actions";
+import { useCartSync } from "@/hooks/use-cart-sync";
 import { loginVerifyService } from "@/services/auth";
 import { useWebTokenStore } from "@/store/auth";
 import { useUserStore } from "@/store/user";
@@ -26,6 +27,7 @@ export default function LoginOtp() {
 
   const { webToken, clearWebToken } = useWebTokenStore();
   const { setUser } = useUserStore();
+  const { syncCart } = useCartSync();
   const router = useRouter();
 
   const form = useForm<OtpFormValues>({
@@ -56,6 +58,7 @@ export default function LoginOtp() {
         );
         setUser(res.info.user);
         clearWebToken();
+        await syncCart();
         toast.success("Welcome back!");
         router.replace(routes.user.dashboard);
       })
