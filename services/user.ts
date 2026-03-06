@@ -128,6 +128,13 @@ export const createOrderService = (address_id: number) =>
     address_id,
   });
 
+// Review Item
+export const submitReviewService = (payload: {
+  item_id: number;
+  rating: number;
+  review: string;
+}) => http.post<BaseApiResponse<string>>(`/user/review_item/`, payload);
+
 export const getOrderService = (id: number) =>
   http.post<BaseApiResponse<Order>>(`/user/order/`, { type: "order", id });
 
