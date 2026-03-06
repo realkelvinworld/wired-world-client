@@ -163,3 +163,135 @@ store/             # Zustand stores (auth, cart, user)
 routes/            # Centralised internal route definitions
 lib/               # Utilities (http client, formatPrice, auth-check, logout)
 ```
+
+---
+
+## Development Conventions
+
+### Component Section Comments
+
+Inside every functional component or page, group and label code blocks in this order (skip any section that doesn't apply):
+
+```tsx
+// state
+// variables
+// api
+// permissions
+// hooks
+// routes or navigation
+// effect
+// functions
+```
+
+---
+
+### Import Conventions
+
+Imports are divided into **two sections** separated by a blank line:
+
+1. **Package imports** — third-party / node_modules
+2. **Local imports** — anything from within the project (`@/` aliases or relative paths)
+
+Within each section, sort imports from **longest to shortest**.
+
+```tsx
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
+import { getOrderHistoryService } from "@/services/user";
+import { FiltersInterface } from "@/interfaces";
+import { routes } from "@/routes";
+
+import OrderCard from "./order-card";
+```
+
+> Use relative imports (`./`, `../`) for files within the same feature folder; use `@/` aliases for cross-feature imports.
+
+---
+
+### UI Components — Barrel Export Pattern
+
+All UI components are accessed through the barrel export at `@/components/ui`. Each namespace is prefixed with `Ui`.
+
+```tsx
+import { UiButton, UiCard, UiSeparator } from "@/components/ui";
+
+<UiButton.Button variant="outline">Click me</UiButton.Button>
+<UiCard.Card>
+  <UiCard.CardHeader>...</UiCard.CardHeader>
+</UiCard.Card>
+```
+
+**Do NOT** import directly from individual component files:
+
+```tsx
+// ❌ Bad
+import { Button } from "@/components/ui/button";
+
+// ✅ Good
+import { UiButton } from "@/components/ui";
+```
+
+---
+
+### Services
+
+All API call functions live in `services/` and always use the `Service` postfix.
+
+```ts
+// services/auth.ts
+export const loginService = () => ...
+export const createAccountService = () => ...
+```
+
+Use **then-catch-finally** over try-catch in client components.
+
+---
+
+### Schemas
+
+All Zod schemas live in `schemas/` — never define them inline inside a component.
+
+```ts
+// schemas/auth.ts
+export const loginFormSchema = z.object({ ... })
+```
+
+---
+
+### Routes
+
+Always use the central `routes` object for internal navigation. Add new routes there first.
+
+```tsx
+import { routes } from "@/routes";
+<Link href={routes.home}>Home</Link>;
+```
+
+---
+
+### Models
+
+TypeScript interfaces for database/API objects live in `models/` and may be shared across multiple services.
+
+```ts
+// models/user.ts
+export interface UserModel { ... }
+```
+
+---
+
+### File Naming
+
+All files inside `app/` are **dash-cased**, not camelCased.
+
+- ✅ `my-component.tsx`
+- ❌ `myComponent.tsx`
+
+---
+
+### General Rules
+
+- Remove all `console.log`s before committing.
+- Clean up outdated comments — don't leave stale or misleading comments.
+- No inline schemas — all Zod schemas live in `schemas/`, imported into forms.
