@@ -1,78 +1,16 @@
 "use client";
 
-import {
-  ShieldCheckIcon,
-  PackageIcon,
-  UsersIcon,
-  GlobeIcon,
-  BuildingsIcon,
-  HeartIcon,
-  RocketIcon,
-  HandshakeIcon,
-  FlagIcon,
-  TrendUpIcon,
-  LightbulbIcon,
-} from "@phosphor-icons/react";
+import * as Icon from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { KitchenThree, SamsungPhones } from "@/public/images";
-import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider";
 import { TextEffect } from "@/components/motion-primitives/text-effect";
 import LoadingLayout from "@/components/animations/loading-layout";
 import { UiBadge, UiButton, UiSeparator } from "@/components/ui";
+import BrandsSlider from "@/components/ux/brands-slider";
 import { routes } from "@/routes";
-import {
-  BekoLogo,
-  BinatoneLogo,
-  BruhmLogo,
-  CromptonLogo,
-  DecakilaLogo,
-  GreeLogo,
-  HavellsLogo,
-  HpLogo,
-  InnovaLogo,
-  KenwoodLogo,
-  LgLogo,
-  MdvLogo,
-  MideaLogo,
-  NascoLogo,
-  NovoLogo,
-  PearlLogo,
-  PhilipsLogo,
-  SamsungLogo,
-  SonyLogo,
-  SyinixLogo,
-  TclLogo,
-} from "@/public/logos";
-
-const allBrands = [
-  { name: "Samsung", logo: SamsungLogo },
-  { name: "LG", logo: LgLogo },
-  { name: "Sony", logo: SonyLogo },
-  { name: "TCL", logo: TclLogo },
-  { name: "Midea", logo: MideaLogo },
-  { name: "Nasco", logo: NascoLogo },
-  { name: "Bruhm", logo: BruhmLogo },
-  { name: "Beko", logo: BekoLogo },
-  { name: "Philips", logo: PhilipsLogo },
-  { name: "Kenwood", logo: KenwoodLogo },
-  { name: "Gree", logo: GreeLogo },
-  { name: "HP", logo: HpLogo },
-  { name: "Innova", logo: InnovaLogo },
-  { name: "Pearl", logo: PearlLogo },
-  { name: "MDV", logo: MdvLogo },
-  { name: "Havells", logo: HavellsLogo },
-  { name: "Binatone", logo: BinatoneLogo },
-  { name: "Crompton", logo: CromptonLogo },
-  { name: "Decakila", logo: DecakilaLogo },
-  { name: "Novo", logo: NovoLogo },
-  { name: "Syinix", logo: SyinixLogo },
-];
-
-const topRow = allBrands.slice(0, 11);
-const bottomRow = allBrands.slice(11);
 
 const stats = [
   { value: "2020", label: "Year Founded" },
@@ -83,25 +21,25 @@ const stats = [
 
 const values = [
   {
-    icon: ShieldCheckIcon,
+    icon: Icon.ShieldCheckIcon,
     title: "Integrity",
     description:
       "Every product is 100% genuine, sourced directly from authorized distributors and brand partners.",
   },
   {
-    icon: HeartIcon,
+    icon: Icon.HeartIcon,
     title: "Customer First",
     description:
       "Dedicated world-class customer service for pre-purchase guidance, warranty claims, and technical support.",
   },
   {
-    icon: LightbulbIcon,
+    icon: Icon.LightbulbIcon,
     title: "Innovation",
     description:
       "We combine global e-commerce best practices with deep local knowledge to deliver a seamless experience.",
   },
   {
-    icon: FlagIcon,
+    icon: Icon.FlagIcon,
     title: "Ghanaian Pride",
     description:
       "A proudly Ghanaian business committed to demonstrating that African-owned companies compete at the highest level.",
@@ -110,25 +48,25 @@ const values = [
 
 const whyChooseUs = [
   {
-    icon: ShieldCheckIcon,
+    icon: Icon.ShieldCheckIcon,
     title: "Authentic Products Only",
     description:
       "Every product is 100% genuine, sourced directly from authorized distributors and brand partners.",
   },
   {
-    icon: PackageIcon,
+    icon: Icon.PackageIcon,
     title: "Nationwide Delivery",
     description:
       "Fast, reliable delivery to every region of Ghana with real-time order tracking and dedicated logistics.",
   },
   {
-    icon: TrendUpIcon,
+    icon: Icon.TrendUpIcon,
     title: "Competitive Pricing",
     description:
       "Our lean online model eliminates high overhead costs, passing genuine savings on to every customer.",
   },
   {
-    icon: HandshakeIcon,
+    icon: Icon.HandshakeIcon,
     title: "B2B & Bulk Orders",
     description:
       "Specialized corporate procurement for businesses, schools, hotels, and government institutions.",
@@ -137,25 +75,25 @@ const whyChooseUs = [
 
 const audiences = [
   {
-    icon: UsersIcon,
+    icon: Icon.UsersIcon,
     title: "Individual Consumers",
     description:
       "Tech-savvy Ghanaians seeking quality electronics at competitive prices with home delivery.",
   },
   {
-    icon: BuildingsIcon,
+    icon: Icon.BuildingsIcon,
     title: "Businesses & SMEs",
     description:
       "Companies requiring appliances, televisions, audio, and office technology at scale.",
   },
   {
-    icon: GlobeIcon,
+    icon: Icon.GlobeIcon,
     title: "Corporate & Institutional",
     description:
       "Large companies, banks, multinationals, schools, and government agencies procuring in bulk.",
   },
   {
-    icon: RocketIcon,
+    icon: Icon.RocketIcon,
     title: "Hospitality Sector",
     description:
       "Hotels, restaurants, and entertainment venues needing appliances and entertainment systems.",
@@ -442,37 +380,7 @@ export default function AboutPage() {
         </section>
 
         {/* Brand Slider */}
-        <section className="py-12">
-          <p className="mb-6 text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Trusted Brand Partners
-          </p>
-          <div className="space-y-6">
-            <InfiniteSlider gap={48} speed={30}>
-              {topRow.map((brand) => (
-                <Image
-                  key={brand.name}
-                  src={brand.logo}
-                  alt={brand.name}
-                  width={80}
-                  height={80}
-                  className="h-12 w-auto object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-                />
-              ))}
-            </InfiniteSlider>
-            <InfiniteSlider gap={48} speed={30} reverse>
-              {bottomRow.map((brand) => (
-                <Image
-                  key={brand.name}
-                  src={brand.logo}
-                  alt={brand.name}
-                  width={80}
-                  height={80}
-                  className="h-12 w-auto object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-                />
-              ))}
-            </InfiniteSlider>
-          </div>
-        </section>
+        <BrandsSlider />
 
         <UiSeparator.Separator />
 

@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { contactFormSchema, type ContactFormValues } from "@/schemas/contact";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { UiField, UiInput } from "@/components/ui";
+import { contactUsService } from "@/services/base";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -14,6 +16,9 @@ import {
 } from "@/components/ui/input-group";
 
 export default function ContactForm() {
+  // state
+  const [loading, setLoading] = useState(false);
+
   // hooks
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -27,13 +32,21 @@ export default function ContactForm() {
 
   // functions
   function onSubmit(data: ContactFormValues) {
-    toast.success("You submitted the following values:", {
-      description: (
-        <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    setLoading(true);
+    contactUsService({
+      full_name: data.full_name,
+      email: data.email,
+      phone: data.phone_number,
+      message: data.message,
+    })
+      .then((res) => {
+        toast.success(res.info);
+        form.reset();
+      })
+      .catch(() => {
+        toast.error("Something went wrong. Please try again.");
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -146,8 +159,8 @@ export default function ContactForm() {
         <Button type="button" variant="outline" onClick={() => form.reset()}>
           Reset
         </Button>
-        <Button type="submit" form="contact-form">
-          Submit
+        <Button type="submit" form="contact-form" disabled={loading}>
+          {loading ? "Submitting..." : "Submit"}
         </Button>
       </UiField.Field>
     </div>

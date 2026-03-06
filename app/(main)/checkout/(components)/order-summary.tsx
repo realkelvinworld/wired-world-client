@@ -1,8 +1,9 @@
 "use client";
 
-import { PackageIcon } from "@phosphor-icons/react";
+import { PackageIcon, TicketIcon, TrashIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 
-import { UiCard, UiSeparator } from "@/components/ui";
+import { UiButton, UiCard, UiInput, UiSeparator } from "@/components/ui";
 
 export interface SummaryItem {
   id: number;
@@ -17,9 +18,22 @@ export interface SummaryItem {
 interface OrderSummaryProps {
   items: SummaryItem[];
   subtotal: string;
+  promoApplied?: string | null;
+  onApplyPromo?: (code: string) => void;
+  onRemovePromo?: () => void;
+  isApplyingPromo?: boolean;
+  isRemovingPromo?: boolean;
 }
 
-export default function OrderSummary({ items, subtotal }: OrderSummaryProps) {
+export default function OrderSummary({
+  items,
+  subtotal,
+  promoApplied,
+  onApplyPromo,
+  onRemovePromo,
+  isApplyingPromo,
+  isRemovingPromo,
+}: OrderSummaryProps) {
   if (items.length === 0) {
     return (
       <UiCard.Card>
@@ -72,6 +86,19 @@ export default function OrderSummary({ items, subtotal }: OrderSummaryProps) {
 
         <UiSeparator.Separator />
 
+        {/* Promo code */}
+        {onApplyPromo && (
+          <PromoSection
+            promoApplied={promoApplied ?? null}
+            onApply={onApplyPromo}
+            onRemove={onRemovePromo!}
+            isApplying={isApplyingPromo ?? false}
+            isRemoving={isRemovingPromo ?? false}
+          />
+        )}
+
+        <UiSeparator.Separator />
+
         {/* Totals */}
         <div className="flex justify-between text-sm font-semibold">
           <span>Subtotal</span>
@@ -82,5 +109,72 @@ export default function OrderSummary({ items, subtotal }: OrderSummaryProps) {
         </p>
       </UiCard.CardContent>
     </UiCard.Card>
+  );
+}
+
+function PromoSection({
+  promoApplied,
+  onApply,
+  onRemove,
+  isApplying,
+  isRemoving,
+}: {
+  promoApplied: string | null;
+  onApply: (code: string) => void;
+  onRemove: () => void;
+  isApplying: boolean;
+  isRemoving: boolean;
+}) {
+  // state
+  const [promoCode, setPromoCode] = useState("");
+
+  // functions
+  function handleApply() {
+    const trimmed = promoCode.trim();
+    if (!trimmed) return;
+    onApply(trimmed);
+    setPromoCode("");
+  }
+
+  if (promoApplied) {
+    return (
+      <div className="flex items-center justify-between rounded-lg border border-dashed border-green-500/40 bg-green-50/50 px-3 py-2 dark:bg-green-950/20">
+        <div className="flex items-center gap-2">
+          <TicketIcon className="size-4 text-green-600" />
+          <span className="text-sm font-medium text-green-700 dark:text-green-400">
+            {promoApplied}
+          </span>
+        </div>
+        <UiButton.Button
+          variant="ghost"
+          size="icon"
+          className="size-7 rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+          onClick={onRemove}
+          disabled={isRemoving}
+        >
+          <TrashIcon className="size-3.5" />
+        </UiButton.Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-2">
+      <UiInput.Input
+        placeholder="Promo code"
+        value={promoCode}
+        onChange={(e) => setPromoCode(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleApply()}
+        className="h-9 text-sm"
+      />
+      <UiButton.Button
+        variant="outline"
+        size="sm"
+        onClick={handleApply}
+        disabled={isApplying || !promoCode.trim()}
+      >
+        {isApplying ? "Applying..." : "Apply"}
+      </UiButton.Button>
+    </div>
   );
 }

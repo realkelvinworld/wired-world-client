@@ -18,7 +18,8 @@ import { WishlistItem } from "@/models/wishlist";
 import { routes } from "@/routes";
 
 export function Wishlist() {
-  const { items, isPending, remove, isToggling } = useWishlist();
+  const { items, isPending, remove, isToggling, clear, isClearing } =
+    useWishlist();
 
   return (
     <UiSheet.Sheet>
@@ -78,6 +79,16 @@ export function Wishlist() {
               ))}
             </div>
           </UiScrollArea.ScrollArea>
+        )}
+        {items.length > 0 && (
+          <UiButton.Button
+            variant="destructive"
+            className="rounded-full m-4"
+            onClick={() => clear()}
+            disabled={isClearing}
+          >
+            Clear all
+          </UiButton.Button>
         )}
       </UiSheet.SheetContent>
     </UiSheet.Sheet>

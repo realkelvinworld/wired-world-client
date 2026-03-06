@@ -1,12 +1,13 @@
 "use client";
 
-import { ShoppingCartIcon, TrashIcon } from "@phosphor-icons/react";
-
+import { ShoppingCartIcon, TrashIcon, TicketIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 import Link from "next/link";
 
 import {
   UiBadge,
   UiButton,
+  UiInput,
   UiScrollArea,
   UiSeparator,
   UiSheet,
@@ -21,12 +22,17 @@ export function OnlineCart() {
   const {
     items,
     subtotal,
+    promoApplied,
     itemCount,
     isPending,
     remove,
     clear,
+    applyPromo,
+    removePromo,
     isRemoving,
     isClearing,
+    isApplyingPromo,
+    isRemovingPromo,
   } = useCart();
 
   return (
@@ -94,6 +100,15 @@ export function OnlineCart() {
                 {subtotal.toLocaleString()}
               </span>
             </div>
+
+            <PromoSection
+              promoApplied={promoApplied}
+              onApply={applyPromo}
+              onRemove={() => removePromo()}
+              isApplying={isApplyingPromo}
+              isRemoving={isRemovingPromo}
+            />
+
             <div className="flex gap-2">
               <UiButton.Button
                 variant="destructive"
@@ -222,6 +237,73 @@ function CartSkeleton() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+function PromoSection({
+  promoApplied,
+  onApply,
+  onRemove,
+  isApplying,
+  isRemoving,
+}: {
+  promoApplied: string | null;
+  onApply: (code: string) => void;
+  onRemove: () => void;
+  isApplying: boolean;
+  isRemoving: boolean;
+}) {
+  // state
+  const [promoCode, setPromoCode] = useState("");
+
+  // functions
+  function handleApply() {
+    const trimmed = promoCode.trim();
+    if (!trimmed) return;
+    onApply(trimmed);
+    setPromoCode("");
+  }
+
+  if (promoApplied) {
+    return (
+      <div className="flex items-center justify-between rounded-lg border border-dashed border-green-500/40 bg-green-50/50 px-3 py-2 dark:bg-green-950/20">
+        <div className="flex items-center gap-2">
+          <TicketIcon className="size-4 text-green-600" />
+          <span className="text-sm font-medium text-green-700 dark:text-green-400">
+            {promoApplied}
+          </span>
+        </div>
+        <UiButton.Button
+          variant="ghost"
+          size="icon"
+          className="size-7 rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+          onClick={onRemove}
+          disabled={isRemoving}
+        >
+          <TrashIcon className="size-3.5" />
+        </UiButton.Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-2">
+      <UiInput.Input
+        placeholder="Promo code"
+        value={promoCode}
+        onChange={(e) => setPromoCode(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleApply()}
+        className="h-9 text-sm"
+      />
+      <UiButton.Button
+        variant="outline"
+        size="sm"
+        onClick={handleApply}
+        disabled={isApplying || !promoCode.trim()}
+      >
+        {isApplying ? "Applying..." : "Apply"}
+      </UiButton.Button>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { UiBadge, UiButton, UiSkeleton } from "@/components/ui";
 import { useWishlist } from "@/hooks/use-wishlist";
+import { useCompare } from "@/hooks/use-compare";
 import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
 import { Product } from "@/models/product";
@@ -22,12 +23,18 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCartStore();
 
   const { isInWishlist, toggle, isToggling } = useWishlist();
+  const {
+    isInCompare,
+    toggle: toggleCompare,
+    isToggling: isComparePending,
+  } = useCompare();
   const { add, isAdding } = useCart();
 
   // variables
   const hasDiscount = parseFloat(product.discount) > 0;
   const productHref = routes.shop.productDetails(product.id);
   const wishlisted = isInWishlist(product.id);
+  const compared = isInCompare(product.id);
 
   // functions
   const handleAddedToCart = (productItem: Product, quantityOfItem: number) => {
@@ -65,16 +72,22 @@ export function ProductCard({ product }: ProductCardProps) {
           >
             <Icon.EyeIcon className="size-4" />
           </UiButton.Button>
-          <UiButton.Button
-            variant="outline"
-            size="icon"
-            className="size-9 rounded-full bg-background/80 backdrop-blur-sm"
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <Icon.ArrowsClockwiseIcon className="size-4" />
-          </UiButton.Button>
+          {user && (
+            <UiButton.Button
+              variant="outline"
+              size="icon"
+              className={`size-9 rounded-full bg-background/80 backdrop-blur-sm ${
+                compared ? "border-primary text-primary" : ""
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                toggleCompare(product.id);
+              }}
+              disabled={isComparePending(product.id)}
+            >
+              <Icon.ArrowsClockwiseIcon className="size-4" />
+            </UiButton.Button>
+          )}
         </div>
 
         <img
