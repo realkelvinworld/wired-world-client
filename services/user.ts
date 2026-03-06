@@ -5,6 +5,7 @@ import {
   PaystackInfo,
 } from "@/models/checkout";
 import { WishlistItem } from "@/models/wishlist";
+import { Product } from "@/models/product";
 import { UserModel } from "@/models/user";
 import { Address } from "@/models/address";
 import { Order } from "@/models/order";
@@ -60,6 +61,16 @@ export const removeFromCartService = (id: number) =>
 export const clearCartService = () =>
   http.post<BaseApiResponse<string>>(`/user/cart/`, { type: "clear" });
 
+// Promo Code
+export const applyPromoService = (promo_code: string) =>
+  http.post<BaseApiResponse<Cart>>(`/user/cart/`, {
+    type: "apply_promo",
+    promo_code,
+  });
+
+export const removePromoService = () =>
+  http.post<BaseApiResponse<Cart>>(`/user/cart/`, { type: "remove_promo" });
+
 // Wishlist
 export const getWishlistService = () =>
   http.post<BaseApiResponse<WishlistItem[]>>(`/user/wish_list/`, {
@@ -76,7 +87,7 @@ export const removeFromWishlistService = (id: number) =>
   });
 
 export const clearWishlistService = () =>
-  http.post<BaseApiResponse<string>>(`/user/compare_list/`, { type: "clear" });
+  http.post<BaseApiResponse<string>>(`/user/wish_list/`, { type: "clear" });
 
 // Addresses
 export const listAddressesService = () =>
@@ -137,6 +148,25 @@ export const submitReviewService = (payload: {
 
 export const getOrderService = (id: number) =>
   http.post<BaseApiResponse<Order>>(`/user/order/`, { type: "order", id });
+
+// Compare List
+export const getCompareListService = () =>
+  http.post<BaseApiResponse<Product[]>>(`/user/compare_list/`, { type: "get" });
+
+export const addToCompareService = (id: number) =>
+  http.post<BaseApiResponse<string>>(`/user/compare_list/`, {
+    type: "add",
+    id,
+  });
+
+export const removeFromCompareService = (id: number) =>
+  http.post<BaseApiResponse<string>>(`/user/compare_list/`, {
+    type: "remove",
+    id,
+  });
+
+export const clearCompareService = () =>
+  http.post<BaseApiResponse<string>>(`/user/compare_list/`, { type: "clear" });
 
 // Sync local cart to server after login/signup
 export const addFullCartService = (

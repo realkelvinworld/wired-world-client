@@ -16,7 +16,16 @@ import UserCheckout from "./(components)/user-checkout";
 function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
   // hooks
   const { cart: localCart } = useCartStore();
-  const { items: serverItems, subtotal: serverSubtotal, isPending } = useCart();
+  const {
+    items: serverItems,
+    subtotal: serverSubtotal,
+    promoApplied,
+    applyPromo,
+    removePromo,
+    isApplyingPromo,
+    isRemovingPromo,
+    isPending,
+  } = useCart();
 
   // variables
   let summaryItems: SummaryItem[];
@@ -83,7 +92,15 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
 
       {/* Right — order summary (sticky on desktop) */}
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <OrderSummary items={summaryItems} subtotal={subtotal} />
+        <OrderSummary
+          items={summaryItems}
+          subtotal={subtotal}
+          promoApplied={isLoggedIn ? promoApplied : null}
+          onApplyPromo={isLoggedIn ? applyPromo : undefined}
+          onRemovePromo={isLoggedIn ? () => removePromo() : undefined}
+          isApplyingPromo={isApplyingPromo}
+          isRemovingPromo={isRemovingPromo}
+        />
       </div>
     </div>
   );

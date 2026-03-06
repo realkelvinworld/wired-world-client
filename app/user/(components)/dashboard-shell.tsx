@@ -14,6 +14,8 @@ import { routes } from "@/routes";
 const navItems = [
   { label: "Dashboard", href: routes.user.dashboard },
   { label: "Order History", href: routes.user.orderHistory },
+  { label: "Addresses", href: routes.user.addresses },
+  { label: "Compare", href: routes.user.compare },
 ];
 
 export default function DashboardShell({

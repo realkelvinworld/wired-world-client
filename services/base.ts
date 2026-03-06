@@ -14,4 +14,15 @@ export const getFaqsService = () =>
 
 // Newsletter
 export const subscribeNewsletterService = (email: string) =>
-  http.post<BaseApiResponse<string>>(`/base/newsletter/`, { email, subscribe: true });
+  http.post<BaseApiResponse<string>>(`/base/newsletter/`, {
+    email,
+    subscribe: true,
+  });
+
+// Contact Us
+export const contactUsService = (payload: {
+  full_name: string;
+  email: string;
+  phone: string;
+  message: string;
+}) => http.post<BaseApiResponse<string>>(`/base/contact_us/`, payload);

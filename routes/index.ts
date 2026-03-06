@@ -15,6 +15,8 @@ export const routes = {
   user: {
     dashboard: "/user",
     orderHistory: "/user/order-history",
+    addresses: "/user/addresses",
+    compare: "/user/compare",
     userDetails: "/user/[id]",
   },
   auth: {
