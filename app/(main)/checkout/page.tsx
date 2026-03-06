@@ -14,9 +14,11 @@ import GuestCheckout from "./(components)/guest-checkout";
 import UserCheckout from "./(components)/user-checkout";
 
 function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
+  // hooks
   const { cart: localCart } = useCartStore();
   const { items: serverItems, subtotal: serverSubtotal, isPending } = useCart();
 
+  // variables
   let summaryItems: SummaryItem[];
   let subtotal: string;
 
@@ -52,7 +54,7 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
       : "";
   }
 
-  const isEmpty = summaryItems.length === 0 && !isPending;
+  const isEmpty = summaryItems.length === 0;
 
   if (isEmpty) {
     return (
@@ -88,6 +90,7 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
 }
 
 export default function CheckoutPage() {
+  // variables
   const isLoggedIn =
     typeof document !== "undefined" && document.cookie.includes("access_token");
 

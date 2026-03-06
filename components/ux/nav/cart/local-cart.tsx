@@ -80,7 +80,7 @@ export function LocalCart() {
         {items.length === 0 ? (
           <CartEmpty />
         ) : (
-          <UiScrollArea.ScrollArea className="flex-1 -mx-6 px-6">
+          <UiScrollArea.ScrollArea className="flex-1  px-6">
             <div className="space-y-4 p-6">
               {items.map((item) => (
                 <CartItemCard
@@ -99,7 +99,7 @@ export function LocalCart() {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Subtotal</span>
               <span className="text-lg font-bold">
-                {formatPrice(currency, subtotal.toString())}
+                {formatPrice(currency, subtotal.toLocaleString())}
               </span>
             </div>
             <div className="flex gap-2">

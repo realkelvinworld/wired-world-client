@@ -6,10 +6,10 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 import Link from "next/link";
 
 import { UiButton, UiField, UiInput, UiSpinner } from "@/components/ui";
+import { loginFormSchema, type LoginFormValues } from "@/schemas/auth";
 import { setAuthCookies } from "@/app/auth/actions";
 import { useWebTokenStore } from "@/store/auth";
 import { useCartSync } from "@/hooks/use-cart-sync";
@@ -18,27 +18,19 @@ import { useUserStore } from "@/store/user";
 import { getDeviceInfo } from "@/lib/utils";
 import { routes } from "@/routes";
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required.")
-    .email("Please enter a valid email address."),
-  password: z.string().min(1, "Password is required."),
-});
-
-type LoginFormValues = z.infer<typeof formSchema>;
-
 export default function LogIn() {
+  // state
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // hooks
   const { setWebToken } = useWebTokenStore();
   const { setUser } = useUserStore();
   const { syncCart } = useCartSync();
   const router = useRouter();
 
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginFormSchema),
     mode: "all",
     defaultValues: {
       email: "",
@@ -46,6 +38,7 @@ export default function LogIn() {
     },
   });
 
+  // functions
   function onSubmit(data: LoginFormValues) {
     const device = getDeviceInfo();
 

@@ -14,6 +14,7 @@ interface FilterModalProps {
   sortingOrder: string;
   setSortingOrder: (value: string) => void;
   hideBrandFilter?: boolean;
+  hideCategoryFilter?: boolean;
 }
 
 export default function FilterModal({
@@ -22,6 +23,7 @@ export default function FilterModal({
   sortingOrder,
   setSortingOrder,
   hideBrandFilter,
+  hideCategoryFilter,
 }: FilterModalProps) {
   return (
     <UiSheet.Sheet>
@@ -33,7 +35,7 @@ export default function FilterModal({
       </UiSheet.SheetTrigger>
       <UiSheet.SheetContent
         side="left"
-        className="w-full max-w-[440px] sm:max-w-[600px] lg:max-w-[550px] py-4 overflow-auto"
+        className="w-full max-w-110 sm:max-w-150 lg:max-w-137.5 py-4 overflow-auto"
       >
         <UiSheet.SheetHeader>
           <UiSheet.SheetTitle>Filters</UiSheet.SheetTitle>
@@ -50,10 +52,12 @@ export default function FilterModal({
                 setFilters={setFilters}
               />
             </div>
-            <UiFilters.MainCategoryFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
+            {!hideCategoryFilter && (
+              <UiFilters.MainCategoryFilter
+                filters={filters}
+                setFilters={setFilters}
+              />
+            )}
             <UiFilters.SubCategoryFilter
               filters={filters}
               setFilters={setFilters}

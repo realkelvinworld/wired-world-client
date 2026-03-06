@@ -6,47 +6,41 @@ import { MailboxIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 
+import {
+  forgotPasswordRequestSchema,
+  type ForgotPasswordRequestValues,
+} from "@/schemas/auth";
 import { UiButton, UiField, UiInput, UiSpinner } from "@/components/ui";
 import { forgotPasswordRequestService } from "@/services/auth";
 import { useForgotPasswordStore } from "@/store/auth";
 import { routes } from "@/routes";
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required.")
-    .email("Please enter a valid email address."),
-});
-
-type RequestFormValues = z.infer<typeof formSchema>;
-
 export default function ForgotPasswordRequest() {
+  // state
   const [loading, setLoading] = useState(false);
 
+  // hooks
   const { setEmail } = useForgotPasswordStore();
   const router = useRouter();
 
-  const form = useForm<RequestFormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ForgotPasswordRequestValues>({
+    resolver: zodResolver(forgotPasswordRequestSchema),
     mode: "all",
     defaultValues: {
       email: "",
     },
   });
 
-  function onSubmit(data: RequestFormValues) {
+  // functions
+  function onSubmit(data: ForgotPasswordRequestValues) {
     setLoading(true);
     setEmail(data.email);
     forgotPasswordRequestService({ email: data.email, type: "request" })
       .then((res) => {
-        toast.success(
-          res.info || "A reset code has been sent to your email.",
-          {
-            icon: <MailboxIcon className="h-4 w-4 text-green-500" />,
-          },
-        );
+        toast.success(res.info || "A reset code has been sent to your email.", {
+          icon: <MailboxIcon className="h-4 w-4 text-green-500" />,
+        });
         router.push(routes.auth.forgotPassword.reset);
       })
       .finally(() => {

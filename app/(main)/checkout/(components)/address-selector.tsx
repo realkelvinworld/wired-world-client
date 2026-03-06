@@ -4,8 +4,8 @@ import { PlusIcon, TrashIcon, MapPinIcon } from "@phosphor-icons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import * as z from "zod";
 
+import { newAddressSchema, type NewAddressValues } from "@/schemas/checkout";
 import {
   UiButton,
   UiCard,
@@ -18,16 +18,6 @@ import { Address } from "@/models/address";
 
 import AddressFields from "./address-fields";
 
-const newAddressSchema = z.object({
-  street_address: z.string().min(1, "Street address is required"),
-  apartment: z.string().optional(),
-  city: z.string().min(1, "City is required"),
-  region: z.string().min(1, "Region is required"),
-  zip: z.string().min(1, "ZIP code is required"),
-});
-
-type NewAddressValues = z.infer<typeof newAddressSchema>;
-
 interface AddressSelectorProps {
   selectedId: number | null;
   onSelect: (id: number) => void;
@@ -37,10 +27,14 @@ export default function AddressSelector({
   selectedId,
   onSelect,
 }: AddressSelectorProps) {
+  // state
   const [showNewForm, setShowNewForm] = useState(false);
+
+  // api
   const { addresses, isPending } = useAddresses();
   const { addMutation, deleteMutation } = useAddressActions();
 
+  // hooks
   const form = useForm<NewAddressValues>({
     resolver: zodResolver(newAddressSchema),
     mode: "all",
@@ -53,6 +47,7 @@ export default function AddressSelector({
     },
   });
 
+  // functions
   function handleAddAddress(data: NewAddressValues) {
     addMutation.mutate(data, {
       onSuccess: () => {

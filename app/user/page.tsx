@@ -20,7 +20,10 @@ import { useFirstPaint } from "@/hooks/use-first-paint";
 import EditProfileForm from "./(components)/edit-profile-form";
 
 export default function UserPage() {
+  // api
   const { data, isPending } = useFirstPaint();
+
+  // variables
   const user = data?.info;
 
   if (isPending) {
@@ -64,6 +67,7 @@ export default function UserPage() {
   const initials =
     `${user.first_name.charAt(0)}${user.last_name.charAt(0)}`.toUpperCase();
 
+  // variables
   const infoItems = [
     { icon: EnvelopeSimpleIcon, label: "Email", value: user.email },
     { icon: PhoneIcon, label: "Phone", value: user.phone || "—" },

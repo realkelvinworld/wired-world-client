@@ -32,7 +32,7 @@ export default function OrderSummary({ items, subtotal }: OrderSummaryProps) {
   }
 
   return (
-    <UiCard.Card>
+    <UiCard.Card className="shadow-none">
       <UiCard.CardHeader className="pb-3">
         <UiCard.CardTitle className="text-base">Order Summary</UiCard.CardTitle>
         <p className="text-sm text-muted-foreground">

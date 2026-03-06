@@ -2,21 +2,22 @@
 
 import { parseAsJson, parseAsString, useQueryState } from "nuqs";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { getProductsService } from "@/services/inventory";
 import { FiltersSchema } from "@/schemas/filters";
 import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
 import { useBrands } from "@/hooks/use-brands";
+import { useCategories } from "@/hooks/use-categories";
 import UiFilters from "@/components/filters";
 
 import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
-import SortToggle from "@/components/shared/sort-toggle";
 
 import BrandSelector from "./(components)/brand-selector";
+import CategorySelector from "./(components)/category-selector";
 
 export default function BrandsPage() {
   // state
@@ -35,16 +36,22 @@ export default function BrandsPage() {
 
   // hooks
   const { data: brandsData, isPending: brandsPending } = useBrands();
-  const brands = brandsData?.info ?? [];
+  const { data: categoriesData, isPending: categoriesPending } =
+    useCategories();
 
-  // auto-select first brand when brands load
+  // variables
+  const brands = useMemo(() => brandsData?.info ?? [], [brandsData]);
+  const categories = categoriesData?.info ?? [];
+  const selectedBrandId = brandId ? Number(brandId) : undefined;
+  const selectedCategoryId = filters.filters?.main_category_id;
+  const selectedBrand = brands?.find((f) => f.id === Number(brandId));
+
+  // effect
   useEffect(() => {
     if (!brandId && brands.length > 0) {
       setBrandId(brands[0].id.toString());
     }
   }, [brandId, brands, setBrandId]);
-
-  const selectedBrandId = brandId ? Number(brandId) : undefined;
 
   // api
   const { data, isPending, error } = useQuery({
@@ -63,25 +70,35 @@ export default function BrandsPage() {
     enabled: !!selectedBrandId,
   });
 
-  // variables
   const paginationItems = data?.paginator?.items;
   const paginationNext = data?.paginator?.next;
   const paginationprev = data?.paginator?.prev;
   const paginationpTotal = data?.paginator?.total_items;
   const paginationNextPage = data?.paginator?.next_page;
 
-  const handleBrandSelect = (id: number) => {
+  // functions
+  function handleBrandSelect(id: number) {
     setBrandId(id.toString());
     setFilters((prev) => ({ ...prev, page: 1 }));
-  };
+  }
 
-  const selectedBrand = brands?.find((f) => f.id === Number(brandId));
+  function handleCategorySelect(id: number | undefined) {
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+      filters: {
+        ...prev.filters,
+        main_category_id: id,
+        sub_category_id: undefined,
+      },
+    }));
+  }
 
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
-        {/* Banner placeholder */}
-        <div className="my-10 ">
+        {/* Banner */}
+        <div className="my-10">
           {selectedBrand?.banners.length === 0 ? (
             <PageHeaderCarousel title={"brands"} />
           ) : (
@@ -89,8 +106,8 @@ export default function BrandsPage() {
           )}
         </div>
 
-        {/* Brand selector */}
-        <div className="mb-6">
+        {/* Brand selector pills */}
+        <div className="mb-4">
           <BrandSelector
             brands={brands}
             selectedBrandId={selectedBrandId}
@@ -99,8 +116,18 @@ export default function BrandsPage() {
           />
         </div>
 
-        {/* Mobile: sticky search + filter trigger */}
-        <div className="sticky top-16 z-10 flex items-center gap-2 bg-background py-2 lg:hidden">
+        {/* Category selector pills */}
+        <div className="mb-6">
+          <CategorySelector
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+            onSelect={handleCategorySelect}
+            isPending={categoriesPending}
+          />
+        </div>
+
+        {/* Sticky search + filter bar */}
+        <div className="sticky top-15 z-30 flex items-center gap-2 bg-background py-4 w-full">
           <UiFilters.SearchFilter
             filters={filters}
             setFilters={setFilters}
@@ -112,50 +139,21 @@ export default function BrandsPage() {
             sortingOrder={sorting_order}
             setSortingOrder={setSorting_order}
             hideBrandFilter
+            hideCategoryFilter
           />
+          <UiFilters.ClearFilters filters={filters} setFilters={setFilters} />
         </div>
 
-        <div className="flex lg:flex-row flex-col gap-6">
-          {/* Desktop: sidebar filters */}
-          <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
-            <div className="flex justify-between gap-2">
-              <SortToggle value={sorting_order} onChange={setSorting_order} />
-              <UiFilters.ClearFilters
-                filters={filters}
-                setFilters={setFilters}
-              />
-            </div>
-            <UiFilters.SearchFilter
-              filters={filters}
-              setFilters={setFilters}
-              placeholder="Search product"
-            />
-            <UiFilters.MainCategoryFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
-            <UiFilters.SubCategoryFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
-            <UiFilters.PriceFilter filters={filters} setFilters={setFilters} />
-            <UiFilters.RatingFilter filters={filters} setFilters={setFilters} />
-            <UiFilters.PromotionFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
-          </div>
+        {/* List products */}
+        <section className="flex-1 min-w-0">
+          <ListProducts
+            setFilters={setFilters}
+            isPending={isPending || brandsPending}
+            error={error}
+            data={data}
+          />
+        </section>
 
-          {/* List products */}
-          <section className="flex-1 min-w-0">
-            <ListProducts
-              setFilters={setFilters}
-              isPending={isPending || brandsPending}
-              error={error}
-              data={data}
-            />
-          </section>
-        </div>
         <section className="my-6">
           <Paginator
             filters={filters}

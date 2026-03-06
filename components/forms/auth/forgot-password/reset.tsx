@@ -6,36 +6,34 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 
-import { UiButton, UiField, UiInput, UiInputOtp, UiSpinner } from "@/components/ui";
+import {
+  forgotPasswordResetSchema,
+  type ForgotPasswordResetValues,
+} from "@/schemas/auth";
+import {
+  UiButton,
+  UiField,
+  UiInput,
+  UiInputOtp,
+  UiSpinner,
+} from "@/components/ui";
 import { forgotPasswordResetService } from "@/services/auth";
 import { useForgotPasswordStore } from "@/store/auth";
 import { routes } from "@/routes";
 
-const formSchema = z
-  .object({
-    otp: z.string().length(6, "Please enter all 6 digits."),
-    password: z.string().min(8, "Password must be at least 8 characters."),
-    confirm_password: z.string(),
-  })
-  .refine((data) => data.password === data.confirm_password, {
-    message: "Passwords do not match.",
-    path: ["confirm_password"],
-  });
-
-type ResetFormValues = z.infer<typeof formSchema>;
-
 export default function ForgotPasswordReset() {
+  // state
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // hooks
   const { email } = useForgotPasswordStore();
   const router = useRouter();
 
-  const form = useForm<ResetFormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ForgotPasswordResetValues>({
+    resolver: zodResolver(forgotPasswordResetSchema),
     mode: "all",
     defaultValues: {
       otp: "",
@@ -44,7 +42,8 @@ export default function ForgotPasswordReset() {
     },
   });
 
-  function onSubmit(data: ResetFormValues) {
+  // functions
+  function onSubmit(data: ForgotPasswordResetValues) {
     setLoading(true);
     forgotPasswordResetService({
       email: email ?? "",

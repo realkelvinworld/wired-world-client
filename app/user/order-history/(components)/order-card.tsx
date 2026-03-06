@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BagIcon,
   CalendarBlankIcon,
   CheckCircleIcon,
   ClockIcon,
@@ -78,7 +79,7 @@ export function OrderCard({ order, isLast }: OrderCardProps) {
   const config = getStatusConfig(order.status);
   const StatusIcon = config.icon;
   const totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0);
-  const itemNames = order.items.map((i) => i.item__name).join(", ");
+  const itemNames = order.items;
   const shortId = order.order_id.split("-")[0].toUpperCase();
 
   const date = new Date(order.created);
@@ -127,7 +128,16 @@ export function OrderCard({ order, isLast }: OrderCardProps) {
             </div>
 
             {/* Item name(s) */}
-            <p className="line-clamp-1 text-sm font-medium">{itemNames}</p>
+            <div>
+              {itemNames.map((n, index) => (
+                <p
+                  className="flex items-center gap-2 text-sm font-medium line-clamp-3 break-all py-1"
+                  key={index}
+                >
+                  <BagIcon size={18} weight="regular" /> {n.item__name}
+                </p>
+              ))}
+            </div>
 
             {/* Meta row */}
             <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">

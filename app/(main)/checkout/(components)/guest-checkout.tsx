@@ -5,8 +5,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 
+import { guestCheckoutSchema, type GuestFormValues } from "@/schemas/checkout";
 import {
   UiButton,
   UiField,
@@ -22,39 +22,22 @@ import { useCartStore } from "@/store/cart";
 
 import AddressFields from "./address-fields";
 
-const schema = z.object({
-  first_name: z.string().min(1, "First name is required"),
-  last_name: z.string().min(1, "Last name is required"),
-  email: z.string().email("Enter a valid email address"),
-  phone: z
-    .string()
-    .min(10, "Enter a valid phone number.")
-    .refine((value) => /^\d+$/.test(value.replace(/\+/g, "")), {
-      message: "Phone number must be numeric.",
-    }),
-  country_id: z.string().min(1, "Select a country"),
-  company_name: z.string().optional(),
-  notes: z.string().optional(),
-  street_address: z.string().min(1, "Street address is required"),
-  apartment: z.string().optional(),
-  city: z.string().min(1, "City is required"),
-  region: z.string().min(1, "Region is required"),
-  zip: z.string().min(1, "ZIP code is required"),
-});
-
-type GuestFormValues = z.infer<typeof schema>;
-
 export default function GuestCheckout() {
+  // state
   const [loading, setLoading] = useState(false);
 
+  // hooks
   const router = useRouter();
-  const { cart } = useCartStore();
+  const { cart, clearCart } = useCartStore();
+
+  // api
   const { data: countriesData, isPending: isCountriesLoading } = useCountry();
 
+  // variables
   const countries = countriesData?.info ?? [];
 
   const form = useForm<GuestFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(guestCheckoutSchema),
     mode: "all",
     defaultValues: {
       first_name: "",
@@ -72,6 +55,7 @@ export default function GuestCheckout() {
     },
   });
 
+  // functions
   function onSubmit(data: GuestFormValues) {
     const cartItems = (cart ?? []).map((c) => ({
       item_id: c.item.id,
@@ -95,7 +79,10 @@ export default function GuestCheckout() {
       cart: cartItems,
     })
       .then((res) => {
-        router.push(res.info.authorization_url);
+        if (res.info.reference) {
+          clearCart();
+          router.push(res.info.authorization_url);
+        }
       })
       .catch(() => {
         toast.error("Failed to place order. Please try again.");

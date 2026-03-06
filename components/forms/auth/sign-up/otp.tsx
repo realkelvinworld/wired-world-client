@@ -5,36 +5,31 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import { UiButton, UiField, UiInputOtp, UiSpinner } from "@/components/ui";
+import { signUpOtpSchema, type SignUpOtpValues } from "@/schemas/auth";
 import { requestEmailService, verifyEmailService } from "@/services/auth";
 import { useResendOtpStore } from "@/store/auth";
 import { routes } from "@/routes";
 
-const formSchema = z.object({
-  otp: z.string().length(6, "Please enter all 6 digits."),
-});
-
-type OtpFormValues = z.infer<typeof formSchema>;
-
 export default function SignUpOtp() {
-  // Hooks
+  // state
+  const [loading, setLoading] = useState(false);
+
+  // hooks
   const router = useRouter();
   const { otpStore, setOtpStore } = useResendOtpStore();
 
-  //   state
-  const [loading, setLoading] = useState(false);
-
-  const form = useForm<OtpFormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignUpOtpValues>({
+    resolver: zodResolver(signUpOtpSchema),
     mode: "all",
     defaultValues: {
       otp: "",
     },
   });
 
-  function onSubmit(data: OtpFormValues) {
+  // functions
+  function onSubmit(data: SignUpOtpValues) {
     setLoading(true);
     verifyEmailService({
       email: otpStore?.email ?? "",

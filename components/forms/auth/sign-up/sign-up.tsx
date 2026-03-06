@@ -5,8 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import * as z from "zod";
+import { toast } from "sonner";
 
+import { signUpFormSchema, type SignUpFormValues } from "@/schemas/auth";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { setAuthCookies } from "@/app/auth/actions";
 import { useCartSync } from "@/hooks/use-cart-sync";
@@ -16,7 +17,6 @@ import { signUpService } from "@/services/auth";
 import { getDeviceInfo } from "@/lib/utils";
 import { useUserStore } from "@/store/user";
 import { routes } from "@/routes";
-import { toast } from "sonner";
 import {
   UiButton,
   UiField,
@@ -26,44 +26,13 @@ import {
 } from "@/components/ui";
 import ErrorState from "@/components/ux/error-state";
 
-const formSchema = z
-  .object({
-    first_name: z
-      .string()
-      .min(2, "First name must be at least 2 characters.")
-      .max(32, "First name must be at most 32 characters."),
-    last_name: z
-      .string()
-      .min(2, "Last name must be at least 2 characters.")
-      .max(32, "Last name must be at most 32 characters."),
-    country_id: z.string(),
-    email: z
-      .string()
-      .min(1, "Email is required.")
-      .email("Please enter a valid email address."),
-    phone: z
-      .string()
-      .min(10, "Enter a valid phone number.")
-      .refine((value) => /^\d+$/.test(value.replace(/\+/g, "")), {
-        message: "Phone number must be numeric.",
-      }),
-    password: z.string().min(8, "Password must be at least 8 characters."),
-    confirm_password: z.string(),
-  })
-  .refine((data) => data.password === data.confirm_password, {
-    message: "Passwords do not match.",
-    path: ["confirm_password"],
-  });
-
-type SignUpFormValues = z.infer<typeof formSchema>;
-
 export default function SignUp() {
-  // State
+  // state
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Hooks
+  // hooks
   const { otpStore } = useResendOtpStore();
   const { data: country, error } = useCountry();
   const { setUser } = useUserStore();
@@ -71,7 +40,7 @@ export default function SignUp() {
   const router = useRouter();
 
   const form = useForm<SignUpFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(signUpFormSchema),
     mode: "all",
     defaultValues: {
       first_name: "",
@@ -84,6 +53,7 @@ export default function SignUp() {
     },
   });
 
+  // functions
   function onSubmit(data: SignUpFormValues) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirm_password, ...rest } = data;

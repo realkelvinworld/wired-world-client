@@ -19,8 +19,13 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  // hooks
   const { add, isAdding } = useCart();
+
+  // state
   const [quantity, setQuantity] = useState(1);
+
+  // variables
   const hasDiscount = parseFloat(product.discount) > 0;
   const inStock = product.stock > 0;
 

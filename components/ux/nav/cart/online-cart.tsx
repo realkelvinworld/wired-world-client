@@ -46,7 +46,7 @@ export function OnlineCart() {
       </UiSheet.SheetTrigger>
       <UiSheet.SheetContent
         side="right"
-        className="w-full max-w-[440px] sm:max-w-[600px] lg:max-w-[550px] overflow-auto"
+        className="w-full max-w-[440px] sm:max-w-[600px] lg:max-w-[550px] overflow-auto "
       >
         <UiSheet.SheetHeader className="pb-4">
           <div className="flex items-center gap-2.5">
@@ -72,7 +72,7 @@ export function OnlineCart() {
         ) : items.length === 0 ? (
           <CartEmpty />
         ) : (
-          <UiScrollArea.ScrollArea className="flex-1 -mx-6 px-6">
+          <UiScrollArea.ScrollArea className="flex-1  px-6">
             <div className="space-y-4 p-6">
               {items.map((item) => (
                 <CartItemCard
@@ -90,7 +90,9 @@ export function OnlineCart() {
           <div className="mt-auto border-t pt-4 space-y-4 px-6 py-10">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Subtotal</span>
-              <span className="text-lg font-bold">{subtotal}</span>
+              <span className="text-lg font-bold">
+                {subtotal.toLocaleString()}
+              </span>
             </div>
             <div className="flex gap-2">
               <UiButton.Button

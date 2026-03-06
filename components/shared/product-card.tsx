@@ -17,18 +17,19 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  /**
-   * Hooks
-   */
+  // hooks
   const { user } = useUserStore();
   const { addItem } = useCartStore();
 
   const { isInWishlist, toggle, isToggling } = useWishlist();
   const { add, isAdding } = useCart();
+
+  // variables
   const hasDiscount = parseFloat(product.discount) > 0;
   const productHref = routes.shop.productDetails(product.id);
   const wishlisted = isInWishlist(product.id);
 
+  // functions
   const handleAddedToCart = (productItem: Product, quantityOfItem: number) => {
     const added = addItem(productItem, quantityOfItem || 1);
     if (added) {

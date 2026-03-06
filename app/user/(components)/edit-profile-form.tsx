@@ -5,15 +5,15 @@ import { PencilSimpleIcon } from "@phosphor-icons/react";
 import { Controller, useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import * as z from "zod";
+import { toast } from "sonner";
 
+import { profileFormSchema, type ProfileFormValues } from "@/schemas/user";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { updateProfileService } from "@/services/user";
 import { useLanguages } from "@/hooks/use-languages";
 import { useCountry } from "@/hooks/use-countries";
 import { useUserStore } from "@/store/user";
 import { UserModel } from "@/models/user";
-import { toast } from "sonner";
 import {
   UiButton,
   UiField,
@@ -23,51 +23,34 @@ import {
   UiSpinner,
 } from "@/components/ui";
 
-const formSchema = z.object({
-  first_name: z
-    .string()
-    .min(2, "First name must be at least 2 characters.")
-    .max(32, "First name must be at most 32 characters."),
-  last_name: z
-    .string()
-    .min(2, "Last name must be at least 2 characters.")
-    .max(32, "Last name must be at most 32 characters."),
-  phone: z
-    .string()
-    .min(10, "Enter a valid phone number.")
-    .refine((value) => /^\d+$/.test(value.replace(/\+/g, "")), {
-      message: "Phone number must be numeric.",
-    }),
-  country_id: z.string().min(1, "Please select a country."),
-  language_id: z.string().min(1, "Please select a language."),
-});
-
-type ProfileFormValues = z.infer<typeof formSchema>;
-
 interface EditProfileFormProps {
   user: UserModel;
 }
 
 export default function EditProfileForm({ user }: EditProfileFormProps) {
+  // state
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { setUser } = useUserStore();
-  const queryClient = useQueryClient();
+  // api
   const { data: countryData } = useCountry();
   const { data: languageData } = useLanguages();
 
+  // hooks
+  const { setUser } = useUserStore();
+  const queryClient = useQueryClient();
+
+  // variables
   const countries = countryData?.info ?? [];
   const languages = languageData?.info ?? [];
 
-  // Find matching IDs from names
   const matchedCountryId =
     countries.find((c) => c.name === user.country)?.id?.toString() ?? "";
   const matchedLanguageId =
     languages.find((l) => l.name === user.language)?.id?.toString() ?? "";
 
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(profileFormSchema),
     mode: "all",
     values: {
       first_name: user.first_name,
@@ -78,6 +61,7 @@ export default function EditProfileForm({ user }: EditProfileFormProps) {
     },
   });
 
+  // functions
   function onSubmit(data: ProfileFormValues) {
     setLoading(true);
     updateProfileService({

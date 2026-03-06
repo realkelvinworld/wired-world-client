@@ -1,32 +1,39 @@
 "use client";
 
 import { PackageIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import { parseAsJson, useQueryState } from "nuqs";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 
 import { getOrderHistoryService } from "@/services/user";
+import { FiltersSchema } from "@/schemas/filters";
 import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
+import UiFilters from "@/components/filters";
 
 import { OrderCard, OrderCardSkeleton } from "./(components)/order-card";
 
 export default function OrderHistoryPage() {
-  const [filters, setFilters] = useState<FiltersInterface>({
-    page: 1,
-    drop: 20,
-  });
+  // state
+  const [filters, setFilters] = useQueryState<FiltersInterface>(
+    "filters",
+    parseAsJson(FiltersSchema).withDefault({ page: 1, drop: 20 }),
+  );
 
+  // api
   const { data, isPending, error } = useQuery({
-    queryKey: ["order-history", filters.page, filters.drop],
+    queryKey: ["order-history", filters],
     queryFn: () =>
       getOrderHistoryService({
         type: "history",
         page: filters.page ?? 1,
         drop: filters.drop ?? 20,
-        filters: {},
+        filters: {
+          search: filters.filters?.search ?? "",
+        },
       }),
   });
 
+  // variables
   const orders = data?.info ?? [];
   const paginationItems = data?.paginator?.items;
   const paginationNext = data?.paginator?.next;
@@ -41,6 +48,16 @@ export default function OrderHistoryPage() {
         <p className="text-sm text-muted-foreground">
           View your past orders and their status.
         </p>
+      </div>
+
+      {/* Search */}
+      <div className="flex items-center gap-2 max-w-sm">
+        <UiFilters.SearchFilter
+          filters={filters}
+          setFilters={setFilters}
+          placeholder="Search orders..."
+        />
+        <UiFilters.ClearFilters filters={filters} setFilters={setFilters} />
       </div>
 
       {/* Loading */}
