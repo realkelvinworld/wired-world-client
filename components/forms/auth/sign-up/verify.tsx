@@ -6,39 +6,30 @@ import { MailboxIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as z from "zod";
 
-import { routes } from "@/routes";
-
+import { verifyEmailSchema, type VerifyFormValues } from "@/schemas/auth";
 import { UiButton, UiField, UiInput, UiSpinner } from "@/components/ui";
 import { requestEmailService } from "@/services/auth";
 import { useResendOtpStore } from "@/store/auth";
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required.")
-    .email("Please enter a valid email address."),
-});
-
-type VerifyFormValues = z.infer<typeof formSchema>;
+import { routes } from "@/routes";
 
 export default function Verify() {
-  // Hooks
+  // state
+  const [loading, setLoading] = useState(false);
+
+  // hooks
   const router = useRouter();
   const { setOtpStore } = useResendOtpStore();
 
-  //   state
-  const [loading, setLoading] = useState(false);
-
   const form = useForm<VerifyFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(verifyEmailSchema),
     mode: "all",
     defaultValues: {
       email: "",
     },
   });
 
+  // functions
   function onSubmit(data: VerifyFormValues) {
     setLoading(true);
     // set temporary data

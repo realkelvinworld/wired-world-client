@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import * as z from "zod";
 
+import { contactFormSchema, type ContactFormValues } from "@/schemas/contact";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { UiField, UiInput } from "@/components/ui";
 import { Button } from "@/components/ui/button";
@@ -13,30 +13,10 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group";
 
-const formSchema = z.object({
-  full_name: z
-    .string()
-    .min(5, "Full name must be at least 5 characters.")
-    .max(32, "Full name must be at most 32 characters."),
-  email: z
-    .string()
-    .min(5, "Email must be at least 5 characters.")
-    .max(32, "Email must be at most 32 characters.")
-    .email("Please enter a valid email address."),
-  phone_number: z
-    .string()
-    .min(10, "Enter a valid mobile number")
-    .refine((value) => /^\d+$/.test(value.replace(/\+/g, "")), {
-      message: "Phone number must be numeric",
-    }),
-  message: z
-    .string()
-    .min(20, "Message must be at least 20 characters.")
-    .max(100, "Message must be at most 100 characters."),
-});
 export default function ContactForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  // hooks
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
     defaultValues: {
       full_name: "",
       email: "",
@@ -45,7 +25,8 @@ export default function ContactForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  // functions
+  function onSubmit(data: ContactFormValues) {
     toast.success("You submitted the following values:", {
       description: (
         <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">

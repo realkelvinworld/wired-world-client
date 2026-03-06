@@ -4,6 +4,7 @@ import {
   CaretLeftIcon,
   CaretRightIcon,
   ChatTeardropTextIcon,
+  GhostIcon,
   StarIcon,
 } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
@@ -24,8 +25,10 @@ interface ProductReviewsProps {
 }
 
 export default function ProductReviews({ itemId }: ProductReviewsProps) {
+  // state
   const [page, setPage] = useState(1);
 
+  // api
   const { data, isPending } = useQuery({
     queryKey: ["product-reviews", itemId, page],
     queryFn: () =>
@@ -37,6 +40,7 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
       }),
   });
 
+  // variables
   const reviews = data?.info ?? [];
   const paginator = data?.paginator;
   const totalItems = paginator?.total_items ?? 0;
@@ -61,7 +65,7 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
       ) : reviews.length === 0 ? (
         <UiCard.Card className="py-12 shadow-none">
           <UiCard.CardContent className="flex flex-col items-center gap-3 text-center">
-            <ChatTeardropTextIcon className="size-10 text-muted-foreground/40" />
+            <GhostIcon className="size-10 text-muted-foreground/40" />
             <p className="text-sm text-muted-foreground">
               No reviews yet. Be the first to review this product.
             </p>

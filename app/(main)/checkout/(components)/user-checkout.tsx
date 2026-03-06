@@ -15,13 +15,19 @@ import { useUserStore } from "@/store/user";
 import AddressSelector from "./address-selector";
 
 export default function UserCheckout() {
-  const router = useRouter();
-  const { user } = useUserStore();
-  const { mutate: placeOrder, isPending } = useUserCheckout();
+  // state
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     null,
   );
 
+  // api
+  const { mutate: placeOrder, isPending } = useUserCheckout();
+
+  // hooks
+  const router = useRouter();
+  const { user } = useUserStore();
+
+  // functions
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!selectedAddressId) return;
@@ -35,7 +41,7 @@ export default function UserCheckout() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Account info — read only */}
-      <UiCard.Card>
+      <UiCard.Card className="shadow-none">
         <UiCard.CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <UserIcon className="size-4 text-muted-foreground" />
@@ -69,7 +75,7 @@ export default function UserCheckout() {
       </UiCard.Card>
 
       {/* Address */}
-      <UiCard.Card>
+      <UiCard.Card className="shadow-none">
         <UiCard.CardHeader className="pb-3">
           <UiCard.CardTitle className="text-base">
             Delivery Address

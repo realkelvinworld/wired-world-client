@@ -14,14 +14,17 @@ import ProductGallery from "./(components)/product-gallery";
 import ProductInfo from "./(components)/product-info";
 
 export default function ProductDetailPage() {
+  // hooks
   const { id } = useParams<{ id: string }>();
 
+  // api
   const { data, isPending, error } = useQuery({
     queryKey: ["product-detail", id],
     queryFn: () => getProductsDetailsService({ type: "item", id: Number(id) }),
     enabled: !!id,
   });
 
+  // variables
   const product = data?.info;
 
   if (isPending) return <ProductDetailSkeleton />;

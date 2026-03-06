@@ -11,13 +11,13 @@ import { useRegions } from "@/hooks/use-regions";
 import { KitchenTwo } from "@/public/images";
 
 export default function ShowroomsPage() {
-  // State
+  // state
   const [activeRegion, setActiveRegion] = useQueryState(
     "activeRegion",
     parseAsIndex.withDefault(1),
   );
 
-  // Hooks
+  // hooks
   const {
     data: regionsData,
     isPending: regionsLoading,
@@ -30,6 +30,7 @@ export default function ShowroomsPage() {
     error: showroomsError,
   } = useShowrooms(activeRegion);
 
+  // variables
   const regions = regionsData?.info;
   const showrooms = showroomsData?.info;
 

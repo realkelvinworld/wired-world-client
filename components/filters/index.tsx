@@ -41,8 +41,13 @@ export function SearchFilter({
   const externalSearch = filters.filters?.search ?? "";
   const [localValue, setLocalValue] = useState(externalSearch);
 
-  if (localValue !== externalSearch && externalSearch === "") {
-    setLocalValue("");
+  // derived-state pattern: reset local input when external search is cleared
+  const [prevExternalSearch, setPrevExternalSearch] = useState(externalSearch);
+  if (prevExternalSearch !== externalSearch) {
+    setPrevExternalSearch(externalSearch);
+    if (externalSearch === "") {
+      setLocalValue("");
+    }
   }
 
   const debouncedUpdate = useMemo(
@@ -70,7 +75,7 @@ export function SearchFilter({
       <UiInput.Input
         type="text"
         placeholder={placeholder}
-        className="pl-9 rounded-full"
+        className="pl-9 rounded-md max-w-80"
         value={localValue}
         onChange={(e) => {
           setLocalValue(e.target.value);

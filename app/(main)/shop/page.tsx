@@ -10,7 +10,6 @@ import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
 import UiFilters from "@/components/filters";
 import { KichenFour } from "@/public/images";
-
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
 
@@ -24,8 +23,6 @@ export default function ShopPage() {
     "sorting_order",
     parseAsString.withDefault(""),
   );
-
-  // hooks
 
   // api
   const { data, isPending, error, refetch } = useQuery({
@@ -53,7 +50,7 @@ export default function ShopPage() {
       <div className="mx-auto ma-wx-7xl px-4 py-12">
         <PageHeader img={KichenFour.src} title="shop/products" />
         {/* Mobile: sticky search + filter trigger */}
-        <div className="sticky top-20 z-30 flex items-center gap-2 bg-background pb-4 w-full">
+        <div className="sticky top-15 z-30 flex items-center gap-2 bg-background py-4 w-full">
           <UiFilters.SearchFilter
             filters={filters}
             setFilters={setFilters}

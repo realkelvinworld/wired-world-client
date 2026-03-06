@@ -24,7 +24,7 @@ export default function QuickNav() {
 
   return (
     <UiCard.Card
-      className={`fixed bottom-5 right-5 z-50 px-2.5 py-4 backdrop-blur-sm bg-background/90 transition-all duration-500 ${
+      className={`fixed bottom-5 right-5 z-50 px-2.5 py-4 backdrop-blur-sm bg-background/90 transition-all duration-500  hidden lg:flex md:flex ${
         scrolled
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-4 pointer-events-none"
