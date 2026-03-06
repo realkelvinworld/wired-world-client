@@ -1,3 +1,9 @@
+<!--
+  These are the agreed-upon patterns and conventions for this project.
+  All development on the WiredWorld client should follow these guidelines.
+  If you're touching this codebase — these are the rules, no exceptions.
+-->
+
 # WiredWorld Client
 
 ## Tech Stack
