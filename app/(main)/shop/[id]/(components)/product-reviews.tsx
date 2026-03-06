@@ -20,6 +20,8 @@ import {
   UiSkeleton,
 } from "@/components/ui";
 
+import ReviewModal from "./review-modal";
+
 interface ProductReviewsProps {
   itemId: number;
 }
@@ -58,6 +60,9 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
         <UiBadge.Badge variant="outline" className="rounded-full">
           {totalItems}
         </UiBadge.Badge>
+        <div className="ml-auto">
+          <ReviewModal itemId={itemId} />
+        </div>
       </div>
 
       {isPending ? (
