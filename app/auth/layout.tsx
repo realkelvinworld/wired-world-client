@@ -3,8 +3,10 @@ import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Sign in or create an account.",
+  title: "Account Access — WiredWorld Ghana",
+  description:
+    "Sign in or create a Wired World (WiredWorld) account to start shopping Ghana's premier online electronics store.",
+  robots: { index: false, follow: false },
 };
 
 export default async function Layout({

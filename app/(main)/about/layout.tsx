@@ -1,25 +1,38 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title:
+    "About Us | Wired World Limited \u2014 Ghana's Online Electronics Store",
   description:
-    "Wired World Limited is a premier online retail electronics company based in Accra, Ghana. Founded in 2020, we deliver quality consumer electronics from trusted brands like Samsung, LG, Sony, TCL, Midea, and Nasco to individuals, businesses, and institutions nationwide.",
+    "Learn about Wired World Limited (WiredWorld) \u2014 Ghana's premier online electronics retailer founded in 2020. Our mission is to empower individuals, SMEs, schools, hotels, and corporations across Ghana through access to the world's best technology at competitive prices. Authentic products, nationwide delivery, world-class service.",
   keywords: [
+    "about Wired World",
     "about WiredWorld",
     "Wired World Limited",
+    "Wired World Ghana",
+    "Wired World history",
+    "WiredWorld founded 2020",
     "electronics company Ghana",
     "online electronics retailer Accra",
     "consumer electronics Ghana",
-    "WiredWorld history",
     "Ghanaian electronics business",
     "trusted electronics brands Ghana",
     "B2B electronics Ghana",
+    "SME electronics Ghana",
+    "corporate electronics Ghana",
+    "electronics for schools Ghana",
+    "electronics for hotels Ghana",
+    "government electronics Ghana",
+    "authorized brand distributor Ghana",
+    "authentic electronics Ghana",
+    "nationwide delivery electronics Ghana",
     "buy electronics online Accra",
   ],
   openGraph: {
-    title: "About Us \u2014 WiredWorld",
+    title:
+      "About Wired World Limited (WiredWorld) \u2014 Ghana's Electronics Store",
     description:
-      "Ghana\u2019s premier online electronics destination. Authentic products from Samsung, LG, Sony & more \u2014 competitive pricing, nationwide delivery, and world-class customer service since 2020.",
+      "Ghana's premier online electronics destination since 2020. Authentic products, nationwide delivery, competitive pricing, and world-class B2B and corporate procurement services.",
   },
 };
 

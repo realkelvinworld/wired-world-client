@@ -37,10 +37,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <img
             src={product.brand__logo}
             alt={product.brand__name}
-            width={24}
-            height={24}
+            width={40}
+            height={40}
             loading="lazy"
-            className="size-6 object-contain"
+            className="size-14 object-contain"
           />
         )}
         <span className="text-sm text-muted-foreground">
@@ -53,22 +53,16 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {product.name}
       </h1>
 
-      {/* Rating */}
-      <div className="flex items-center gap-1">
-        {Array.from({ length: 5 }, (_, i) => (
-          <StarIcon
-            key={i}
-            weight={i < product.rating ? "fill" : "regular"}
-            className={
-              i < product.rating
-                ? "size-5 text-yellow-500"
-                : "size-5 text-muted-foreground/40"
-            }
-          />
-        ))}
-        <span className="ml-1 text-sm text-muted-foreground">
-          {product.rating}/5
-        </span>
+      {/* Category */}
+      <div>
+        <p className="text-base text-muted-foreground">
+          {product.category__main_category__name} &rsaquo;{" "}
+          {product.category__name}
+        </p>
+        <p className="text-base text-muted-foreground">
+          <span className="font-semibold text-foreground">SKU:</span>{" "}
+          {product.sku}
+        </p>
       </div>
 
       {/* Price */}
@@ -130,16 +124,24 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
       <UiSeparator.Separator />
 
-      {/* Category */}
       <div className="space-y-1">
-        <p className="text-xs text-muted-foreground">
-          {product.category__main_category__name} &rsaquo;{" "}
-          {product.category__name}
-        </p>
-        <p className="text-xs text-muted-foreground">
-          <span className="font-semibold text-foreground">SKU:</span>{" "}
-          {product.sku}
-        </p>
+        {/* Rating */}
+        <div className="flex items-center gap-1">
+          {Array.from({ length: 5 }, (_, i) => (
+            <StarIcon
+              key={i}
+              weight={i < product.rating ? "fill" : "regular"}
+              className={
+                i < product.rating
+                  ? "size-5 text-yellow-500"
+                  : "size-5 text-muted-foreground/40"
+              }
+            />
+          ))}
+          <span className="ml-1 text-sm text-muted-foreground">
+            {product.rating}/5
+          </span>
+        </div>
       </div>
 
       {/* Quantity + Action */}

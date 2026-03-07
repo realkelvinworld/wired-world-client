@@ -1,21 +1,27 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Checkout",
+  title: "Checkout | Secure Payment — WiredWorld Ghana",
   description:
-    "Complete your WiredWorld purchase securely. Review your cart, enter your delivery address, choose a payment method, and confirm your order. We support multiple payment options and offer fast, reliable delivery across Ghana.",
+    "Complete your Wired World (WiredWorld) purchase securely. We accept Mobile Money (MTN MoMo, Vodafone Cash), bank transfers, card payments, and pay on delivery. Fast, reliable nationwide delivery across Ghana.",
   keywords: [
-    "checkout",
-    "buy electronics",
-    "secure payment",
-    "online order",
-    "delivery Ghana",
     "WiredWorld checkout",
+    "Wired World checkout",
+    "buy electronics Ghana",
+    "secure online payment Ghana",
+    "Mobile Money electronics Ghana",
+    "MTN MoMo payment Ghana",
+    "Vodafone Cash payment Ghana",
+    "pay on delivery Ghana",
+    "bank transfer electronics Ghana",
+    "card payment electronics Ghana",
+    "online order Ghana",
+    "delivery Ghana",
   ],
   openGraph: {
-    title: "Checkout — WiredWorld",
+    title: "Checkout — Wired World (WiredWorld)",
     description:
-      "Securely complete your purchase with multiple payment options and fast delivery.",
+      "Securely complete your purchase. Mobile Money, card, bank transfer & pay on delivery accepted. Fast nationwide delivery.",
   },
   robots: {
     index: false,

@@ -28,6 +28,8 @@ export function useCart() {
 
   const items = data?.info?.items ?? [];
   const subtotal = data?.info?.subtotal ?? "";
+  const fees = data?.info?.fees ?? "";
+  const total = data?.info?.total ?? "";
   const promoApplied = data?.info?.promo_applied ?? null;
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -66,6 +68,8 @@ export function useCart() {
   return {
     items,
     subtotal,
+    fees,
+    total,
     promoApplied,
     itemCount,
     isPending,

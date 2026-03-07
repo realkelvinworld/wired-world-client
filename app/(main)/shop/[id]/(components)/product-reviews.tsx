@@ -21,6 +21,7 @@ import {
 } from "@/components/ui";
 
 import ReviewModal from "./review-modal";
+import { useUserStore } from "@/store/user";
 
 interface ProductReviewsProps {
   itemId: number;
@@ -41,6 +42,9 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
         drop: 5,
       }),
   });
+
+  // Hooks
+  const { user } = useUserStore();
 
   // variables
   const reviews = data?.info ?? [];
@@ -72,7 +76,10 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
           <UiCard.CardContent className="flex flex-col items-center gap-3 text-center">
             <GhostIcon className="size-10 text-muted-foreground/40" />
             <p className="text-sm text-muted-foreground">
-              No reviews yet. Be the first to review this product.
+              No reviews yet.{" "}
+              {user
+                ? "Be the first to review this product."
+                : "Sign in to review this product."}
             </p>
           </UiCard.CardContent>
         </UiCard.Card>

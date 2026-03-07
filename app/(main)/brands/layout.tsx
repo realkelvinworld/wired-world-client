@@ -1,25 +1,43 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Brands",
+  title: "Our Brands | Authorized Electronics Partners — Wired World Ghana",
   description:
-    "Explore our curated selection of trusted electronics brands including LG, Samsung, Sony, TCL, Midea, and Nasco. Each brand is chosen for its quality, innovation, and reliability — so you can shop with confidence knowing every product meets our standards.",
+    "Wired World Limited (WiredWorld) is an authorized retailer of Samsung, LG, Sony, TCL, Midea, Nasco, Sigma, Electrolux, MDV, Audiio, Bruhm, Pearl, Innova, Ariston, Tesla, JBL, and Harman. Every product is 100% genuine, sourced from authorized distributors and backed by full manufacturer warranties.",
   keywords: [
-    "electronics brands",
-    "LG",
+    "Wired World brands",
+    "WiredWorld brands",
+    "authorized electronics brands Ghana",
+    "genuine electronics Ghana",
+    "authentic electronics brands",
+    "Samsung authorized retailer Ghana",
+    "LG authorized retailer Ghana",
+    "Sony authorized retailer Ghana",
     "Samsung",
+    "LG",
     "Sony",
     "TCL",
     "Midea",
     "Nasco",
-    "trusted brands",
-    "brand catalogue",
-    "WiredWorld brands",
+    "Sigma",
+    "Electrolux",
+    "MDV",
+    "Audiio",
+    "Bruhm",
+    "Pearl",
+    "Innova",
+    "Ariston",
+    "Tesla",
+    "JBL",
+    "Harman",
+    "manufacturer warranty Ghana",
+    "brand catalogue Ghana",
+    "trusted electronics brands Ghana",
   ],
   openGraph: {
-    title: "Brands — WiredWorld",
+    title: "Authorized Brands — Wired World (WiredWorld) Ghana",
     description:
-      "Discover the top electronics brands we carry. From LG and Samsung to Sony and TCL — quality you can trust, all in one place.",
+      "Discover the full lineup of authorized brands we carry — Samsung, LG, Sony, TCL, Midea, Nasco, JBL, Ariston & more. 100% genuine products backed by manufacturer warranties.",
   },
 };
 

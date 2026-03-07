@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Log-in",
-  description: "Sign in to your WiredWorld account.",
+  title: "Log In",
+  description:
+    "Sign in to your Wired World (WiredWorld) account to access your orders, wishlist, and saved addresses.",
+  robots: { index: false, follow: false },
 };
 
 export default function Layout({

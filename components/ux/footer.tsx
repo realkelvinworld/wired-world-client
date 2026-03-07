@@ -38,7 +38,6 @@ const footerSections = [
     title: "Company",
     links: [
       { label: "About", href: routes.about },
-      { label: "Blog", href: routes.blog },
 
       { label: "Contact Sales", href: routes.contact },
     ],

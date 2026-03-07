@@ -18,6 +18,8 @@ export interface SummaryItem {
 interface OrderSummaryProps {
   items: SummaryItem[];
   subtotal: string;
+  fees?: string;
+  total?: string;
   promoApplied?: string | null;
   onApplyPromo?: (code: string) => void;
   onRemovePromo?: () => void;
@@ -28,6 +30,8 @@ interface OrderSummaryProps {
 export default function OrderSummary({
   items,
   subtotal,
+  fees,
+  total,
   promoApplied,
   onApplyPromo,
   onRemovePromo,
@@ -100,13 +104,27 @@ export default function OrderSummary({
         <UiSeparator.Separator />
 
         {/* Totals */}
-        <div className="flex justify-between text-sm font-semibold">
-          <span>Subtotal</span>
-          <span>{subtotal}</span>
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Subtotal</span>
+            <span>{subtotal}</span>
+          </div>
+          {fees && (
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Fees</span>
+              <span>{fees}</span>
+            </div>
+          )}
+          {total && (
+            <>
+              <UiSeparator.Separator />
+              <div className="flex justify-between text-sm font-semibold">
+                <span>Total</span>
+                <span>{total}</span>
+              </div>
+            </>
+          )}
         </div>
-        <p className="text-xs text-muted-foreground">
-          Fees and final total are calculated at payment.
-        </p>
       </UiCard.CardContent>
     </UiCard.Card>
   );
