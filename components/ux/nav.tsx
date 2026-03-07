@@ -21,6 +21,7 @@ import {
 import { SearchProducts } from "./nav/search-products";
 import { Wishlist } from "./nav/wishlist";
 import { Cart } from "./nav/cart";
+import { useRouter } from "next/navigation";
 
 const navLinkClass =
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none bg-transparent";
@@ -28,6 +29,7 @@ const navLinkClass =
 export default function Navbar() {
   // hooks
   const { data } = useNavBar();
+  const { push } = useRouter();
 
   // state
   const [activeCategory, setActiveCategory] = useState(0);
@@ -291,6 +293,18 @@ export default function Navbar() {
           <SearchProducts />
 
           {user && <Wishlist />}
+          {user && (
+            <UiButton.Button
+              variant={"outline"}
+              size={"icon"}
+              className="rounded-full"
+              onClick={() => {
+                push(routes.user.compare);
+              }}
+            >
+              <Icon.ArrowsClockwiseIcon />
+            </UiButton.Button>
+          )}
           {!hydrated ? (
             <UiSpinner.Spinner className="size-5" />
           ) : user ? (

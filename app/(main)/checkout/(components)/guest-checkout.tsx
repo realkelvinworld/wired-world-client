@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { toast } from "sonner";
 
 import { guestCheckoutSchema, type GuestFormValues } from "@/schemas/checkout";
@@ -12,6 +12,7 @@ import {
   UiField,
   UiInput,
   UiSelect,
+  UiSkeleton,
   UiSpinner,
   UiTextArea,
 } from "@/components/ui";

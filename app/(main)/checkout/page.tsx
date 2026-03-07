@@ -1,10 +1,12 @@
 "use client";
 
 import { ShoppingBagIcon, ArrowLeftIcon } from "@phosphor-icons/react";
+import { useSyncExternalStore } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-import { UiButton } from "@/components/ui";
-import { formatPrice } from "@/lib/format-price";
+import { UiButton, UiSkeleton } from "@/components/ui";
+import { previewCartService } from "@/services/user";
 import { useCartStore } from "@/store/cart";
 import { useCart } from "@/hooks/use-cart";
 import { routes } from "@/routes";
@@ -14,11 +16,20 @@ import GuestCheckout from "./(components)/guest-checkout";
 import UserCheckout from "./(components)/user-checkout";
 
 function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const storeHydrated = useSyncExternalStore(
+    (cb) => useCartStore.persist.onFinishHydration(cb),
+    () => useCartStore.persist.hasHydrated(),
+    () => false,
+  );
+  const hydrated = storeHydrated;
+
   // hooks
   const { cart: localCart } = useCartStore();
   const {
     items: serverItems,
     subtotal: serverSubtotal,
+    fees: serverFees,
+    total: serverTotal,
     promoApplied,
     applyPromo,
     removePromo,
@@ -27,9 +38,27 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
     isPending,
   } = useCart();
 
+  // api
+  const { data: previewData, isPending: isPreviewPending } = useQuery({
+    queryKey: [
+      "cart-preview",
+      (localCart ?? []).map((c) => `${c.item.id}:${c.quantity}`).join(","),
+    ],
+    queryFn: () =>
+      previewCartService(
+        (localCart ?? []).map((c) => ({
+          item_id: c.item.id,
+          quantity: c.quantity,
+        })),
+      ),
+    enabled: !isLoggedIn && (localCart?.length ?? 0) > 0,
+  });
+
   // variables
   let summaryItems: SummaryItem[];
   let subtotal: string;
+  let fees: string | undefined;
+  let total: string | undefined;
 
   if (isLoggedIn) {
     summaryItems = (serverItems ?? []).map((i) => ({
@@ -42,28 +71,32 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
       quantity: i.quantity,
     }));
     subtotal = serverSubtotal;
+    fees = serverFees || undefined;
+    total = serverTotal || undefined;
   } else {
-    summaryItems = (localCart ?? []).map((c) => ({
-      id: c.item.id,
-      name: c.item.name,
-      brand: c.item.brand__name,
-      image: c.item.images[0],
-      currency: c.item.currency,
-      price: c.item.on_promotion ? c.item.discounted_price : c.item.price,
-      quantity: c.quantity,
+    const previewItems = previewData?.info?.items ?? [];
+    summaryItems = previewItems.map((i) => ({
+      id: i.item__id,
+      name: i.item__name,
+      brand: i.item__brand__name,
+      image: i.item__images[0],
+      currency: i.item__currency,
+      price: i.item__on_promotion ? i.item__discounted_price : i.item__price,
+      quantity: i.quantity,
     }));
-    const rawTotal = (localCart ?? []).reduce((sum, c) => {
-      const unitPrice = parseFloat(
-        c.item.on_promotion ? c.item.discounted_price : c.item.price,
-      );
-      return sum + unitPrice * c.quantity;
-    }, 0);
-    subtotal = localCart?.length
-      ? formatPrice(localCart[0].item.currency, rawTotal.toFixed(2))
-      : "";
+    subtotal = previewData?.info?.subtotal ?? "";
+    fees = previewData?.info?.fees;
+    total = previewData?.info?.total;
   }
 
-  const isEmpty = summaryItems.length === 0;
+  const isEmpty = isLoggedIn
+    ? serverItems.length === 0
+    : (localCart?.length ?? 0) === 0;
+
+  // consditions
+  if (!hydrated || isPending) {
+    return <UiSkeleton.Skeleton className="h-96 w-full" />;
+  }
 
   if (isEmpty) {
     return (
@@ -92,15 +125,21 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
 
       {/* Right — order summary (sticky on desktop) */}
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <OrderSummary
-          items={summaryItems}
-          subtotal={subtotal}
-          promoApplied={isLoggedIn ? promoApplied : null}
-          onApplyPromo={isLoggedIn ? applyPromo : undefined}
-          onRemovePromo={isLoggedIn ? () => removePromo() : undefined}
-          isApplyingPromo={isApplyingPromo}
-          isRemovingPromo={isRemovingPromo}
-        />
+        {!isLoggedIn && isPreviewPending ? (
+          <UiSkeleton.Skeleton className="h-96 w-full rounded-xl" />
+        ) : (
+          <OrderSummary
+            items={summaryItems}
+            subtotal={subtotal}
+            fees={fees}
+            total={total}
+            promoApplied={isLoggedIn ? promoApplied : null}
+            onApplyPromo={isLoggedIn ? applyPromo : undefined}
+            onRemovePromo={isLoggedIn ? () => removePromo() : undefined}
+            isApplyingPromo={isApplyingPromo}
+            isRemovingPromo={isRemovingPromo}
+          />
+        )}
       </div>
     </div>
   );

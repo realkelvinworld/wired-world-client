@@ -13,22 +13,24 @@ import {
 } from "@/components/ui";
 import { formatPrice } from "@/lib/format-price";
 import { useCartStore } from "@/store/cart";
-import { OrderItem } from "@/models/order";
-import { routes } from "@/routes";
 import { Product } from "@/models/product";
+import { routes } from "@/routes";
 
 export function LocalCart() {
+  // Hooks
   const { cart, removeItem, clearCart } = useCartStore();
 
+  // variables
   const items = cart ?? [];
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
-  const currency = items[0]?.item.currency ?? "GHS";
-  const subtotal = items.reduce((sum, item) => {
-    const price = parseFloat(item.item.discounted_price || item.item.price);
-    return sum + price * item.quantity;
-  }, 0);
+  // const currency = items[0]?.item.currency ?? "GHS";
+  // const subtotal = items.reduce((sum, item) => {
+  //   const price = parseFloat(item.item.discounted_price || item.item.price);
+  //   return sum + price * item.quantity;
+  // }, 0);
 
+  // functions
   function handleRemove(productId: number) {
     removeItem(productId);
     toast.success("Removed from cart");
@@ -96,12 +98,12 @@ export function LocalCart() {
 
         {items.length > 0 && (
           <div className="mt-auto border-t pt-4 space-y-4 px-6 py-10">
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Subtotal</span>
               <span className="text-lg font-bold">
                 {formatPrice(currency, subtotal.toLocaleString())}
               </span>
-            </div>
+            </div> */}
             <div className="flex gap-2">
               <UiButton.Button
                 variant="destructive"

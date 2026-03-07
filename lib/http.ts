@@ -65,6 +65,9 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
   // Strip empty string values from request body
   const apiParams = (config.data as Record<string, unknown>) ?? {};
+  if (Array.isArray(config.data)) {
+    return config;
+  }
   const cleanedParams: Record<string, unknown> = {};
 
   Object.entries(apiParams).forEach(([key, value]) => {

@@ -48,13 +48,13 @@ export default function DashboardShell({
       </div>
 
       <div className="flex flex-wrap gap-2 items-center justify-between">
-        <nav className="flex gap-1">
+        <nav className="flex lg:overflow-hidden overflow-x-auto gap-2 py-2">
           {navItems.map((item) => (
             <UiButton.Button
               key={item.href}
               variant={pathname === item.href ? "default" : "ghost"}
               size="sm"
-              className="rounded-full"
+              className="rounded-full transition-all ease-linear duration-150 active:scale-110"
               asChild
             >
               <Link href={item.href}>{item.label}</Link>
@@ -62,7 +62,9 @@ export default function DashboardShell({
           ))}
         </nav>
 
-        <div className="flex gap-2">
+        <UiSeparator.Separator className="lg:hidden md:hidden block" />
+
+        <div className="flex gap-2 py-2">
           <UiButton.Button
             variant="outline"
             size="sm"

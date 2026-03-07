@@ -12,6 +12,7 @@ import { routes } from "@/routes";
 import { useUserStore } from "@/store/user";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -29,6 +30,7 @@ export function ProductCard({ product }: ProductCardProps) {
     isToggling: isComparePending,
   } = useCompare();
   const { add, isAdding } = useCart();
+  const { push } = useRouter();
 
   // variables
   const hasDiscount = parseFloat(product.discount) > 0;
@@ -66,8 +68,8 @@ export function ProductCard({ product }: ProductCardProps) {
             variant="outline"
             size="icon"
             className="size-9 rounded-full bg-background/80 backdrop-blur-sm"
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
+              push(routes.shop.productDetails(product.id));
             }}
           >
             <Icon.EyeIcon className="size-4" />
@@ -111,15 +113,30 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
           <div className="flex shrink-0 gap-1">
             {user ? (
-              <UiButton.Button
-                variant="ghost"
-                size="icon"
-                className="size-8 rounded-full"
-                onClick={() => add({ id: product.id, quantity: 1 })}
-                disabled={isAdding || product.stock === 0}
-              >
-                <Icon.ShoppingCartIcon className="size-4" />
-              </UiButton.Button>
+              <>
+                <UiButton.Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-8 rounded-full"
+                  onClick={() => add({ id: product.id, quantity: 1 })}
+                  disabled={isAdding || product.stock === 0}
+                >
+                  <Icon.ShoppingCartIcon className="size-4" />
+                </UiButton.Button>
+                <UiButton.Button
+                  variant="ghost"
+                  size="icon"
+                  className={`size-8 rounded-full ${wishlisted ? "text-red-500" : ""}`}
+                  onClick={() => toggle(product.id)}
+                  disabled={isToggling}
+                >
+                  {wishlisted ? (
+                    <Icon.HeartIcon className="size-4" weight="fill" />
+                  ) : (
+                    <Icon.HeartIcon className="size-4" />
+                  )}
+                </UiButton.Button>
+              </>
             ) : (
               <UiButton.Button
                 variant="ghost"
@@ -131,19 +148,6 @@ export function ProductCard({ product }: ProductCardProps) {
                 <Icon.ShoppingCartIcon className="size-4" />
               </UiButton.Button>
             )}
-            <UiButton.Button
-              variant="ghost"
-              size="icon"
-              className={`size-8 rounded-full ${wishlisted ? "text-red-500" : ""}`}
-              onClick={() => toggle(product.id)}
-              disabled={isToggling}
-            >
-              {wishlisted ? (
-                <Icon.HeartIcon className="size-4" weight="fill" />
-              ) : (
-                <Icon.HeartIcon className="size-4" />
-              )}
-            </UiButton.Button>
           </div>
         </div>
 

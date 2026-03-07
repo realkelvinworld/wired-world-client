@@ -1,12 +1,20 @@
 "use client";
 
+import {
+  MapPinIcon,
+  PhoneIcon,
+  EnvelopeSimpleIcon,
+  WhatsappLogoIcon,
+  ClockIcon,
+} from "@phosphor-icons/react";
+import { useState } from "react";
+
 import { KitchenOne } from "@/public/images";
-import { UiBadge } from "@/components/ui";
+import { UiBadge, UiSeparator } from "@/components/ui";
 
 import { TransitionPanel } from "@/components/motion-primitives/transition-panel";
 import LoadingLayout from "@/components/animations/loading-layout";
 import ContactForm from "@/components/forms/contact/contact-form";
-import { useState } from "react";
 
 const TABSANDCONTENT = [
   {
@@ -66,6 +74,116 @@ export default function ContactPage() {
             <ContactForm />
           </div>
         </section>
+
+        {/* Contact Details */}
+        <div className="lg:mt-20 mt-12">
+          <h2 className="text-4xl font-bold tracking-tight">
+            <span className="text-primary">Call</span> us / Get in{" "}
+            <span className="text-primary">Touch</span>
+          </h2>
+          <p className="mt-2 text-muted-foreground max-w-xl">
+            Reach us directly — we&apos;re available for general enquiries and
+            B2B corporate sales.
+          </p>
+
+          <div className="mt-8 grid sm:grid-cols-2 gap-6">
+            {/* General Enquiries */}
+            <div className="rounded-2xl border p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                General Enquiries
+              </p>
+              <UiSeparator.Separator />
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">Accra, Ghana</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <div className="space-y-1">
+                    <a
+                      href="tel:+233551105055"
+                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                    >
+                      +233 (0) 55 110 5055
+                    </a>
+                    <a
+                      href="tel:+233551105055"
+                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                    >
+                      +233 (0) 55 110 5055
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <a
+                    href="mailto:support@wiredworldgh.com"
+                    className="text-sm hover:text-primary transition-colors"
+                  >
+                    support@wiredworldgh.com
+                  </a>
+                </div>
+                <div className="flex items-start gap-3">
+                  <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">WhatsApp Business Available</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">Mon–Sat: 8:00 AM – 6:00 PM</span>
+                </div>
+              </div>
+            </div>
+
+            {/* B2B & Corporate Sales */}
+            <div className="rounded-2xl border p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                B2B &amp; Corporate Sales
+              </p>
+              <UiSeparator.Separator />
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">Accra, Ghana</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <div className="space-y-1">
+                    <a
+                      href="tel:+233551105055"
+                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                    >
+                      +233 (0) 55 110 5055
+                    </a>
+                    <a
+                      href="tel:+233551105055"
+                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                    >
+                      +233 (0) 55 110 5055
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <a
+                    href="mailto:support@wiredworldgh.com"
+                    className="text-sm hover:text-primary transition-colors"
+                  >
+                    support@wiredworldgh.com
+                  </a>
+                </div>
+                <div className="flex items-start gap-3">
+                  <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">WhatsApp Business Available</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">Mon–Sat: 8:00 AM – 6:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Location */}
         <div className="lg:mt-20 mt-10">

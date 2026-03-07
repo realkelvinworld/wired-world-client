@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions",
+  title: "Terms & Conditions | Wired World Limited",
   description:
-    "Read the WiredWorld terms and conditions. This page outlines the rules and regulations governing your use of our website, purchase of products, delivery policies, return and refund procedures, warranty information, and your rights and responsibilities as a customer.",
+    "Read the Wired World Limited (WiredWorld) terms and conditions. Covers purchase rules, delivery policies, return and refund procedures, warranty information, and your rights and responsibilities as a customer.",
   keywords: [
-    "terms and conditions",
+    "Wired World terms and conditions",
     "WiredWorld terms",
-    "purchase terms",
-    "return policy",
-    "refund policy",
-    "warranty terms",
+    "purchase terms Ghana",
+    "return policy Ghana",
+    "refund policy Ghana",
+    "warranty terms Ghana",
     "user agreement",
   ],
   openGraph: {
-    title: "Terms & Conditions — WiredWorld",
+    title: "Terms & Conditions — Wired World (WiredWorld)",
     description:
       "Our terms and conditions covering purchases, deliveries, returns, refunds, and warranties.",
   },
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsLayout({
