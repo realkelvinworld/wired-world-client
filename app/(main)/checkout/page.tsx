@@ -14,6 +14,7 @@ import { routes } from "@/routes";
 import OrderSummary, { SummaryItem } from "./(components)/order-summary";
 import GuestCheckout from "./(components)/guest-checkout";
 import UserCheckout from "./(components)/user-checkout";
+import { useUserStore } from "@/store/user";
 
 function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
   const storeHydrated = useSyncExternalStore(
@@ -37,6 +38,7 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
     isRemovingPromo,
     isPending,
   } = useCart();
+  const { user } = useUserStore();
 
   // api
   const { data: previewData, isPending: isPreviewPending } = useQuery({
@@ -94,7 +96,7 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
     : (localCart?.length ?? 0) === 0;
 
   // consditions
-  if (!hydrated || isPending) {
+  if (!hydrated || (user && isPending)) {
     return <UiSkeleton.Skeleton className="h-96 w-full" />;
   }
 

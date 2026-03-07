@@ -81,8 +81,7 @@ export function ProductCard({ product }: ProductCardProps) {
               className={`size-9 rounded-full bg-background/80 backdrop-blur-sm ${
                 compared ? "border-primary text-primary" : ""
               }`}
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 toggleCompare(product.id);
               }}
               disabled={isComparePending(product.id)}
