@@ -94,8 +94,17 @@ export const metadata: Metadata = {
     "MTN MoMo electronics",
     "pay on delivery Ghana",
   ],
-  authors: [{ name: "WiredWorld" }],
-  creator: "WiredWorld",
+  authors: [
+    {
+      name: "Kelvin Kumordzi",
+      url: "https://kelvinworld.com",
+    },
+    {
+      name: "Joel Aryetey",
+      url: "https://damtetechnologies.com",
+    },
+  ],
+  creator: "Damte Technologies",
   publisher: "WiredWorld",
   metadataBase: new URL(siteUrl),
   alternates: {
@@ -140,6 +149,15 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    "application-name": "WiredWorld",
+    "developed-by":
+      "Kelvin Kumordzi & Joel Aryetey — Damte Technologies (https://damtetechnologies.com)",
+    "development-agency": "Damte Technologies",
+    "agency-url": "https://damtetechnologies.com",
+    "engineer-1": "Kelvin Kumordzi",
+    "engineer-2": "Joel Aryetey",
   },
 };
 
