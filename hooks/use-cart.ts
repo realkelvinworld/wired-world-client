@@ -17,13 +17,10 @@ const CART_KEY = ["cart"];
 export function useCart() {
   const queryClient = useQueryClient();
 
-  const hasToken =
-    typeof document !== "undefined" && document.cookie.includes("access_token");
-
   const { data, isPending } = useQuery({
     queryKey: CART_KEY,
     queryFn: () => getCartService(),
-    enabled: hasToken,
+    enabled: true,
   });
 
   const items = data?.info?.items ?? [];

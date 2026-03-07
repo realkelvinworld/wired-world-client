@@ -153,6 +153,7 @@ export default function SignUp() {
                 {...field}
                 id="email"
                 type="email"
+                disabled
                 aria-invalid={fieldState.invalid}
                 placeholder="kelvin@example.com"
                 autoComplete="email"
