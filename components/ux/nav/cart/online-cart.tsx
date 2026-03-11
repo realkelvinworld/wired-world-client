@@ -13,8 +13,8 @@ import {
   UiSheet,
   UiSkeleton,
 } from "@/components/ui";
+import { formatToLocalString } from "@/lib/utils";
 import { useCart } from "@/hooks/use-cart";
-import { formatPrice } from "@/lib/format-price";
 import { CartItem } from "@/models/cart";
 import { routes } from "@/routes";
 
@@ -97,7 +97,7 @@ export function OnlineCart() {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Subtotal</span>
               <span className="text-lg font-bold">
-                {subtotal.toLocaleString()}
+                {formatToLocalString(subtotal)}
               </span>
             </div>
 
@@ -176,11 +176,15 @@ function CartItemCard({
           <div className="space-y-0.5">
             <div className="flex items-baseline gap-2">
               <span className="text-sm font-bold">
-                {formatPrice(item.item__currency, item.item__discounted_price)}
+                {formatToLocalString(
+                  `${item.item__currency} ${item.item__discounted_price}`,
+                )}
               </span>
               {hasDiscount && (
                 <span className="text-xs text-muted-foreground line-through">
-                  {formatPrice(item.item__currency, item.item__price)}
+                  {formatToLocalString(
+                    `${item.item__currency} ${item.item__price}`,
+                  )}
                 </span>
               )}
             </div>

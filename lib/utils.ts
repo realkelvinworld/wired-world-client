@@ -86,6 +86,17 @@ export const formatCompactNumber = (value: number) => {
   }).format(value);
 };
 
-export const formatToLocalString = (value: number) => {
-  return value.toLocaleString();
+export const formatToLocalString = (value: number | string) => {
+  if (typeof value === "number") {
+    return value.toLocaleString();
+  }
+
+  // Extract currency prefix and numeric part e.g. "GHS 12741.19"
+  const match = value.match(/^([A-Z]+)\s([\d.]+)$/);
+  if (!match) return value; // fallback if format is unexpected
+
+  const [, currency, amount] = match;
+  const formatted = parseFloat(amount).toLocaleString();
+
+  return `${currency} ${formatted}`;
 };

@@ -5,14 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
+import { UiButton, UiSkeleton, UiSeparator, UiSpinner } from "@/components/ui";
 import { newAddressSchema, type NewAddressValues } from "@/schemas/checkout";
-import {
-  UiButton,
-  UiCard,
-  UiSkeleton,
-  UiSeparator,
-  UiSpinner,
-} from "@/components/ui";
 import { useAddressActions, useAddresses } from "@/hooks/use-address";
 import { Address } from "@/models/address";
 
@@ -48,7 +42,7 @@ export default function AddressSelector({
   });
 
   // functions
-  function handleAddAddress(data: NewAddressValues) {
+  function onSubmit(data: NewAddressValues) {
     addMutation.mutate(data, {
       onSuccess: () => {
         form.reset();
@@ -79,9 +73,8 @@ export default function AddressSelector({
       {addresses.map((address: Address) => {
         const isSelected = selectedId === address.id;
         return (
-          <button
+          <div
             key={address.id}
-            type="button"
             onClick={() => onSelect(address.id)}
             className={`w-full rounded-xl border p-4 text-left transition-colors ${
               isSelected
@@ -122,7 +115,7 @@ export default function AddressSelector({
                 )}
               </UiButton.Button>
             </div>
-          </button>
+          </div>
         );
       })}
 
@@ -139,44 +132,42 @@ export default function AddressSelector({
           Add new address
         </UiButton.Button>
       ) : (
-        <UiCard.Card className="border-dashed">
-          <UiCard.CardHeader className="pb-3">
-            <UiCard.CardTitle className="text-sm">New Address</UiCard.CardTitle>
-          </UiCard.CardHeader>
-          <UiCard.CardContent>
-            <form
-              onSubmit={form.handleSubmit(handleAddAddress)}
-              className="space-y-4"
-            >
+        <div className="border border-dashed p-6 rounded-xl">
+          <div className="pb-3">
+            <h3 className="text-sm font-semibold">New Address</h3>
+          </div>
+          <div>
+            <div className="space-y-4">
               <AddressFields control={form.control} />
               <UiSeparator.Separator />
-              <div className="flex justify-end gap-2">
-                <UiButton.Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setShowNewForm(false);
-                    form.reset();
-                  }}
-                >
-                  Cancel
-                </UiButton.Button>
-                <UiButton.Button
-                  type="submit"
-                  size="sm"
-                  disabled={addMutation.isPending || !form.formState.isValid}
-                >
-                  {addMutation.isPending ? (
-                    <UiSpinner.Spinner className="text-secondary" />
-                  ) : (
-                    "Save address"
-                  )}
-                </UiButton.Button>
-              </div>
-            </form>
-          </UiCard.CardContent>
-        </UiCard.Card>
+            </div>
+            <div className="flex justify-end gap-2 my-2">
+              <UiButton.Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setShowNewForm(false);
+                  form.reset();
+                }}
+              >
+                Cancel
+              </UiButton.Button>
+              <UiButton.Button
+                type="button"
+                size="sm"
+                disabled={addMutation.isPending || !form.formState.isValid}
+                onClick={form.handleSubmit(onSubmit)}
+              >
+                {addMutation.isPending ? (
+                  <UiSpinner.Spinner className="text-secondary" />
+                ) : (
+                  "Save address"
+                )}
+              </UiButton.Button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -4,6 +4,7 @@ import { PackageIcon, TicketIcon, TrashIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { UiButton, UiCard, UiInput, UiSeparator } from "@/components/ui";
+import { formatToLocalString } from "@/lib/utils";
 
 export interface SummaryItem {
   id: number;
@@ -80,7 +81,7 @@ export default function OrderSummary({
                     Qty: {item.quantity}
                   </span>
                   <span className="text-sm font-semibold">
-                    {item.currency} {item.price}
+                    {item.currency} {formatToLocalString(Number(item.price))}
                   </span>
                 </div>
               </div>
@@ -107,12 +108,12 @@ export default function OrderSummary({
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Subtotal</span>
-            <span>{subtotal}</span>
+            <span>{formatToLocalString(subtotal)}</span>
           </div>
           {fees && (
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Fees</span>
-              <span>{fees}</span>
+              <span className="text-muted-foreground">Tax</span>
+              <span>{formatToLocalString(fees)}</span>
             </div>
           )}
           {total && (
@@ -120,7 +121,7 @@ export default function OrderSummary({
               <UiSeparator.Separator />
               <div className="flex justify-between text-sm font-semibold">
                 <span>Total</span>
-                <span>{total}</span>
+                <span>{formatToLocalString(total)}</span>
               </div>
             </>
           )}
