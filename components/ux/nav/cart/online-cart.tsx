@@ -39,10 +39,10 @@ export function OnlineCart() {
     <UiSheet.Sheet>
       <UiSheet.SheetTrigger asChild>
         <UiButton.Button
-          variant="outline"
-          className="relative rounded-full border bg-primary text-white"
+          variant="default"
+          className="relative rounded-full border bg-primary text-white py-5"
         >
-          Cart <ShoppingCartIcon />
+          <span className="hidden lg:block">Cart</span> <ShoppingCartIcon />
           {itemCount > 0 && (
             <UiBadge.Badge className="absolute -top-1.5 -right-1.5 size-5 items-center justify-center rounded-full border-2 border-background bg-destructive px-0 text-[10px] font-bold text-white">
               {itemCount}
