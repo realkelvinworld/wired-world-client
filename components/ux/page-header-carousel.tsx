@@ -3,15 +3,27 @@ import { useEffect, useState, useCallback } from "react";
 import Autoplay from "embla-carousel-autoplay";
 
 import { UiBadge, UiButton, UiCarousel } from "../ui";
+import {
+  AppleImage,
+  HisenseImage,
+  LGImage,
+  SamsungImage,
+  SamsungPhones,
+} from "@/public/images";
+import Image from "next/image";
+import Link from "next/link";
+import { routes } from "@/routes";
 
 export default function PageHeaderCarousel({
   img,
   title,
   badge,
+  url,
 }: {
   img?: string[];
   title?: string;
   badge?: string;
+  url?: string;
 }) {
   const images = img?.length ? img : defaultImg;
   const [api, setApi] = useState<UiCarousel.CarouselApi | null>(null);
@@ -35,27 +47,33 @@ export default function PageHeaderCarousel({
   return (
     <div className="relative">
       <div className="relative">
-        <UiCarousel.Carousel
-          opts={{ loop: true, align: "center" }}
-          plugins={[Autoplay({ delay: 6000, stopOnInteraction: false })]}
-          setApi={setApi}
-          className="lg:w-full w-full"
-        >
-          <UiCarousel.CarouselContent>
-            {images.map((i, index) => (
-              <UiCarousel.CarouselItem key={index}>
-                <div className="relative flex justify-center items-center">
-                  <img
-                    src={i}
-                    alt="Image Tile"
-                    className="w-full object-cover object-center lg:h-100 h-100 rounded-2xl bg-gray-100"
-                  />
-                  <div className="absolute inset-0 bg-black/60 rounded-2xl" />
-                </div>
-              </UiCarousel.CarouselItem>
-            ))}
-          </UiCarousel.CarouselContent>
-        </UiCarousel.Carousel>
+        <Link href={url ? url : routes.brands} className="block">
+          <UiCarousel.Carousel
+            opts={{ loop: true, align: "center" }}
+            plugins={[Autoplay({ delay: 6000, stopOnInteraction: false })]}
+            setApi={setApi}
+            className="lg:w-full w-full "
+          >
+            <UiCarousel.CarouselContent>
+              {images.map((i, index) => (
+                <UiCarousel.CarouselItem key={index}>
+                  <div className="relative flex justify-center items-center">
+                    <Image
+                      src={i}
+                      width={100}
+                      height={100}
+                      unoptimized={true}
+                      loading="lazy"
+                      alt="Image Tile"
+                      className="w-full object-cover object-center lg:h-100 h-100 rounded-2xl bg-gray-100"
+                    />
+                    <div className="absolute inset-0 bg-black/60 rounded-2xl" />
+                  </div>
+                </UiCarousel.CarouselItem>
+              ))}
+            </UiCarousel.CarouselContent>
+          </UiCarousel.Carousel>
+        </Link>
         <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">
           {badge ? badge : "wiredworld."}
         </UiBadge.Badge>
@@ -102,7 +120,9 @@ export default function PageHeaderCarousel({
 }
 
 const defaultImg = [
-  "/images/SAMSUNG-PHONES.jpg",
-  "/images/SONY-IMAGE.jpg",
-  "images/TCL-IMAGE.jpg",
+  LGImage,
+  HisenseImage,
+  SamsungPhones,
+  SamsungImage,
+  AppleImage,
 ];

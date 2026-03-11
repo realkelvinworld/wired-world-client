@@ -8,20 +8,20 @@ import {
   StarIcon,
 } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "@/store/user";
 import { useState } from "react";
 
 import { getProductReviewsService } from "@/services/inventory";
 import { Review } from "@/models/review";
 import {
   UiAvatar,
-  UiBadge,
   UiButton,
+  UiBadge,
   UiCard,
   UiSkeleton,
 } from "@/components/ui";
 
 import ReviewModal from "./review-modal";
-import { useUserStore } from "@/store/user";
 
 interface ProductReviewsProps {
   itemId: number;

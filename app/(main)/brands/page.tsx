@@ -5,19 +5,19 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 
 import { getProductsService } from "@/services/inventory";
+import { useCategories } from "@/hooks/use-categories";
 import { FiltersSchema } from "@/schemas/filters";
 import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
 import { useBrands } from "@/hooks/use-brands";
-import { useCategories } from "@/hooks/use-categories";
 import UiFilters from "@/components/filters";
 
 import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
 
-import BrandSelector from "./(components)/brand-selector";
 import CategorySelector from "./(components)/category-selector";
+import BrandSelector from "./(components)/brand-selector";
 
 export default function BrandsPage() {
   // state

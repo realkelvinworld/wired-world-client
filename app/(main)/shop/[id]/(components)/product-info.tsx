@@ -8,11 +8,14 @@ import {
   XCircleIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { UiBadge, UiButton, UiSeparator, UiSpinner } from "@/components/ui";
-import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
+import { useCartStore } from "@/store/cart";
+import { useUserStore } from "@/store/user";
 import { Product } from "@/models/product";
+import { useCart } from "@/hooks/use-cart";
 
 interface ProductInfoProps {
   product: Product;
@@ -21,6 +24,8 @@ interface ProductInfoProps {
 export default function ProductInfo({ product }: ProductInfoProps) {
   // hooks
   const { add, isAdding } = useCart();
+  const { addItem } = useCartStore();
+  const { user } = useUserStore();
 
   // state
   const [quantity, setQuantity] = useState(1);
@@ -28,6 +33,17 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   // variables
   const hasDiscount = parseFloat(product.discount) > 0;
   const inStock = product.stock > 0;
+
+  // functions
+  const handleAddedToCart = (productItem: Product, quantityOfItem: number) => {
+    const added = addItem(productItem, quantityOfItem || 1);
+    if (added) {
+      setQuantity(1);
+      toast.success("Added to cart");
+    } else {
+      toast.error("Cannot add more than available stock");
+    }
+  };
 
   return (
     <div className="space-y-5">
@@ -170,21 +186,33 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           </UiButton.Button>
         </div>
 
-        <UiButton.Button
-          size="lg"
-          className="flex-1 rounded-full"
-          disabled={!inStock || isAdding}
-          onClick={() => add({ id: product.id, quantity })}
-        >
-          {isAdding ? (
-            <UiSpinner.Spinner className="text-secondary" />
-          ) : (
-            <>
-              <ShoppingCartIcon weight="bold" className="size-5" />
-              Add to cart
-            </>
-          )}
-        </UiButton.Button>
+        {user ? (
+          <UiButton.Button
+            size="lg"
+            className="flex-1 rounded-full"
+            disabled={!inStock || isAdding}
+            onClick={() => add({ id: product.id, quantity })}
+          >
+            {isAdding ? (
+              <UiSpinner.Spinner className="text-secondary" />
+            ) : (
+              <>
+                <ShoppingCartIcon weight="bold" className="size-5" />
+                Add to cart
+              </>
+            )}
+          </UiButton.Button>
+        ) : (
+          <UiButton.Button
+            size="lg"
+            className="flex-1 rounded-full"
+            disabled={!inStock}
+            onClick={() => handleAddedToCart(product, quantity || 1)}
+          >
+            <ShoppingCartIcon weight="bold" className="size-5" />
+            Add to cart
+          </UiButton.Button>
+        )}
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export default function ShopPage() {
   );
 
   // api
-  const { data, isPending, error, refetch } = useQuery({
+  const { data, isPending, error } = useQuery({
     queryKey: ["products", filters, sorting_order],
     queryFn: () =>
       getProductsService({
