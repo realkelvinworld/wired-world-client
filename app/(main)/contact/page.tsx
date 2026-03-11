@@ -10,11 +10,12 @@ import {
 import { useState } from "react";
 
 import { KitchenOne } from "@/public/images";
-import { UiBadge, UiSeparator } from "@/components/ui";
+import { UiBadge, UiSeparator, UiSpinner } from "@/components/ui";
 
 import { TransitionPanel } from "@/components/motion-primitives/transition-panel";
 import LoadingLayout from "@/components/animations/loading-layout";
 import ContactForm from "@/components/forms/contact/contact-form";
+import { useContacts } from "@/hooks/useContacts";
 
 const TABSANDCONTENT = [
   {
@@ -41,6 +42,14 @@ const TABSANDCONTENT = [
 
 export default function ContactPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { data, error, isPending } = useContacts();
+
+  // variables
+  const contactCardOne = data?.info[0];
+  const cardOneNumbers = contactCardOne?.numbers;
+
+  const contactCardTwo = data?.info[1];
+  const cardTwoNumbers = contactCardTwo?.numbers;
 
   return (
     <LoadingLayout>
@@ -88,100 +97,120 @@ export default function ContactPage() {
 
           <div className="mt-8 grid sm:grid-cols-2 gap-6">
             {/* General Enquiries */}
-            <div className="rounded-2xl border p-6 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                General Enquiries
-              </p>
-              <UiSeparator.Separator />
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <span className="text-sm">Accra, Ghana</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <div className="space-y-1">
+            {isPending && !error ? (
+              <UiSpinner.Spinner />
+            ) : (
+              <div className="rounded-2xl border p-6 space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  General Enquiries
+                </p>
+                <UiSeparator.Separator />
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <span className="text-sm">
+                      {contactCardOne?.location || "Accra, Ghana"}
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <div className="space-y-1">
+                      {cardOneNumbers?.map((number, index) => (
+                        <a
+                          key={index}
+                          href={`tel:${number}`}
+                          className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                        >
+                          {number}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
                     <a
-                      href="tel:+233551105055"
-                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                      href={`mailto:${contactCardOne?.email || "support@wiredworldgh.com"}`}
+                      className="text-sm hover:text-primary transition-colors"
                     >
-                      +233 (0) 55 110 5055
-                    </a>
-                    <a
-                      href="tel:+233551105055"
-                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
-                    >
-                      +233 (0) 55 110 5055
+                      {contactCardOne?.email || "support@wiredworldgh.com"}
                     </a>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <a
-                    href="mailto:support@wiredworldgh.com"
-                    className="text-sm hover:text-primary transition-colors"
-                  >
-                    support@wiredworldgh.com
-                  </a>
-                </div>
-                <div className="flex items-start gap-3">
-                  <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <span className="text-sm">WhatsApp Business Available</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <span className="text-sm">Mon–Sat: 8:00 AM – 6:00 PM</span>
+                  {contactCardOne?.whatsapp_business_available && (
+                    <div className="flex items-start gap-3">
+                      <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                      <span className="text-sm">
+                        WhatsApp Business Available
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex items-start gap-3">
+                    <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <span className="text-sm">
+                      {contactCardOne?.opening_hours ||
+                        "Mon–Sat: 8:00 AM – 6:00 PM"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* B2B & Corporate Sales */}
-            <div className="rounded-2xl border p-6 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                B2B &amp; Corporate Sales
-              </p>
-              <UiSeparator.Separator />
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <span className="text-sm">Accra, Ghana</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <div className="space-y-1">
+            {isPending && !error ? (
+              <UiSpinner.Spinner />
+            ) : (
+              <div className="rounded-2xl border p-6 space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  B2B & CORPORATE SALES
+                </p>
+                <UiSeparator.Separator />
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <span className="text-sm">
+                      {contactCardOne?.location || "Accra, Ghana"}
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <div className="space-y-1">
+                      {cardOneNumbers?.map((number, index) => (
+                        <a
+                          key={index}
+                          href={`tel:${number}`}
+                          className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                        >
+                          {number}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
                     <a
-                      href="tel:+233551105055"
-                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                      href={`mailto:${contactCardOne?.email || "support@wiredworldgh.com"}`}
+                      className="text-sm hover:text-primary transition-colors"
                     >
-                      +233 (0) 55 110 5055
-                    </a>
-                    <a
-                      href="tel:+233551105055"
-                      className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
-                    >
-                      +233 (0) 55 110 5055
+                      {contactCardOne?.email || "support@wiredworldgh.com"}
                     </a>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <a
-                    href="mailto:support@wiredworldgh.com"
-                    className="text-sm hover:text-primary transition-colors"
-                  >
-                    support@wiredworldgh.com
-                  </a>
-                </div>
-                <div className="flex items-start gap-3">
-                  <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <span className="text-sm">WhatsApp Business Available</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                  <span className="text-sm">Mon–Sat: 8:00 AM – 6:00 PM</span>
+                  {contactCardOne?.whatsapp_business_available && (
+                    <div className="flex items-start gap-3">
+                      <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                      <span className="text-sm">
+                        WhatsApp Business Available
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex items-start gap-3">
+                    <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <span className="text-sm">
+                      {contactCardOne?.opening_hours ||
+                        "Mon–Sat: 8:00 AM – 6:00 PM"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 

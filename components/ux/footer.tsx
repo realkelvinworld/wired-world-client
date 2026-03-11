@@ -4,6 +4,7 @@ import {
   XLogoIcon,
   InstagramLogoIcon,
   FacebookLogoIcon,
+  TiktokLogoIcon,
 } from "@phosphor-icons/react";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -59,14 +60,33 @@ const footerSections = [
 ];
 
 export const socialLinks = [
-  { label: "X (fka Twitter)", href: "#", icon: XLogoIcon },
-  { label: "Instagram", href: "#", icon: InstagramLogoIcon },
-  { label: "Facebook", href: "#", icon: FacebookLogoIcon },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@wiredworldltd?_r=1&_t=ZS-94aFyBVYaAP",
+    icon: TiktokLogoIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/wiredworldltd?igsh=MXIyNGM4ajNqaGVydw==",
+    icon: InstagramLogoIcon,
+  },
+  {
+    label: "Snapchat",
+    href: "https://snapchat.com/t/DFYqNv5O",
+    icon: InstagramLogoIcon,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/183BWcSS9A/?mibextid=wwXIfr",
+    icon: FacebookLogoIcon,
+  },
 ];
 
 export default function Footer() {
+  // state
   const [email, setEmail] = useState("");
 
+  // mutations
   const { mutate: subscribe, isPending } = useMutation({
     mutationFn: () => subscribeNewsletterService(email),
     onSuccess: () => {

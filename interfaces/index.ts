@@ -36,6 +36,17 @@ export interface Country {
   image: string;
 }
 
+export interface Contacts {
+  id: number;
+  label: string;
+  location: string;
+  email: string;
+  numbers: string[];
+  whatsapp_business_available: boolean;
+  opening_hours: string;
+  enabled: boolean;
+}
+
 // Login response
 export interface LoginResponse {
   two_factor: string;

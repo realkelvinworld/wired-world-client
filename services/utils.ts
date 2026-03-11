@@ -1,4 +1,4 @@
-import { BaseApiResponse, Country } from "@/interfaces";
+import { BaseApiResponse, Contacts, Country } from "@/interfaces";
 import { Announcement, NavbarData } from "@/models/navbar";
 import { Showroom } from "@/models/showroom";
 import { Region } from "@/models/region";
@@ -8,6 +8,10 @@ import { http } from "../lib/http";
 // verify service
 export const getCountriesService = () =>
   http.post<BaseApiResponse<Country[]>>(`/base/countries/`);
+
+// contact service
+export const getContactService = () =>
+  http.post<BaseApiResponse<Contacts[]>>(`/base/support_contacts/`);
 
 // Navbar
 export const getNavbarService = () =>

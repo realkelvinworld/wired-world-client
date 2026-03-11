@@ -1,29 +1,8 @@
 import React from "react";
 import { InfiniteSlider } from "@/components/motion-primitives/infinite-slider";
 
-import {
-  BekoLogo,
-  BinatoneLogo,
-  BruhmLogo,
-  CromptonLogo,
-  DecakilaLogo,
-  GreeLogo,
-  HavellsLogo,
-  HpLogo,
-  InnovaLogo,
-  KenwoodLogo,
-  LgLogo,
-  MdvLogo,
-  MideaLogo,
-  NascoLogo,
-  NovoLogo,
-  PearlLogo,
-  PhilipsLogo,
-  SamsungLogo,
-  SonyLogo,
-  SyinixLogo,
-  TclLogo,
-} from "@/public/logos";
+import { BekoLogo, BinatoneLogo, BruhmLogo, CromptonLogo, DecakilaLogo, GreeLogo, HavellsLogo, HpLogo, InnovaLogo, KenwoodLogo, LgLogo, MdvLogo, MideaLogo, NascoLogo, NovoLogo, PearlLogo, PhilipsLogo, SamsungLogo, SonyLogo, SyinixLogo, TclLogo,
+} from "@/public/logos"; //prettier-ignore
 import Image from "next/image";
 
 export default function BrandsSlider() {

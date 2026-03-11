@@ -1,9 +1,10 @@
 "use client";
 
-import { firstPaintService } from "@/services/user";
-import { useUserStore } from "@/store/user";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+
+import { firstPaintService } from "@/services/user";
+import { useUserStore } from "@/store/user";
 
 export function useFirstPaint() {
   const { setUser } = useUserStore();
