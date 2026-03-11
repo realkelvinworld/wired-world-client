@@ -184,10 +184,10 @@ export default function Footer() {
           </p>
         </div>
       </div>
-      <div className="bg-white flex justify-center items-center">
+      <div className="bg-primary flex justify-center items-center">
         <Link
           href={"https://damtech.io"}
-          className="text-black/40 hover:text-black text-xs text-center py-2"
+          className="text-white/70 hover:text-white text-xs text-center py-2"
         >
           Developed and Designed by Damte Technologies
         </Link>
