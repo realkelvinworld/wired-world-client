@@ -54,13 +54,13 @@ export default function ProductReviews({ itemId }: ProductReviewsProps) {
   return (
     <div className="space-y-6">
       {/* Section header */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <ChatTeardropTextIcon
           weight="light"
           size={25}
           className="text-muted-foreground"
         />
-        <h2 className="text-xl font-semibold">Customer Reviews</h2>
+        <h2 className="lg:text-xl text-sm font-semibold">Customer Reviews</h2>
         <UiBadge.Badge variant="outline" className="rounded-full">
           {totalItems}
         </UiBadge.Badge>
