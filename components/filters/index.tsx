@@ -67,7 +67,7 @@ export function SearchFilter({
   );
 
   return (
-    <div className="relative">
+    <div className="relative shadow-none">
       <MagnifyingGlassIcon
         weight="bold"
         className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
@@ -75,7 +75,7 @@ export function SearchFilter({
       <UiInput.Input
         type="text"
         placeholder={placeholder}
-        className="pl-9 rounded-md max-w-80"
+        className="pl-9 rounded-lg max-w-80 shadow-none"
         value={localValue}
         onChange={(e) => {
           setLocalValue(e.target.value);

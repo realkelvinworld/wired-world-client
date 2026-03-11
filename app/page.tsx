@@ -87,7 +87,7 @@ export default function Home() {
         {/* First Carousel */}
         <section className="mt-20">
           <PageHeaderCarousel
-            badge="shop from your favorite brands."
+            badge="shop from your favorite brands"
             title="brands."
             url={routes.brands}
           />
