@@ -24,12 +24,6 @@ export function LocalCart() {
   const items = cart ?? [];
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
-  // const currency = items[0]?.item.currency ?? "GHS";
-  // const subtotal = items.reduce((sum, item) => {
-  //   const price = parseFloat(item.item.discounted_price || item.item.price);
-  //   return sum + price * item.quantity;
-  // }, 0);
-
   // functions
   function handleRemove(productId: number) {
     removeItem(productId);
@@ -46,9 +40,9 @@ export function LocalCart() {
       <UiSheet.SheetTrigger asChild>
         <UiButton.Button
           variant="outline"
-          className="relative rounded-full border bg-primary text-white"
+          className="relative rounded-full border bg-primary text-white py-5"
         >
-          Cart <ShoppingCartIcon />
+          <span className="hidden lg:block">Cart</span> <ShoppingCartIcon />
           {itemCount > 0 && (
             <UiBadge.Badge className="absolute -top-1.5 -right-1.5 size-5 items-center justify-center rounded-full border-2 border-background bg-destructive px-0 text-[10px] font-bold text-white">
               {itemCount}
@@ -98,12 +92,6 @@ export function LocalCart() {
 
         {items.length > 0 && (
           <div className="mt-auto border-t pt-4 space-y-4 px-6 py-10">
-            {/* <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Subtotal</span>
-              <span className="text-lg font-bold">
-                {formatPrice(currency, subtotal.toLocaleString())}
-              </span>
-            </div> */}
             <div className="flex gap-2">
               <UiButton.Button
                 variant="destructive"

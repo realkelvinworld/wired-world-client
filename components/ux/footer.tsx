@@ -184,6 +184,14 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      <div className="bg-white">
+        <Link
+          href={"https://damtech.io"}
+          className="text-black text-xs text-center py-2"
+        >
+          Developed and Designed by Damte Technologies
+        </Link>
+      </div>
     </footer>
   );
 }
