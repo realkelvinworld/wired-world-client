@@ -2,7 +2,7 @@ export interface Showroom {
   id: number;
   region_id: number;
   enabled: boolean;
-  image: string | null;
+  images: string[] | null;
   location: string;
   description: string;
   tel: string;

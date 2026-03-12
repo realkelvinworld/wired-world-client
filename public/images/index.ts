@@ -4,7 +4,7 @@ export { default as SamsungPhones } from "./SAMSUNG-PHONES.jpg";
 export { default as SamsungImage } from "./SAMSUNG-IMAGE2.jpg";
 export { default as AppleImage } from "./APPLE-IMAGE.jpg";
 export { default as LGImage } from "./LG-IMAGE.jpg";
-export { default as HisenseImage } from "./HISENSE-IMAGE.png";
+
 export { default as KitchenThree } from "./KITCHEN-THREE.jpg";
 export { default as Airconditioner } from "./AIRCON-ONE.png";
 export { default as KitchenOne } from "./KITCHECN-ONE.jpg";
