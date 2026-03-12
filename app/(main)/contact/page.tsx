@@ -52,230 +52,224 @@ export default function ContactPage() {
   const cardTwoNumbers = contactCardTwo?.numbers;
 
   return (
-    <LoadingLayout>
-      <div className="min-h-screen max-w-7xl mx-auto px-4 py-12">
-        <section className="grid lg:grid-cols-2 grid-cols-1 gap-x-10 ">
-          <div className="relative">
-            <img
-              src={KitchenOne.src}
-              alt="Wired world Kitchen setup"
-              loading="lazy"
-              className="w-full object-cover object-center lg:h-200 h-100 rounded-xl bg-gray-100"
-            />
-            <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">
-              wiredworld.
-            </UiBadge.Badge>
-            <p className="block text-[clamp(1rem,8vw,10rem)] leading-none font-bold tracking-tighter text-primary-foreground/40 absolute lg:bottom-14 bottom-2 lg:left-2 right-2">
-              contact.
-            </p>
-          </div>
-          <div className="flex flex-col justify-center">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl lg:m-0 mt-10 font-bold tracking-tight">
-              Let&#39;s Start a <br />
-              <span className="text-primary">Conversation</span>
-            </h1>
-            <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
-              Have a question, need a quote, or want to explore a bulk order?
-              We&#39;d love to hear from you. Our team typically responds within
-              24 hours.
-            </p>
-            {/* Form */}
-            <ContactForm />
-          </div>
-        </section>
-
-        {/* Contact Details */}
-        <div className="lg:mt-20 mt-12">
-          <h2 className="text-4xl font-bold tracking-tight">
-            <span className="text-primary">Call</span> us / Get in{" "}
-            <span className="text-primary">Touch</span>
-          </h2>
-          <p className="mt-2 text-muted-foreground max-w-xl">
-            Reach us directly — we&apos;re available for general enquiries and
-            B2B corporate sales.
+    <div className="min-h-screen max-w-7xl mx-auto px-4 py-12">
+      <section className="grid lg:grid-cols-2 grid-cols-1 gap-x-10 ">
+        <div className="relative">
+          <img
+            src={KitchenOne.src}
+            alt="Wired world Kitchen setup"
+            loading="lazy"
+            className="w-full object-cover object-center lg:h-200 h-100 rounded-xl bg-gray-100"
+          />
+          <UiBadge.Badge className="absolute top-4 left-4 font-semibold bg-primary text-white">
+            wiredworld.
+          </UiBadge.Badge>
+          <p className="block text-[clamp(1rem,8vw,10rem)] leading-none font-bold tracking-tighter text-primary-foreground/40 absolute lg:bottom-14 bottom-2 lg:left-2 right-2">
+            contact.
           </p>
-
-          <div className="mt-8 grid sm:grid-cols-2 gap-6">
-            {/* General Enquiries */}
-            {isPending && !error ? (
-              <UiSpinner.Spinner />
-            ) : (
-              <div className="rounded-2xl border p-6 space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  General Enquiries
-                </p>
-                <UiSeparator.Separator />
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <span className="text-sm">
-                      {contactCardOne?.location || "Accra, Ghana"}
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <div className="space-y-1">
-                      {cardOneNumbers?.map((number, index) => (
-                        <a
-                          key={index}
-                          href={`tel:${number}`}
-                          className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
-                        >
-                          {number}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <a
-                      href={`mailto:${contactCardOne?.email || "support@wiredworldgh.com"}`}
-                      className="text-sm hover:text-primary transition-colors"
-                    >
-                      {contactCardOne?.email || "support@wiredworldgh.com"}
-                    </a>
-                  </div>
-                  {contactCardOne?.whatsapp_business_available && (
-                    <div className="flex items-start gap-3">
-                      <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                      <span className="text-sm">
-                        WhatsApp Business Available
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex items-start gap-3">
-                    <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <span className="text-sm">
-                      {contactCardOne?.opening_hours ||
-                        "Mon–Sat: 8:00 AM – 6:00 PM"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* B2B & Corporate Sales */}
-            {isPending && !error ? (
-              <UiSpinner.Spinner />
-            ) : (
-              <div className="rounded-2xl border p-6 space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  B2B & CORPORATE SALES
-                </p>
-                <UiSeparator.Separator />
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <span className="text-sm">
-                      {contactCardOne?.location || "Accra, Ghana"}
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <div className="space-y-1">
-                      {cardOneNumbers?.map((number, index) => (
-                        <a
-                          key={index}
-                          href={`tel:${number}`}
-                          className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
-                        >
-                          {number}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <a
-                      href={`mailto:${contactCardOne?.email || "support@wiredworldgh.com"}`}
-                      className="text-sm hover:text-primary transition-colors"
-                    >
-                      {contactCardOne?.email || "support@wiredworldgh.com"}
-                    </a>
-                  </div>
-                  {contactCardOne?.whatsapp_business_available && (
-                    <div className="flex items-start gap-3">
-                      <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                      <span className="text-sm">
-                        WhatsApp Business Available
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex items-start gap-3">
-                    <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <span className="text-sm">
-                      {contactCardOne?.opening_hours ||
-                        "Mon–Sat: 8:00 AM – 6:00 PM"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
-
-        {/* Location */}
-        <div className="lg:mt-20 mt-10">
-          <h2 className="lg:text-4xl sm:text-3xl font-bold tracking-tight">
-            Come Say <span className="text-primary">Hello</span>
-          </h2>
-          <p className="mt-2 text-muted-foreground max-w-xl">
-            Prefer to see things in person? Stop by our showroom in / at{" "}
-            <span className="text-primary">
-              {" "}
-              {TABSANDCONTENT[activeIndex].title}{" "}
-            </span>{" "}
-            — our doors are always open.
+        <div className="flex flex-col justify-center">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl lg:m-0 mt-10 font-bold tracking-tight">
+            Let&#39;s Start a <br />
+            <span className="text-primary">Conversation</span>
+          </h1>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
+            Have a question, need a quote, or want to explore a bulk order?
+            We&#39;d love to hear from you. Our team typically responds within
+            24 hours.
           </p>
-          <div>
-            <div className="mb-4 flex space-x-2 overflow-auto">
-              {TABSANDCONTENT.map((item, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`hover:cursor-pointer px-4 py-1 text-sm font-medium hover:bg-none ${
-                    activeIndex === index
-                      ? "border-b-2 border-primary text-primary  "
-                      : " text-neutral-800"
-                  }`}
-                >
-                  {item.title}
-                </button>
-              ))}
-            </div>
-            <div className="overflow-hidden border-t border-zinc-200 dark:border-zinc-700">
-              <TransitionPanel
-                activeIndex={activeIndex}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                variants={{
-                  enter: { opacity: 0, x: -50, filter: "blur(4px)" },
-                  center: { opacity: 1, x: 0, filter: "blur(0px)" },
-                  exit: { opacity: 0, x: 50, filter: "blur(4px)" },
-                }}
-              >
-                {TABSANDCONTENT.map((item, index) => (
-                  <div key={index} className="py-2">
-                    <div className="relative h-64 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
-                      {
-                        <iframe
-                          src={item.url}
-                          width="100%"
-                          height="100%"
-                          style={{ border: 0 }}
-                          allowFullScreen
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          className="absolute inset-0"
-                        />
-                      }
-                    </div>
+          {/* Form */}
+          <ContactForm />
+        </div>
+      </section>
+
+      {/* Contact Details */}
+      <div className="lg:mt-20 mt-12">
+        <h2 className="text-4xl font-bold tracking-tight">
+          <span className="text-primary">Call</span> us / Get in{" "}
+          <span className="text-primary">Touch</span>
+        </h2>
+        <p className="mt-2 text-muted-foreground max-w-xl">
+          Reach us directly — we&apos;re available for general enquiries and B2B
+          corporate sales.
+        </p>
+
+        <div className="mt-8 grid sm:grid-cols-2 gap-6">
+          {/* General Enquiries */}
+          {isPending && !error ? (
+            <UiSpinner.Spinner />
+          ) : (
+            <div className="rounded-2xl border p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {contactCardOne?.label || "B2B & CORPORATE SALES"}
+              </p>
+              <UiSeparator.Separator />
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">
+                    {contactCardOne?.location || "Accra, Ghana"}
+                  </span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <div className="space-y-1">
+                    {cardOneNumbers?.map((number, index) => (
+                      <a
+                        key={index}
+                        href={`tel:${number}`}
+                        className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                      >
+                        {number}
+                      </a>
+                    ))}
                   </div>
-                ))}
-              </TransitionPanel>
+                </div>
+                <div className="flex items-start gap-3">
+                  <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <a
+                    href={`mailto:${contactCardOne?.email || "support@wiredworldgh.com"}`}
+                    className="text-sm hover:text-primary transition-colors"
+                  >
+                    {contactCardOne?.email || "support@wiredworldgh.com"}
+                  </a>
+                </div>
+                {contactCardOne?.whatsapp_business_available && (
+                  <div className="flex items-start gap-3">
+                    <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <span className="text-sm">WhatsApp Business Available</span>
+                  </div>
+                )}
+                <div className="flex items-start gap-3">
+                  <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">
+                    {contactCardOne?.opening_hours ||
+                      "Mon–Sat: 8:00 AM – 6:00 PM"}
+                  </span>
+                </div>
+              </div>
             </div>
+          )}
+
+          {/* Card two */}
+          {isPending && !error ? (
+            <UiSpinner.Spinner />
+          ) : (
+            <div className="rounded-2xl border p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {contactCardTwo?.label || "GENERAL ENQUIRIES"}
+              </p>
+              <UiSeparator.Separator />
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <MapPinIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">
+                    {contactCardTwo?.location || "Accra, Ghana"}
+                  </span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <PhoneIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <div className="space-y-1">
+                    {cardTwoNumbers?.map((number, index) => (
+                      <a
+                        key={index}
+                        href={`tel:${number}`}
+                        className="block text-sm font-semibold tracking-wide hover:text-primary transition-colors"
+                      >
+                        {number}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <EnvelopeSimpleIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <a
+                    href={`mailto:${contactCardTwo?.email || "support@wiredworldgh.com"}`}
+                    className="text-sm hover:text-primary transition-colors"
+                  >
+                    {contactCardTwo?.email || "support@wiredworldgh.com"}
+                  </a>
+                </div>
+                {contactCardTwo?.whatsapp_business_available && (
+                  <div className="flex items-start gap-3">
+                    <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                    <span className="text-sm">WhatsApp Business Available</span>
+                  </div>
+                )}
+                <div className="flex items-start gap-3">
+                  <ClockIcon className="size-4 mt-0.5 shrink-0 text-primary" />
+                  <span className="text-sm">
+                    {contactCardTwo?.opening_hours ||
+                      "Mon–Sat: 8:00 AM – 6:00 PM"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Location */}
+      <div className="lg:mt-20 mt-10">
+        <h2 className="lg:text-4xl sm:text-3xl font-bold tracking-tight">
+          Come Say <span className="text-primary">Hello</span>
+        </h2>
+        <p className="mt-2 text-muted-foreground max-w-xl">
+          Prefer to see things in person? Stop by our showroom in / at{" "}
+          <span className="text-primary">
+            {" "}
+            {TABSANDCONTENT[activeIndex].title}{" "}
+          </span>{" "}
+          — our doors are always open.
+        </p>
+        <div>
+          <div className="mb-4 flex space-x-2 overflow-auto">
+            {TABSANDCONTENT.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`hover:cursor-pointer px-4 py-1 text-sm font-medium hover:bg-none ${
+                  activeIndex === index
+                    ? "border-b-2 border-primary text-primary  "
+                    : " text-neutral-800"
+                }`}
+              >
+                {item.title}
+              </button>
+            ))}
+          </div>
+          <div className="overflow-hidden border-t border-zinc-200 dark:border-zinc-700">
+            <TransitionPanel
+              activeIndex={activeIndex}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              variants={{
+                enter: { opacity: 0, x: -50, filter: "blur(4px)" },
+                center: { opacity: 1, x: 0, filter: "blur(0px)" },
+                exit: { opacity: 0, x: 50, filter: "blur(4px)" },
+              }}
+            >
+              {TABSANDCONTENT.map((item, index) => (
+                <div key={index} className="py-2">
+                  <div className="relative h-64 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+                    {
+                      <iframe
+                        src={item.url}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        className="absolute inset-0"
+                      />
+                    }
+                  </div>
+                </div>
+              ))}
+            </TransitionPanel>
           </div>
         </div>
       </div>
-    </LoadingLayout>
+    </div>
   );
 }

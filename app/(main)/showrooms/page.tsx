@@ -2,7 +2,15 @@
 
 import { parseAsIndex, useQueryState } from "nuqs";
 import * as Icon from "@phosphor-icons/react";
+import Image from "next/image";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { UiButton, UiCard, UiSeparator, UiSkeleton } from "@/components/ui";
 import ErrorState from "@/components/ux/error-state";
 import { useShowrooms } from "@/hooks/use-showrooms";
@@ -95,16 +103,31 @@ export default function ShowroomsPage() {
             {showrooms.map((showroom) => (
               <UiCard.Card
                 key={showroom.id}
-                className="overflow-hidden shadow-none"
+                className="overflow-hidden shadow-none "
               >
-                {showroom.image ? (
-                  <div className="relative h-40 w-full">
-                    <img
-                      src={showroom.image}
-                      alt={showroom.location}
-                      loading="lazy"
-                      className="absolute inset-0 size-full object-cover"
-                    />
+                {showroom.images ? (
+                  <div className=" h-45 w-full ">
+                    <Carousel className="">
+                      <CarouselContent>
+                        {showroom.images.map((image, index) => (
+                          <CarouselItem key={index} className=" h-45 w-full ">
+                            <div className="w-full h-full relative ">
+                              <Image
+                                width={100}
+                                height={100}
+                                unoptimized={true}
+                                loading="lazy"
+                                src={image}
+                                alt={showroom.location}
+                                className="absolute size-full object-cover"
+                              />
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="absolute top-20 left-2 " />
+                      <CarouselNext className="absolute top-20 right-2 " />
+                    </Carousel>
                   </div>
                 ) : (
                   <div className="flex h-40 items-center justify-center bg-muted/50">

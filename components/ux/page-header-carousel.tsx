@@ -5,7 +5,6 @@ import Autoplay from "embla-carousel-autoplay";
 import { UiBadge, UiButton, UiCarousel } from "../ui";
 import {
   AppleImage,
-  HisenseImage,
   LGImage,
   SamsungImage,
   SamsungPhones,
@@ -119,10 +118,4 @@ export default function PageHeaderCarousel({
   );
 }
 
-const defaultImg = [
-  LGImage,
-  HisenseImage,
-  SamsungPhones,
-  SamsungImage,
-  AppleImage,
-];
+const defaultImg = [LGImage, SamsungPhones, SamsungImage, AppleImage];

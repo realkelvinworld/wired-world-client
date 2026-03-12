@@ -190,7 +190,7 @@ export default function Navbar() {
                             className={`flex items-start gap-3 rounded-md p-3 transition-colors ${activeCategory === index ? "bg-accent" : "hover:bg-accent"}`}
                             onMouseEnter={() => setActiveCategory(index)}
                           >
-                            {cat.icon && (
+                            {cat.icon ? (
                               <img
                                 src={cat.icon}
                                 alt="Category Logo"
@@ -198,6 +198,11 @@ export default function Navbar() {
                                 className="mt-0.5 size-5 shrink-0 text-muted-foreground"
                                 width={100}
                                 height={100}
+                              />
+                            ) : (
+                              <Icon.ShapesIcon
+                                size={25}
+                                className="text-muted-foreground"
                               />
                             )}
                             <div>
