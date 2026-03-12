@@ -2,13 +2,7 @@
 
 import { parseAsIndex, useQueryState } from "nuqs";
 import * as Icon from "@phosphor-icons/react";
-
-import { UiButton, UiCard, UiSeparator, UiSkeleton } from "@/components/ui";
-import ErrorState from "@/components/ux/error-state";
-import { useShowrooms } from "@/hooks/use-showrooms";
-import PageHeader from "@/components/ux/page-header";
-import { useRegions } from "@/hooks/use-regions";
-import { KitchenTwo } from "@/public/images";
+import Image from "next/image";
 
 import {
   Carousel,
@@ -17,7 +11,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
+import { UiButton, UiCard, UiSeparator, UiSkeleton } from "@/components/ui";
+import ErrorState from "@/components/ux/error-state";
+import { useShowrooms } from "@/hooks/use-showrooms";
+import PageHeader from "@/components/ux/page-header";
+import { useRegions } from "@/hooks/use-regions";
+import { KitchenTwo } from "@/public/images";
 
 export default function ShowroomsPage() {
   // state
