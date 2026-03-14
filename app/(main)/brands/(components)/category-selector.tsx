@@ -30,7 +30,7 @@ export default function CategorySelector({
 
   return (
     <UiScrollArea.ScrollArea className="w-full">
-      <div className="flex gap-2 pb-2">
+      <div className="flex flex-wrap gap-2 pb-2">
         <UiButton.Button
           variant={selectedCategoryId === undefined ? "default" : "outline"}
           size="sm"

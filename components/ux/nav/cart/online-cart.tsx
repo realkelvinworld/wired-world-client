@@ -146,12 +146,14 @@ function CartItemCard({
         href={routes.shop.productDetails(item.item__id)}
         className="relative size-24 shrink-0 overflow-hidden rounded-xl bg-muted/30"
       >
-        <img
-          src={item.item__images[0]}
-          alt={item.item__name}
-          loading="lazy"
-          className="absolute inset-0 size-full object-contain p-2 transition-transform duration-200 group-hover/card:scale-105"
-        />
+        {item.item__images && (
+          <img
+            src={item.item__images[0]}
+            alt={item.item__name}
+            loading="lazy"
+            className="absolute inset-0 size-full object-contain p-2 transition-transform duration-200 group-hover/card:scale-105"
+          />
+        )}
         {hasDiscount && (
           <UiBadge.Badge className="absolute top-1.5 left-1.5 rounded-full border-0 px-1.5 py-0.5 text-[10px] font-semibold text-white">
             -{Math.round(parseFloat(item.item__discount))}%
