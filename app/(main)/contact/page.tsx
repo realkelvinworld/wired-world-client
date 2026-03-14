@@ -9,13 +9,13 @@ import {
 } from "@phosphor-icons/react";
 import { useState } from "react";
 
-import { KitchenOne } from "@/public/images";
 import { UiBadge, UiSeparator, UiSpinner } from "@/components/ui";
+import { WiredImage5 } from "@/public/images";
 
 import { TransitionPanel } from "@/components/motion-primitives/transition-panel";
-import LoadingLayout from "@/components/animations/loading-layout";
 import ContactForm from "@/components/forms/contact/contact-form";
 import { useContacts } from "@/hooks/useContacts";
+import Image from "next/image";
 
 const TABSANDCONTENT = [
   {
@@ -55,8 +55,11 @@ export default function ContactPage() {
     <div className="min-h-screen max-w-7xl mx-auto px-4 py-12">
       <section className="grid lg:grid-cols-2 grid-cols-1 gap-x-10 ">
         <div className="relative">
-          <img
-            src={KitchenOne.src}
+          <Image
+            unoptimized
+            width={100}
+            height={100}
+            src={WiredImage5.src}
             alt="Wired world Kitchen setup"
             loading="lazy"
             className="w-full object-cover object-center lg:h-200 h-100 rounded-xl bg-gray-100"

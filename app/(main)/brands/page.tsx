@@ -18,6 +18,7 @@ import FilterModal from "@/components/shared/filter-modal";
 
 import CategorySelector from "./(components)/category-selector";
 import BrandSelector from "./(components)/brand-selector";
+import { UiSeparator } from "@/components/ui";
 
 export default function BrandsPage() {
   // state
@@ -115,7 +116,8 @@ export default function BrandsPage() {
             isPending={brandsPending}
           />
         </div>
-
+        {/* separator */}
+        <UiSeparator.Separator className="my-4" />
         {/* Category selector pills */}
         <div className="mb-6">
           <CategorySelector

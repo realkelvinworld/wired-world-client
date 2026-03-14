@@ -5,7 +5,12 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { KitchenThree, SamsungPhones } from "@/public/images";
+import {
+  KitchenThree,
+  SamsungPhones,
+  WiredImage10,
+  WiredImage8,
+} from "@/public/images";
 import { TextEffect } from "@/components/motion-primitives/text-effect";
 import LoadingLayout from "@/components/animations/loading-layout";
 import { UiBadge, UiButton, UiSeparator } from "@/components/ui";
@@ -172,7 +177,7 @@ export default function AboutPage() {
           className="relative"
         >
           <Image
-            src={KitchenThree}
+            src={WiredImage8}
             alt="WiredWorld premium kitchen appliances showcase"
             className="w-full rounded-2xl object-cover object-center lg:h-125 h-80 bg-muted"
             placeholder="blur"
@@ -289,8 +294,8 @@ export default function AboutPage() {
           </div>
           <div className="flex justify-center">
             <Image
-              src={SamsungPhones}
-              alt="Samsung smartphones available at WiredWorld Ghana"
+              src={WiredImage10}
+              alt="Soundbars available at WiredWorld Ghana"
               className="max-h-80 w-full rounded-2xl object-cover object-center"
               placeholder="blur"
             />

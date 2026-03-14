@@ -3,6 +3,8 @@
 import { parseAsJson, parseAsString, useQueryState } from "nuqs";
 import { useQuery } from "@tanstack/react-query";
 
+import ListProducts from "@/components/shared/list-products";
+import FilterModal from "@/components/shared/filter-modal";
 import { getProductsService } from "@/services/inventory";
 import PageHeader from "@/components/ux/page-header";
 import { FiltersSchema } from "@/schemas/filters";
@@ -10,8 +12,7 @@ import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
 import UiFilters from "@/components/filters";
 import { KichenFour } from "@/public/images";
-import ListProducts from "@/components/shared/list-products";
-import FilterModal from "@/components/shared/filter-modal";
+import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 
 export default function ShopPage() {
   // state
@@ -48,7 +49,7 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto ma-wx-7xl px-4 py-12">
-        <PageHeader img={KichenFour.src} title="shop/products" />
+        <PageHeaderCarousel title="shop/products" />
         {/* Mobile: sticky search + filter trigger */}
         <div className="sticky top-15 z-30 flex items-center gap-2 bg-background py-4 w-full">
           <UiFilters.SearchFilter
@@ -66,37 +67,6 @@ export default function ShopPage() {
         </div>
 
         <div className="flex lg:flex-row flex-col gap-6">
-          {/* Desktop: sidebar filters */}
-          {/* <div className="hidden lg:flex lg:sticky top-20 self-start w-80 flex-col gap-4">
-            <div className="flex justify-between gap-2">
-              <SortToggle value={sorting_order} onChange={setSorting_order} />
-              <UiFilters.ClearFilters
-                filters={filters}
-                setFilters={setFilters}
-              />
-            </div>
-            <UiFilters.SearchFilter
-              filters={filters}
-              setFilters={setFilters}
-              placeholder="Search product"
-            />
-            <UiFilters.MainCategoryFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
-            <UiFilters.SubCategoryFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
-            <UiFilters.BrandFilter filters={filters} setFilters={setFilters} />
-            <UiFilters.PriceFilter filters={filters} setFilters={setFilters} />
-            <UiFilters.RatingFilter filters={filters} setFilters={setFilters} />
-            <UiFilters.PromotionFilter
-              filters={filters}
-              setFilters={setFilters}
-            />
-          </div> */}
-
           {/* List products */}
           <section className="flex-1 min-w-0">
             <ListProducts

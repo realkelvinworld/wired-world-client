@@ -1,17 +1,22 @@
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useCallback } from "react";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
+import Link from "next/link";
 
-import { UiBadge, UiButton, UiCarousel } from "../ui";
+import { routes } from "@/routes";
+
 import {
-  AppleImage,
   LGImage,
   SamsungImage,
   SamsungPhones,
+  WiredImage10,
+  WiredImage2,
+  WiredImage5,
+  WiredImage9,
 } from "@/public/images";
-import Image from "next/image";
-import Link from "next/link";
-import { routes } from "@/routes";
+
+import { UiBadge, UiButton, UiCarousel } from "../ui";
 
 export default function PageHeaderCarousel({
   img,
@@ -118,4 +123,13 @@ export default function PageHeaderCarousel({
   );
 }
 
-const defaultImg = [LGImage, SamsungPhones, SamsungImage, AppleImage];
+const defaultImg = [
+  WiredImage5,
+  WiredImage2,
+  WiredImage2,
+  SamsungImage,
+  WiredImage10,
+  WiredImage9,
+  LGImage,
+  SamsungPhones,
+];
