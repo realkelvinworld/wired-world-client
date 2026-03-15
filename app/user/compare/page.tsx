@@ -190,7 +190,7 @@ function CompareCard({
               product.stock > 0 ? (
                 <span className="flex items-center gap-1 text-xs text-green-600">
                   <CheckCircleIcon weight="fill" className="size-3.5" />
-                  In stock ({product.stock})
+                  In stock
                 </span>
               ) : (
                 <span className="flex items-center gap-1 text-xs text-red-500">

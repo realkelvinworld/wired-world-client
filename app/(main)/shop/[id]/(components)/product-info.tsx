@@ -104,9 +104,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {inStock ? (
           <>
             <CheckCircleIcon weight="fill" className="size-4 text-green-600" />
-            <span className="text-sm font-medium text-green-600">
-              In stock ({product.stock})
-            </span>
+            <span className="text-sm font-medium text-green-600">In stock</span>
           </>
         ) : (
           <>

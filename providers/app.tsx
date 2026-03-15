@@ -61,7 +61,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
             </NuqsAdapter>
           </Suspense>
         </AppProgressProvider>
-        <Toaster />
+        <Toaster position="top-center" />
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
