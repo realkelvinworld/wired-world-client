@@ -16,7 +16,13 @@ import { useCartStore } from "@/store/cart";
 import { Product } from "@/models/product";
 import { routes } from "@/routes";
 
-export function LocalCart() {
+export function LocalCart({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   // Hooks
   const { cart, removeItem, clearCart } = useCartStore();
 
@@ -36,7 +42,7 @@ export function LocalCart() {
   }
 
   return (
-    <UiSheet.Sheet>
+    <UiSheet.Sheet open={open} onOpenChange={setOpen}>
       <UiSheet.SheetTrigger asChild>
         <UiButton.Button
           variant="outline"
@@ -82,6 +88,7 @@ export function LocalCart() {
                 <CartItemCard
                   key={item.item.id}
                   item={item.item}
+                  setOpen={setOpen}
                   quantity={item.quantity}
                   onRemove={() => handleRemove(item.item.id)}
                 />
@@ -100,7 +107,11 @@ export function LocalCart() {
               >
                 Clear cart
               </UiButton.Button>
-              <UiButton.Button className="flex-1 rounded-full" asChild>
+              <UiButton.Button
+                className="flex-1 rounded-full"
+                asChild
+                onClick={() => setOpen(false)}
+              >
                 <Link href={routes.checkout}>Checkout</Link>
               </UiButton.Button>
             </div>
@@ -115,16 +126,19 @@ function CartItemCard({
   quantity,
   item,
   onRemove,
+  setOpen,
 }: {
   quantity: number;
   item: Product;
   onRemove: () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const hasDiscount = parseFloat(item.discount) > 0;
 
   return (
     <div className="group/card flex gap-4 rounded-2xl border p-3 transition-colors hover:bg-muted/40">
       <Link
+        onClick={() => setOpen(false)}
         href={routes.shop.productDetails(item.id)}
         className="relative size-24 shrink-0 overflow-hidden rounded-xl bg-muted/30"
       >
@@ -147,6 +161,7 @@ function CartItemCard({
             {item.brand__name}
           </p>
           <Link
+            onClick={() => setOpen(false)}
             href={routes.shop.productDetails(item.id)}
             className="line-clamp-2 text-sm font-semibold leading-snug hover:underline"
           >

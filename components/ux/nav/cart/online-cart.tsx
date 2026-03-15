@@ -18,7 +18,13 @@ import { useCart } from "@/hooks/use-cart";
 import { CartItem } from "@/models/cart";
 import { routes } from "@/routes";
 
-export function OnlineCart() {
+export function OnlineCart({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const {
     items,
     subtotal,
@@ -36,7 +42,7 @@ export function OnlineCart() {
   } = useCart();
 
   return (
-    <UiSheet.Sheet>
+    <UiSheet.Sheet open={open} onOpenChange={setOpen}>
       <UiSheet.SheetTrigger asChild>
         <UiButton.Button
           variant="default"
@@ -82,6 +88,7 @@ export function OnlineCart() {
             <div className="space-y-4 p-6">
               {items.map((item) => (
                 <CartItemCard
+                  setOpen={setOpen}
                   key={item.id}
                   item={item}
                   onRemove={() => remove(item.id)}
@@ -118,7 +125,11 @@ export function OnlineCart() {
               >
                 {isClearing ? "Clearing..." : "Clear cart"}
               </UiButton.Button>
-              <UiButton.Button className="flex-1 rounded-full" asChild>
+              <UiButton.Button
+                className="flex-1 rounded-full"
+                asChild
+                onClick={() => setOpen(false)}
+              >
                 <Link href={routes.checkout}>Checkout</Link>
               </UiButton.Button>
             </div>
@@ -133,18 +144,21 @@ function CartItemCard({
   item,
   onRemove,
   disabled,
+  setOpen,
 }: {
   item: CartItem;
   onRemove: () => void;
   disabled: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const hasDiscount = parseFloat(item.item__discount) > 0;
 
   return (
-    <div className="group/card flex gap-4 rounded-2xl border p-3 transition-colors hover:bg-muted/40">
+    <div className=" group/card flex gap-4 rounded-2xl border p-3 transition-colors hover:bg-muted/40">
       <Link
+        onClick={() => setOpen(false)}
         href={routes.shop.productDetails(item.item__id)}
-        className="relative size-24 shrink-0 overflow-hidden rounded-xl bg-muted/30"
+        className=" relative size-24 shrink-0 overflow-hidden rounded-xl bg-muted/30"
       >
         {item.item__images && (
           <img
@@ -167,6 +181,7 @@ function CartItemCard({
             {item.item__brand__name}
           </p>
           <Link
+            onClick={() => setOpen(false)}
             href={routes.shop.productDetails(item.item__id)}
             className="line-clamp-2 text-sm font-semibold leading-snug hover:underline"
           >
