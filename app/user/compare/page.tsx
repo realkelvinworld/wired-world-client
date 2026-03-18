@@ -10,6 +10,10 @@ import {
 } from "@phosphor-icons/react";
 import Link from "next/link";
 
+import { useCompare } from "@/hooks/use-compare";
+import { formatPrice } from "@/lib/format-price";
+import { Product } from "@/models/product";
+import { routes } from "@/routes";
 import {
   UiBadge,
   UiButton,
@@ -17,10 +21,6 @@ import {
   UiSeparator,
   UiSkeleton,
 } from "@/components/ui";
-import { useCompare } from "@/hooks/use-compare";
-import { formatPrice } from "@/lib/format-price";
-import { Product } from "@/models/product";
-import { routes } from "@/routes";
 
 export default function UserComparePage() {
   // api
