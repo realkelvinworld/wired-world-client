@@ -81,7 +81,7 @@ export default function Paginator({
           {total != null && total > 0 && (
             <span className="text-muted-foreground">
               <span className="font-medium text-foreground">
-                {formatToLocalString(total)}
+                {total.toLocaleString()}
               </span>{" "}
               items
             </span>
