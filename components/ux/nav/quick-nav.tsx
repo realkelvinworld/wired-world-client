@@ -1,5 +1,6 @@
 "use client";
 
+import * as Icon from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -43,16 +44,17 @@ export default function QuickNav() {
                     {cat.icon ? (
                       <img
                         src={cat.icon}
-                        alt={cat.name}
-                        width={18}
-                        height={18}
+                        alt="Category Logo"
                         loading="lazy"
-                        className="size-4.5 object-contain"
+                        className="mt-0.5 size-5 shrink-0 text-muted-foreground"
+                        width={100}
+                        height={100}
                       />
                     ) : (
-                      <span className="text-xs font-bold">
-                        {cat.name.charAt(0)}
-                      </span>
+                      <Icon.CirclesFourIcon
+                        size={25}
+                        className="text-muted-foreground"
+                      />
                     )}
                   </Link>
                 </UiTooltip.TooltipTrigger>

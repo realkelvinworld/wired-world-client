@@ -90,7 +90,6 @@ export const formatCompactNumber = (value: number) => {
 //   if (typeof value === "number") {
 //     return value.toLocaleString();
 //   }
-
 //   // Extract currency prefix and numeric part e.g. "GHS 12741.19"
 //   const match = value.match(/^([A-Z]+)\s([\d.]+)$/);
 //   if (!match) return value; // fallback if format is unexpected
@@ -100,28 +99,35 @@ export const formatCompactNumber = (value: number) => {
 
 //   return `${currency} ${formatted}`;
 // };
+
 export const formatToLocalString = (value: number | string) => {
-  if (typeof value === "number") {
-    return value.toLocaleString("en-US", {
+  const formatNumber = (num: number) =>
+    num.toLocaleString("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
+
+  if (typeof value === "number") {
+    return formatNumber(value);
   }
 
   // Handle strings like "GHS 16550.00"
-  const match = value.match(/([A-Z]+\s?)([\d,]+(\.\d+)?)/);
-  if (match) {
-    const currency = match[1]; // "GHS "
-    const num = parseFloat(match[2].replace(/,/g, ""));
+  const currencyMatch = value.match(/([A-Z]+\s?)([\d,]+(\.\d+)?)/);
+  if (currencyMatch) {
+    const currency = currencyMatch[1]; // "GHS "
+    const num = parseFloat(currencyMatch[2].replace(/,/g, ""));
 
     if (!isNaN(num)) {
-      return (
-        currency +
-        num.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })
-      );
+      return currency + formatNumber(num);
+    }
+  }
+
+  // Handle plain numeric strings like "16650.00"
+  const numericMatch = value.match(/^-?[\d,]+(\.\d+)?$/);
+  if (numericMatch) {
+    const num = parseFloat(value.replace(/,/g, ""));
+    if (!isNaN(num)) {
+      return formatNumber(num);
     }
   }
 

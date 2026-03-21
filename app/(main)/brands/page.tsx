@@ -162,6 +162,7 @@ export default function BrandsPage() {
             items={paginationItems ?? 0}
             setFilters={setFilters}
             next={paginationNext}
+            showCount={false}
             prev={paginationprev}
             total={paginationpTotal}
             next_page={paginationNextPage}
