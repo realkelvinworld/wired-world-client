@@ -13,6 +13,7 @@ import { useUserStore } from "@/store/user";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { formatToLocalString } from "@/lib/utils";
 
 interface ProductCardProps {
   product: Product;
@@ -150,13 +151,13 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-baseline gap-2 ">
           <span className="text-sm font-bold">
-            {formatPrice(product.currency, product.discounted_price)}
+            {product.currency} {formatToLocalString(product.price)}
           </span>
           {hasDiscount && (
             <span className="text-xs text-muted-foreground line-through">
-              {formatPrice(product.currency, product.price)}
+              {product.currency} {formatToLocalString(product.discounted_price)}
             </span>
           )}
         </div>

@@ -13,6 +13,7 @@ import {
 import { UiBadge, UiCard, UiSkeleton } from "@/components/ui";
 import { formatPrice } from "@/lib/format-price";
 import { Order } from "@/models/order";
+import { formatToLocalString } from "@/lib/utils";
 
 // ── Status config ──────────────────────────────────────────
 
@@ -157,7 +158,7 @@ export function OrderCard({ order, isLast }: OrderCardProps) {
 
             {/* Total */}
             <p className="text-sm font-semibold">
-              {formatPrice(order.currency, order.total_amount)}
+              {order.currency} {formatToLocalString(order.total_amount)}
             </p>
           </div>
         </UiCard.CardContent>

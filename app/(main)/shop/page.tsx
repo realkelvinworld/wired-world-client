@@ -3,16 +3,14 @@
 import { parseAsJson, parseAsString, useQueryState } from "nuqs";
 import { useQuery } from "@tanstack/react-query";
 
+import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
 import { getProductsService } from "@/services/inventory";
-import PageHeader from "@/components/ux/page-header";
 import { FiltersSchema } from "@/schemas/filters";
 import Paginator from "@/components/ui/paginator";
 import { FiltersInterface } from "@/interfaces";
 import UiFilters from "@/components/filters";
-import { KichenFour } from "@/public/images";
-import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 
 export default function ShopPage() {
   // state
@@ -83,6 +81,7 @@ export default function ShopPage() {
             items={paginationItems ?? 0}
             setFilters={setFilters}
             next={paginationNext}
+            showCount={false}
             prev={paginationprev}
             total={paginationpTotal}
             next_page={paginationNextPage}

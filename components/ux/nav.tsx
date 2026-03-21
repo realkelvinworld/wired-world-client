@@ -2,10 +2,11 @@
 
 import * as Icon from "@phosphor-icons/react";
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { WiredWorldLogo } from "@/public/logos";
 import { mobileLinks, socialLinks } from "@/db-locale";
+import { WiredWorldLogo } from "@/public/logos";
 import { useNavBar } from "@/hooks/use-navbar";
 import { useUserStore } from "@/store/user";
 import { routes } from "@/routes";
@@ -21,7 +22,6 @@ import {
 import { SearchProducts } from "./nav/search-products";
 import { Wishlist } from "./nav/wishlist";
 import { Cart } from "./nav/cart";
-import { useRouter } from "next/navigation";
 
 const navLinkClass =
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none bg-transparent";
@@ -200,7 +200,7 @@ export default function Navbar() {
                                 height={100}
                               />
                             ) : (
-                              <Icon.ShapesIcon
+                              <Icon.CirclesFourIcon
                                 size={25}
                                 className="text-muted-foreground"
                               />

@@ -18,6 +18,7 @@ type PaginatorProps = React.HTMLAttributes<HTMLDivElement> & {
   prev?: boolean;
   items: number;
   total?: number;
+  showCount?: boolean;
   next_page?: number;
   previous_page?: number;
 };
@@ -45,6 +46,7 @@ export default function Paginator({
   next,
   prev,
   total,
+  showCount = true,
   next_page,
 }: PaginatorProps) {
   const handlePageChange = (page: number) => {
@@ -78,7 +80,7 @@ export default function Paginator({
       <div className="flex flex-wrap items-center justify-between gap-3">
         {/* Left: info + per-page */}
         <div className="flex items-center gap-2 text-sm">
-          {total != null && total > 0 && (
+          {showCount && total != null && total > 0 && (
             <span className="text-muted-foreground">
               <span className="font-medium text-foreground">
                 {total.toLocaleString()}
