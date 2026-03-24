@@ -63,10 +63,11 @@ export default function Navbar() {
         <Link href={routes.home} className=" flex items-center space-x-2">
           <img
             src={WiredWorldLogo.src}
-            alt="WiredWorld"
+            alt="WiredWorld — Ghana's Premier Electronics Store"
             width={200}
             className="rounded-full "
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
           />
         </Link>
 
@@ -108,7 +109,7 @@ export default function Navbar() {
                           <div className="absolute inset-0 bg-linear-to-br from-blue-50 via-neutral-500 to-neutral-700">
                             <img
                               src="/images/HOME-BANNER.avif"
-                              alt="Home Banner"
+                              alt="WiredWorld — featured electronics brands in Ghana"
                               loading="lazy"
                               className="absolute inset-0 size-full object-cover object-center opacity-30"
                             />
@@ -193,7 +194,7 @@ export default function Navbar() {
                             {cat.icon ? (
                               <img
                                 src={cat.icon}
-                                alt="Category Logo"
+                                alt={cat.name}
                                 loading="lazy"
                                 className="mt-0.5 size-5 shrink-0 text-muted-foreground"
                                 width={100}
@@ -303,6 +304,7 @@ export default function Navbar() {
               variant={"outline"}
               size={"icon"}
               className="rounded-full"
+              aria-label="Compare products"
               onClick={() => {
                 push(routes.user.compare);
               }}

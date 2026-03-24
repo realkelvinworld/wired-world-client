@@ -68,6 +68,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <UiButton.Button
             variant="outline"
             size="icon"
+            aria-label={`View ${product.name}`}
             className="size-9 rounded-full bg-background/80 backdrop-blur-sm"
             onClick={() => {
               push(routes.shop.productDetails(product.id));
@@ -79,6 +80,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <UiButton.Button
               variant="outline"
               size="icon"
+              aria-label={compared ? `Remove ${product.name} from compare` : `Add ${product.name} to compare`}
               className={`size-9 rounded-full bg-background/80 backdrop-blur-sm ${
                 compared ? "border-primary text-primary" : ""
               }`}
@@ -117,6 +119,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <UiButton.Button
                   variant="ghost"
                   size="icon"
+                  aria-label={`Add ${product.name} to cart`}
                   className="size-8 rounded-full"
                   onClick={() => add({ id: product.id, quantity: 1 })}
                   disabled={isAdding || product.stock === 0}
@@ -126,6 +129,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <UiButton.Button
                   variant="ghost"
                   size="icon"
+                  aria-label={wishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
                   className={`size-8 rounded-full ${wishlisted ? "text-red-500" : ""}`}
                   onClick={() => toggle(product.id)}
                   disabled={isToggling}
@@ -141,6 +145,7 @@ export function ProductCard({ product }: ProductCardProps) {
               <UiButton.Button
                 variant="ghost"
                 size="icon"
+                aria-label={`Add ${product.name} to cart`}
                 className="size-8 rounded-full"
                 onClick={() => handleAddedToCart(product, 1)}
                 disabled={isAdding || product.stock === 0}

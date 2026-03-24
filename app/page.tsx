@@ -90,6 +90,7 @@ export default function Home() {
             badge="shop from your favorite brands"
             title=""
             url={routes.brands}
+            altPrefix="WiredWorld featured electronics and home appliances"
           />
         </section>
 
@@ -99,9 +100,9 @@ export default function Home() {
             Top picks based on popularity
           </UiBadge.Badge>
 
-          <h1 className="text-3xl lg:text-5xl sm:text-4xl font-bold text-center tracking-tight">
+          <h2 className="text-3xl lg:text-5xl sm:text-4xl font-bold text-center tracking-tight">
             Discover Our Best Sellers
-          </h1>
+          </h2>
 
           {/*Quick Brand selector */}
           <div className="mb-6 flex flex-col gap-6">

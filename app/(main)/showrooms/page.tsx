@@ -45,6 +45,9 @@ export default function ShowroomsPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
+        <h1 className="sr-only">
+          WiredWorld Showrooms — Accra Newtown, East Legon &amp; Kasoa, Ghana
+        </h1>
         {/* Header Space */}
         <PageHeader img={KitchenTwo.src} title="showrooms" />
 
