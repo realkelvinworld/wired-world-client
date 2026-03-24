@@ -15,10 +15,10 @@ import UiFilters from "@/components/filters";
 import PageHeaderCarousel from "@/components/ux/page-header-carousel";
 import ListProducts from "@/components/shared/list-products";
 import FilterModal from "@/components/shared/filter-modal";
+import { UiSeparator } from "@/components/ui";
 
 import CategorySelector from "./(components)/category-selector";
 import BrandSelector from "./(components)/brand-selector";
-import { UiSeparator } from "@/components/ui";
 
 export default function BrandsPage() {
   // state
@@ -48,11 +48,11 @@ export default function BrandsPage() {
   const selectedBrand = brands?.find((f) => f.id === Number(brandId));
 
   // effect
-  useEffect(() => {
-    if (!brandId && brands.length > 0) {
-      setBrandId(brands[0].id.toString());
-    }
-  }, [brandId, brands, setBrandId]);
+  // useEffect(() => {
+  //   if (!brandId && brands.length > 0) {
+  //     setBrandId(brands[0].id.toString());
+  //   }
+  // }, [brandId, brands, setBrandId]);
 
   // api
   const { data, isPending, error } = useQuery({
@@ -68,7 +68,6 @@ export default function BrandsPage() {
         drop: filters.drop ?? 10,
         type: "list",
       }),
-    enabled: !!selectedBrandId,
   });
 
   const paginationItems = data?.paginator?.items;
