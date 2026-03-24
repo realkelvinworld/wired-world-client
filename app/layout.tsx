@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import Announcements from "@/components/ux/nav/announcements";
+import WhatsAppButton from "@/components/ux/whatsapp-button";
 import QuickNav from "@/components/ux/nav/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
@@ -94,6 +95,10 @@ export const metadata: Metadata = {
     "Mobile Money electronics Ghana",
     "MTN MoMo electronics",
     "pay on delivery Ghana",
+    "WiredWorld WhatsApp",
+    "WhatsApp WiredWorld Ghana",
+    "contact WiredWorld WhatsApp",
+    "+233551105055",
   ],
   authors: [
     {
@@ -162,6 +167,30 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "WiredWorld",
+  alternateName: "Wired World Limited",
+  url: "https://wiredworldgh.com",
+  logo: "https://wiredworldgh.com/logos/WIRED-WORLD-2.png",
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+233-55-110-5055",
+      contactType: "customer service",
+      availableLanguage: "English",
+      areaServed: "GH",
+      contactOption: "WhatsApp",
+    },
+  ],
+  sameAs: [
+    "https://www.facebook.com/share/183BWcSS9A/?mibextid=wwXIfr",
+    "https://www.instagram.com/wiredworldltd?igsh=MXIyNGM4ajNqaGVydw==",
+    "https://www.tiktok.com/@wiredworldltd?_r=1&_t=ZS-94aFyBVYaAP",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -172,10 +201,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <AppProvider>
           <Announcements />
           <Navbar />
           {children}
+          <WhatsAppButton />
           <QuickNav />
           <TrustBar />
           <Footer />
