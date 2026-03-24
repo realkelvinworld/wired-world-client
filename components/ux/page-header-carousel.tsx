@@ -23,11 +23,13 @@ export default function PageHeaderCarousel({
   title,
   badge,
   url,
+  altPrefix,
 }: {
   img?: string[];
   title?: string;
   badge?: string;
   url?: string;
+  altPrefix?: string;
 }) {
   const images = img?.length ? img : defaultImg;
   const [api, setApi] = useState<UiCarousel.CarouselApi | null>(null);
@@ -68,7 +70,11 @@ export default function PageHeaderCarousel({
                       height={100}
                       unoptimized={true}
                       loading="lazy"
-                      alt="Image Tile"
+                      alt={
+                        altPrefix
+                          ? `${altPrefix} ${index + 1}`
+                          : `WiredWorld electronics and home appliances showcase ${index + 1}`
+                      }
                       className="w-full object-cover object-center lg:h-100 h-100 rounded-2xl bg-gray-100"
                     />
                     <div className="absolute inset-0 bg-black/60 rounded-2xl" />

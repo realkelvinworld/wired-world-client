@@ -140,7 +140,14 @@ export default function ContactPage() {
                 {contactCardOne?.whatsapp_business_available && (
                   <div className="flex items-start gap-3">
                     <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <span className="text-sm">WhatsApp Business Available</span>
+                    <a
+                      href="https://wa.me/+233551105055"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm hover:text-primary transition-colors"
+                    >
+                      WhatsApp Business Available
+                    </a>
                   </div>
                 )}
                 <div className="flex items-start gap-3">
@@ -196,7 +203,14 @@ export default function ContactPage() {
                 {contactCardTwo?.whatsapp_business_available && (
                   <div className="flex items-start gap-3">
                     <WhatsappLogoIcon className="size-4 mt-0.5 shrink-0 text-primary" />
-                    <span className="text-sm">WhatsApp Business Available</span>
+                    <a
+                      href="https://wa.me/+233551105055"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm hover:text-primary transition-colors"
+                    >
+                      WhatsApp Business Available
+                    </a>
                   </div>
                 )}
                 <div className="flex items-start gap-3">

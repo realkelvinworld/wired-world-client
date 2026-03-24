@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+const siteUrl = "https://wiredworldgh.com";
+
 export const metadata: Metadata = {
   title: "Privacy Policy | Wired World Limited",
   description:
@@ -13,12 +15,30 @@ export const metadata: Metadata = {
     "data rights",
     "user privacy",
   ],
+  alternates: {
+    canonical: "/privacy",
+  },
   openGraph: {
+    type: "website",
+    url: `${siteUrl}/privacy`,
     title: "Privacy Policy — Wired World (WiredWorld)",
     description:
       "How we collect, use, and protect your personal data. Your privacy matters to us.",
+    images: [
+      {
+        url: `${siteUrl}/logos/WIRED-WORLD-2.png`,
+        width: 512,
+        height: 512,
+        alt: "WiredWorld Logo",
+      },
+    ],
   },
-  alternates: { canonical: "/privacy" },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | WiredWorld Ghana",
+    description: "How WiredWorld collects, uses, and protects your personal data.",
+    images: [`${siteUrl}/logos/WIRED-WORLD-2.png`],
+  },
 };
 
 export default function PrivacyLayout({

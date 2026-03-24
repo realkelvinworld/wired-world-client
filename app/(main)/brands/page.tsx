@@ -98,12 +98,25 @@ export default function BrandsPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-12">
+        <h1 className="sr-only">
+          Authorized Electronics Brands — WiredWorld Ghana
+        </h1>
         {/* Banner */}
         <div className="my-10">
           {selectedBrand?.banners.length === 0 ? (
-            <PageHeaderCarousel title={"brands"} />
+            <PageHeaderCarousel
+              title={"brands"}
+              altPrefix="WiredWorld authorized electronics brands"
+            />
           ) : (
-            <PageHeaderCarousel img={selectedBrand?.banners} />
+            <PageHeaderCarousel
+              img={selectedBrand?.banners}
+              altPrefix={
+                selectedBrand?.name
+                  ? `${selectedBrand.name} products at WiredWorld Ghana`
+                  : "WiredWorld brand products"
+              }
+            />
           )}
         </div>
 

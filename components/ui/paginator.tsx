@@ -40,14 +40,12 @@ function getVisiblePages(current: number, total: number): (number | "dots")[] {
 }
 
 export default function Paginator({
-  items,
   filters,
   setFilters,
   next,
   prev,
   total,
   showCount = true,
-  next_page,
 }: PaginatorProps) {
   const handlePageChange = (page: number) => {
     setFilters((prev) => ({ ...prev, page }));
@@ -60,8 +58,8 @@ export default function Paginator({
     setFilters((prev) => ({ ...prev, drop: Number(value), page: 1 }));
   };
 
-  const currentPage = next_page && next_page > 1 ? next_page - 1 : 1;
-  const drop = filters.drop || items || 20;
+  const currentPage = filters.page ?? 1;
+  const drop = filters.drop || 10;
   const totalPages = total ? Math.ceil(total / drop) : 1;
   const progress = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;
   const visiblePages = getVisiblePages(currentPage, totalPages);

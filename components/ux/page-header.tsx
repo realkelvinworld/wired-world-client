@@ -4,10 +4,12 @@ export default function PageHeader({
   img,
   title,
   badge,
+  altText,
 }: {
   img?: string;
   title?: string;
   badge?: string;
+  altText?: string;
 }) {
   return (
     <div>
@@ -15,7 +17,7 @@ export default function PageHeader({
         {img && (
           <img
             src={img}
-            alt="Wired world"
+            alt={altText ?? (title ? `WiredWorld ${title} — electronics and home appliances Ghana` : "WiredWorld showroom")}
             loading="lazy"
             className="w-full object-cover object-center lg:h-100 h-100 rounded-xl mb-20 bg-gray-100"
           />

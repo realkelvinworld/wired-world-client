@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import Announcements from "@/components/ux/nav/announcements";
+import WhatsAppButton from "@/components/ux/whatsapp-button";
 import QuickNav from "@/components/ux/nav/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import Footer from "@/components/ux/footer";
@@ -21,6 +22,7 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = "https://wiredworldgh.com";
+const ogImage = `${siteUrl}/images/HOME-BANNER-3.jpg`;
 
 export const metadata: Metadata = {
   title: {
@@ -94,6 +96,10 @@ export const metadata: Metadata = {
     "Mobile Money electronics Ghana",
     "MTN MoMo electronics",
     "pay on delivery Ghana",
+    "WiredWorld WhatsApp",
+    "WhatsApp WiredWorld Ghana",
+    "contact WiredWorld WhatsApp",
+    "+233551105055",
   ],
   authors: [
     {
@@ -108,9 +114,6 @@ export const metadata: Metadata = {
   creator: "Damte Technologies",
   publisher: "WiredWorld",
   metadataBase: new URL(siteUrl),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -122,10 +125,10 @@ export const metadata: Metadata = {
       "Ghana's premier online electronics destination since 2020. Authentic products from Samsung, LG, Sony & 15+ brands — nationwide delivery, Mobile Money accepted, competitive pricing & dedicated B2B and corporate procurement.",
     images: [
       {
-        url: "/logos/WIRED-WORLD-2.png",
-        width: 512,
-        height: 512,
-        alt: "WiredWorld Logo",
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: "WiredWorld — Ghana's Premier Electronics Store",
       },
     ],
   },
@@ -134,7 +137,7 @@ export const metadata: Metadata = {
     title: "Wired World (WiredWorld) — Electronics & Home Appliances | Ghana",
     description:
       "Ghana's premier online electronics destination since 2020. Authentic products from Samsung, LG, Sony & 15+ brands — nationwide delivery, Mobile Money accepted, competitive pricing & dedicated B2B and corporate procurement.",
-    images: ["/logos/WIRED-WORLD-2.png"],
+    images: [ogImage],
   },
   icons: {
     icon: "/logos/WIRED-WORLD-2.png",
@@ -162,6 +165,71 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["Store", "LocalBusiness"],
+  name: "WiredWorld",
+  alternateName: "Wired World Limited",
+  description:
+    "Ghana's premier online electronics store. Shop TVs, home appliances, audio systems, gaming consoles & more from 15+ trusted brands. Nationwide delivery, Mobile Money accepted.",
+  url: "https://wiredworldgh.com",
+  logo: "https://wiredworldgh.com/logos/WIRED-WORLD-2.png",
+  image: "https://wiredworldgh.com/images/HOME-BANNER-3.jpg",
+  priceRange: "$$",
+  currenciesAccepted: "GHS",
+  paymentAccepted: "Cash, Mobile Money, Bank Transfer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Accra",
+    addressRegion: "Greater Accra",
+    addressCountry: "GH",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 5.5867,
+    longitude: -0.2089,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      opens: "08:00",
+      closes: "18:00",
+    },
+  ],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+233-55-110-5055",
+      contactType: "customer service",
+      availableLanguage: "English",
+      areaServed: "GH",
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+233-55-110-5055",
+      contactType: "sales",
+      availableLanguage: "English",
+      areaServed: "GH",
+    },
+  ],
+  hasMap:
+    "https://www.google.com/maps/search/?api=1&query=Wired+World+Accra+Newtown",
+  sameAs: [
+    "https://www.facebook.com/share/183BWcSS9A/?mibextid=wwXIfr",
+    "https://www.instagram.com/wiredworldltd?igsh=MXIyNGM4ajNqaGVydw==",
+    "https://www.tiktok.com/@wiredworldltd?_r=1&_t=ZS-94aFyBVYaAP",
+    "https://snapchat.com/t/DFYqNv5O",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -172,10 +240,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <AppProvider>
           <Announcements />
           <Navbar />
           {children}
+          <WhatsAppButton />
           <QuickNav />
           <TrustBar />
           <Footer />

@@ -36,9 +36,9 @@ export default function BrandsSlider() {
     <div>
       {" "}
       <section className="py-12">
-        <p className="mb-6 text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+        <h2 className="mb-6 text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           Trusted Brand Partners
-        </p>
+        </h2>
         <div className="space-y-6">
           <InfiniteSlider gap={48} speed={30}>
             {topRow.map((brand) => (

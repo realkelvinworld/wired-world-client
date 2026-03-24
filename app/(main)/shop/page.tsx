@@ -47,7 +47,13 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto ma-wx-7xl px-4 py-12">
-        <PageHeaderCarousel title="shop/products" />
+        <h1 className="sr-only">
+          Shop Electronics &amp; Home Appliances — WiredWorld Ghana
+        </h1>
+        <PageHeaderCarousel
+          title="shop/products"
+          altPrefix="WiredWorld shop — electronics and home appliances"
+        />
         {/* Mobile: sticky search + filter trigger */}
         <div className="sticky top-15 z-30 flex items-center gap-2 bg-background py-4 w-full">
           <UiFilters.SearchFilter

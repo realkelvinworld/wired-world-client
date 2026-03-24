@@ -198,8 +198,19 @@ export const mobileLinks = [
  * - icon: Phosphor icon component for the platform
  */
 export const socialLinks = [
-  { label: "Twitter", href: "#", icon: Icon.XLogoIcon },
-  { label: "Instagram", href: "#", icon: Icon.InstagramLogoIcon },
-  { label: "LinkedIn", href: "#", icon: Icon.LinkedinLogoIcon },
-  { label: "YouTube", href: "#", icon: Icon.YoutubeLogoIcon },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@wiredworldltd?_r=1&_t=ZS-94aFyBVYaAP",
+    icon: Icon.TiktokLogoIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/wiredworldltd?igsh=MXIyNGM4ajNqaGVydw==",
+    icon: Icon.InstagramLogoIcon,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/183BWcSS9A/?mibextid=wwXIfr",
+    icon: Icon.FacebookLogoIcon,
+  },
 ];

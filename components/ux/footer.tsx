@@ -54,7 +54,6 @@ const footerSections = [
     title: "Support",
     links: [
       { label: "Contact Us", href: routes.contact },
-      { label: "FAQ", href: routes.contact },
     ],
   },
 ];
@@ -185,12 +184,14 @@ export default function Footer() {
         </div>
       </div>
       <div className="bg-primary flex justify-center items-center">
-        <Link
-          href={"https://damtech.io"}
+        <a
+          href="https://damtech.io"
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-white/70 hover:text-white text-xs text-center py-2"
         >
           Developed and Designed by Damte Technologies
-        </Link>
+        </a>
       </div>
     </footer>
   );
