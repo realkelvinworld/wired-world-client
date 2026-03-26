@@ -59,7 +59,7 @@ export default function Paginator({
   };
 
   const currentPage = filters.page ?? 1;
-  const drop = filters.drop || 10;
+  const drop = filters.drop || 12;
   const totalPages = total ? Math.ceil(total / drop) : 1;
   const progress = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;
   const visiblePages = getVisiblePages(currentPage, totalPages);
@@ -96,7 +96,7 @@ export default function Paginator({
               <UiSelect.SelectValue>{drop}/pg</UiSelect.SelectValue>
             </UiSelect.SelectTrigger>
             <UiSelect.SelectContent align="start">
-              {[20, 50, 100, 250, 500].map((n) => (
+              {[12, 24, 48, 108, 252, 500].map((n) => (
                 <UiSelect.SelectItem key={n} value={n.toString()}>
                   {n} per page
                 </UiSelect.SelectItem>
