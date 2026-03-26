@@ -33,7 +33,7 @@ export default function ShopPage() {
         },
         sorting_order: sorting_order,
         page: filters.page ?? 1,
-        drop: filters.drop ?? 10,
+        drop: filters.drop ?? 12,
         type: "list",
       }),
   });
