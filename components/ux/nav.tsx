@@ -464,7 +464,7 @@ export default function Navbar() {
                       className="flex items-center gap-3 rounded-md px-3 py-2.5 hover:bg-accent"
                       onClick={() => setMobileOpen(false)}
                     >
-                      {cat.icon && (
+                      {cat.icon ? (
                         <img
                           src={cat.icon}
                           alt={cat.name}
@@ -472,6 +472,11 @@ export default function Navbar() {
                           height={16}
                           loading="lazy"
                           className="size-4 shrink-0"
+                        />
+                      ) : (
+                        <Icon.CirclesFourIcon
+                          size={16}
+                          className="shrink-0 text-muted-foreground"
                         />
                       )}
                       <span className="text-sm font-medium">{cat.name}</span>
