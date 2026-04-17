@@ -12,6 +12,7 @@ import { toast } from "sonner";
 
 import { UiBadge, UiButton, UiSeparator, UiSpinner } from "@/components/ui";
 import { formatPrice } from "@/lib/format-price";
+import { trackAddToCart } from "@/lib/pixel";
 import { useCartStore } from "@/store/cart";
 import { useUserStore } from "@/store/user";
 import { Product } from "@/models/product";
@@ -38,6 +39,12 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const handleAddedToCart = (productItem: Product, quantityOfItem: number) => {
     const added = addItem(productItem, quantityOfItem || 1);
     if (added) {
+      trackAddToCart({
+        name: productItem.name,
+        sku: productItem.sku,
+        price: productItem.discounted_price,
+        currency: productItem.currency,
+      });
       setQuantity(1);
       toast.success("Added to cart");
     } else {
@@ -189,7 +196,15 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             size="lg"
             className="flex-1 rounded-full"
             disabled={!inStock || isAdding}
-            onClick={() => add({ id: product.id, quantity })}
+            onClick={() => {
+              trackAddToCart({
+                name: product.name,
+                sku: product.sku,
+                price: product.discounted_price,
+                currency: product.currency,
+              });
+              add({ id: product.id, quantity });
+            }}
           >
             {isAdding ? (
               <UiSpinner.Spinner className="text-secondary" />

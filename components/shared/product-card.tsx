@@ -7,6 +7,7 @@ import { useWishlist } from "@/hooks/use-wishlist";
 import { useCompare } from "@/hooks/use-compare";
 import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/format-price";
+import { trackAddToCart } from "@/lib/pixel";
 import { Product } from "@/models/product";
 import { routes } from "@/routes";
 import { useUserStore } from "@/store/user";
@@ -43,6 +44,12 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddedToCart = (productItem: Product, quantityOfItem: number) => {
     const added = addItem(productItem, quantityOfItem || 1);
     if (added) {
+      trackAddToCart({
+        name: productItem.name,
+        sku: productItem.sku,
+        price: productItem.discounted_price,
+        currency: productItem.currency,
+      });
       toast.success("Added to cart");
     } else {
       toast.error("Cannot add more than available stock");
@@ -121,7 +128,15 @@ export function ProductCard({ product }: ProductCardProps) {
                   size="icon"
                   aria-label={`Add ${product.name} to cart`}
                   className="size-8 rounded-full"
-                  onClick={() => add({ id: product.id, quantity: 1 })}
+                  onClick={() => {
+                    trackAddToCart({
+                      name: product.name,
+                      sku: product.sku,
+                      price: product.discounted_price,
+                      currency: product.currency,
+                    });
+                    add({ id: product.id, quantity: 1 });
+                  }}
                   disabled={isAdding || product.stock === 0}
                 >
                   <Icon.ShoppingCartIcon className="size-4" />

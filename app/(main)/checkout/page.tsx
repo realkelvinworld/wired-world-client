@@ -1,12 +1,13 @@
 "use client";
 
 import { ShoppingBagIcon, ArrowLeftIcon } from "@phosphor-icons/react";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 import { UiButton, UiSkeleton } from "@/components/ui";
 import { previewCartService } from "@/services/user";
+import { trackInitiateCheckout } from "@/lib/pixel";
 import { useCartStore } from "@/store/cart";
 import { useCart } from "@/hooks/use-cart";
 import { routes } from "@/routes";
@@ -94,6 +95,20 @@ function CheckoutContent({ isLoggedIn }: { isLoggedIn: boolean }) {
   const isEmpty = isLoggedIn
     ? serverItems.length === 0
     : (localCart?.length ?? 0) === 0;
+
+  // effect
+  const trackedRef = useRef(false);
+  useEffect(() => {
+    if (trackedRef.current) return;
+    if (!total || summaryItems.length === 0) return;
+    trackedRef.current = true;
+    trackInitiateCheckout({
+      skus: summaryItems.map((i) => String(i.id)),
+      total,
+      itemCount: summaryItems.reduce((sum, i) => sum + i.quantity, 0),
+      currency: summaryItems[0]?.currency,
+    });
+  }, [summaryItems, total]);
 
   // consditions
   if (!hydrated || (user && isPending)) {

@@ -3,10 +3,12 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import Link from "next/link";
 
 import { getProductsDetailsService } from "@/services/inventory";
 import { UiButton, UiSeparator, UiSkeleton } from "@/components/ui";
+import { trackViewContent } from "@/lib/pixel";
 import { routes } from "@/routes";
 
 import ProductReviews from "./(components)/product-reviews";
@@ -26,6 +28,18 @@ export default function ProductDetailPage() {
 
   // variables
   const product = data?.info;
+
+  // effect
+  useEffect(() => {
+    if (!product) return;
+    trackViewContent({
+      name: product.name,
+      sku: product.sku,
+      price: product.discounted_price,
+      category: product.category__name,
+      currency: product.currency,
+    });
+  }, [product]);
 
   if (isPending) return <ProductDetailSkeleton />;
 
