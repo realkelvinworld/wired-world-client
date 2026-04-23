@@ -163,6 +163,7 @@ export const metadata: Metadata = {
     "agency-url": "https://damtetechnologies.com",
     "engineer-1": "Kelvin Kumordzi",
     "engineer-2": "Joel Aryetey",
+    "google-site-verification": "sySo7Mb1_urFEVwAWgv3sxhrI3zjua5xP7fEZlSqd8U",
   },
 };
 
