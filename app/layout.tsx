@@ -8,6 +8,7 @@ import WhatsAppButton from "@/components/ux/whatsapp-button";
 import QuickNav from "@/components/ux/nav/quick-nav";
 import TrustBar from "@/components/ux/trust-bar";
 import MetaPixel from "@/components/meta-pixel";
+import GoogleAnalytics from "@/components/google-analytics";
 import Footer from "@/components/ux/footer";
 import AppProvider from "@/providers/app";
 import Navbar from "@/components/ux/nav";
@@ -247,6 +248,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <AppProvider>
+          <GoogleAnalytics />
           <MetaPixel />
           <Announcements />
           <Navbar />
